@@ -7,12 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-  "type" : "git",
-  "url" : "https://github.com/Tordek947/Web"
-  }
+    "type": "git",
+    "url": "https://github.com/Tordek947/Web"
+  },
   "author": "Hryhorii Popov",
   "license": "UNLICENSED",
   "devDependencies": {
     "gulp": "^4.0.0"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
   }
 }
