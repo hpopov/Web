@@ -27,13 +27,6 @@ $mdImageCoefficient: 6/7;
 			margin-top: 25px;
 			margin-bottom: 25px;
 		}
-		.projects-component {
-			.project-container{
-				.project{
-					margin-right: 0px;
-				}
-			}
-		}
 		.personal-info-component {
 			.content {
 				.text-content{
@@ -44,10 +37,19 @@ $mdImageCoefficient: 6/7;
 				}
 			}
 		}
+		.subjects-component {
+			.search-parameters {
+				.optional-line {
+					.sm-show {
+						display: none;
+					}
+				}
+			}
+		}
 		.projects-component {
-			.project-container {
-				.project {
-					padding-right: 0;
+			.project-container{
+				.project{
+					margin-right: 0px;
 				}
 			}
 		}
