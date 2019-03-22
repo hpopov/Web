@@ -1,0 +1,93 @@
+@import "../helper/variables";
+@import "../helper/placeholders";
+
+body {
+	padding: 0;
+	margin: 0;
+	background-color: $mainBackgroundColor;
+	button, input[type=submit], input[type=button]{
+		border: 0;
+		&:-moz-focus-outer, ::-moz-focus-inner {
+			border: 0;
+			padding: 0;
+		}
+	}
+}
+
+p {
+	margin:0;
+	padding:0;
+}
+
+a {
+	text-decoration: none;
+	//complete pseudoclasses
+}
+
+h3 {
+	font-size: $h3Size;
+	margin:0;
+}
+
+h4 {
+	font-size: $h4Size;
+	margin:0;
+}
+
+h5 {
+	font-size: $h5Size;
+	margin:0;
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.float-right {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.data-entry {
+	display: flex;
+
+	>* {
+		width: 60%;
+		&:first-child {
+			font-weight: bold;
+			width: 40%;
+			margin-right: 10px;
+		}
+		.data-entry>*:first-child {
+			font-style: italic;
+		}
+
+	}
+
+}
+
+.left-justified-text {
+	text-align: left;
+}
+
+.download-cv-button {
+	@extend %large-button;
+	@include buttonColors($importantButtonColors...);
+}
+
+.logout-button {
+	@extend %large-button;
+	@include buttonColors($headerButtonColors...);
+}
+
+.dark-button {
+	@extend %button;
+	@include buttonColors($darkButtonColors...);
+}
+
+.light-button {
+	@extend %tiny-button;
+	@include buttonColors($lightButtonColors...);
+}

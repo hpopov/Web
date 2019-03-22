@@ -1,0 +1,21 @@
+@import "../layout/common";
+@import "../layout/header";
+@import "../layout/footer";
+@import "../helper/variables";
+@import "../helper/placeholders";
+@import "../components/components";
+
+.main-content {
+	@extend %main-container;
+
+	>.space-between {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+	>.float-right {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+}
+
+@import "../layout/media";

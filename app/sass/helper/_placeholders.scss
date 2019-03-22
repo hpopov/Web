@@ -1,0 +1,44 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+
+%main-container {
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+%component {
+	padding: 4%;
+	margin-bottom: 4%;
+	background-color: $componentColor;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+%button {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	min-width: 120px;
+	font-size: $buttonFontSize;
+	border-radius: 5px;
+}
+
+%large-button {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 15px;
+	padding-right: 15px;
+	min-width: 110px;
+	font-size: $largeButtonFontSize;
+	border-radius: 6px;
+}
+
+%tiny-button {
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 0px;
+	padding-right: 0px;
+	font-size: $buttonFontSize;
+}

@@ -1,0 +1,20 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+@import "../helper/placeholders";
+
+footer {
+	@extend .space-between;
+	@extend %main-container;
+	background-color: $footerColor;
+	@include logo-img($logoWidth,$logoHeight);
+	.footer-links {
+		a {
+			padding-left: 10px;
+			padding-right: 10px;
+			color: $footerLinksColor;
+			&:hover {
+				color: darken($footerLinksColor, 15%);
+			}
+		}
+	}
+}

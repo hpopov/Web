@@ -1,0 +1,57 @@
+/*=======================================FONTS=====================================*/
+$h3Size: 25pt;
+$h4Size: $h3Size*0.8;
+$h5Size: $h4Size*0.7;
+$buttonFontSize: 11pt;
+$largeButtonFontSize: $buttonFontSize*1.2;
+
+
+$logoWidth: 100px;
+$logoHeight: $logoWidth;
+
+$userImgUrl: "/images/user-img.jpg";
+$avatarWidth: 50px;
+$avatarHeight: $avatarWidth;
+$userImgWidth: $avatarWidth*7;
+$userImgHeight: $avatarHeight*7;
+
+$table-border: 1px solid black;
+
+$projectThumbWidth: 304px;
+$projectThumbHeight: 220px;
+
+
+/*========================================COLOURS========================================*/
+$headerColor: #464547;
+$headerTextColor: #d7d9e3;
+$footerColor: $headerColor;
+$mainBackgroundColor: #ebeef0;
+$componentColor: #fff;
+$footerLinksColor: $headerTextColor;
+$defaultInputTextColor: #ccc;
+
+$importantButtonBackgroudColor: #e74c3c;
+$importantButtonColors: (backgroundColor: $importantButtonBackgroudColor,
+	textColor: lighten($importantButtonBackgroudColor,50%),
+	hoverBackgroundColor: darken($importantButtonBackgroudColor,10%),
+	hoverTextColor: lighten(darken($importantButtonBackgroudColor,10%),50%)	
+	);
+$headerButtonBackgroundColor: darken($headerColor, 15%);//#272c33;
+$headerButtonColors: (backgroundColor: $headerButtonBackgroundColor,
+	textColor: lighten($headerButtonBackgroundColor,50%),
+	hoverBackgroundColor: darken($headerButtonBackgroundColor,10%),
+	hoverTextColor: lighten(darken($headerButtonBackgroundColor,10%),50%)
+	);
+$darkButtonBackgroundColor: #b1b1b1;
+$darkButtonTextColor: #112636;
+$darkButtonColors: (backgroundColor: $darkButtonBackgroundColor,
+	textColor: $darkButtonTextColor,
+	hoverBackgroundColor: darken($darkButtonBackgroundColor,10%),
+	hoverTextColor: darken($darkButtonTextColor,30%)
+	);
+$lightButtonTextColor: darken($darkButtonBackgroundColor,40%);
+$lightButtonColors: (backgroundColor: transparent,
+	textColor: $lightButtonTextColor,
+	hoverBackgroundColor: transparent,
+	hoverTextColor: darken($lightButtonTextColor,30%)
+	);

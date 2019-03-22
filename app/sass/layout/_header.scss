@@ -1,0 +1,26 @@
+@import "../helper/variables";
+@import "../helper/mixins";
+@import "../helper/placeholders";
+
+header {
+	@extend .space-between;
+	@extend %main-container;
+	background-color: $headerColor;
+	color: $headerTextColor;
+	@include logo-img($logoWidth,$logoHeight);
+
+	.user-greetings {
+		display: flex;
+		align-items: center;
+		>* {
+			margin-left: 10px;
+		}
+		.img-holder {
+			margin-right: 10px;
+			img {
+				@include size($avatarWidth, $avatarHeight);
+				border-radius: max($avatarWidth,$avatarHeight)/2;
+			}
+		}
+	}
+}

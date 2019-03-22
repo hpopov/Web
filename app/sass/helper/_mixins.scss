@@ -1,0 +1,28 @@
+
+@mixin size($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+@mixin logo-img($width, $height) {
+	.img-holder {
+		a {
+			display: block;
+			height: $height;
+		}
+		img {
+			@include size($width, $height); 
+		}
+	}
+}
+
+@mixin buttonColors($backgroundColor, $textColor,
+		$hoverBackgroundColor, $hoverTextColor) {
+	background-color: $backgroundColor;
+	border-color: $backgroundColor;
+	color: $textColor;
+	&:hover {
+		background-color: $hoverBackgroundColor;
+		color: $hoverTextColor;
+	}
+}

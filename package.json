@@ -1,27 +1,30 @@
 {
   "name": "web",
   "version": "1.0.0",
-  "description": "Web labs project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Tordek947/Web"
-  },
-  "author": "Hryhorii Popov",
-  "license": "UNLICENSED",
-  "devDependencies": {
-    "gulp": "^4.0.0"
-  },
+  "description": "To use this project you have to install gulp:\r npm install gulp --save-dev\r Prerequisities:\r You have to has node.js with npm installed (go to official site)\r Also you have to install gulp globally (npm install --global gulp)",
+  "main": "gulpfile.js",
   "dependencies": {
     "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tordek947/Web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tordek947/Web/issues"
+  },
+  "homepage": "https://github.com/Tordek947/Web#readme"
 }
