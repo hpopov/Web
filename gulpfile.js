@@ -8,15 +8,20 @@ var gulpIf = require('gulp-if');
 var browserSync = require('browser-sync').create();
 
 var config = {
+
+    isDevelop: false,
+
     paths: {
         sass: './app/sass/**/*.scss', 
-        html: './app/index.html'   
+        html: './app/index.html',
+        filesToCopy: ['./app/index.html', './app/fonts/**/*','./app/images/**/*','./app/js/**/*'],
+        css:  './app/css/main.min.css'
     },
     output: { 
         cssName: '/css/main.min.css', 
-        path: './app'
-    },
-    isDevelop: true
+        path: './dist',
+        devPath: './app'
+    }
 };
 gulp.task('sass', function() {
     return gulp.src(config.paths.sass) 
@@ -24,10 +29,17 @@ gulp.task('sass', function() {
         .pipe(sass()) 
         .pipe(concat(config.output.cssName))      
         .pipe(autoprefixer())      
-        .pipe(gulpIf(!config.isDevelop, cleanCss())) 
         .pipe(sourcemaps.write()) 
-        .pipe(gulp.dest(config.output.path)) 
+        .pipe(gulp.dest(config.output.devPath)) 
         .pipe(browserSync.stream());
+});
+gulp.task('copyFiles', function(){
+	gulp.src(config.paths.filesToCopy, {base: config.output.devPath})
+	.pipe(gulp.dest(config.output.path));
+
+	return gulp.src(config.paths.css, {base: config.output.devPath})
+    .pipe(gulpIf(!config.isDevelop, cleanCss())) 
+	.pipe(gulp.dest(config.output.path));
 });
 
 gulp.task('watch-sass', function(){
@@ -40,11 +52,12 @@ gulp.task('watch-html', function(){
 gulp.task('serve', function() {
     browserSync.init({ 
         server: {
-            baseDir: config.output.path 
+            baseDir: config.output.devPath 
         }
     });
 
 });
 
 
-gulp.task('default', gulp.series('sass', gulp.parallel('serve','watch-sass', 'watch-html')));
+gulp.task('default', gulp.series('sass', 'copyFiles', gulp.parallel('serve','watch-sass', 'watch-html')));
+gulp.task('pack', gulp.series('sass', 'copyFiles'));

@@ -3,6 +3,7 @@
 <head>
 	<title>ITCampus - My Profile</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/css/main.min.css" type="text/css" media="all">
 </head>
 <body>
@@ -27,100 +28,45 @@
 		</div>
 		<div class="components-container">
 			<div class="personal-info-component">
-				<div class="content">
-					<div class="text-content">
-						<h4>Personal information</h4>
-						<div class="data-map">
-							<div class="data-entry">
-								<p>Surname:</p>
-								<p>Popov</p>
-							</div>
-							<div class="data-entry">
-								<p>Name:</p>
-								<p>Hryhorii</p>
-							</div>
-							<div class="data-entry">
-								<p>Phone number:</p>
-								<p>(+38) 096 169 8581</p>
-							</div>
-							<div class="data-entry">
-								<p>Date of birth:</p>
-								<p>25.03.1999</p>
-							</div>
-							<div class="data-entry">
-								<p>City:</p>
-								<p>Kyiw</p>
-							</div>
-							<div class="edu-skills">
-								<div class="data-entry">
-									<p>Education:</p>
-									<p><abbr>NTUU</abbr> "Igor Sikorsky Kyiv Polytechnic Institute"</p>
-								</div>
-								<div class="data-entry">
-									<p>Faculty:</p>
-									<p>Institute of Applied System Analysis</p>
-								</div>
-								<div class="data-entry">
-									<p>Years of education:</p>
-									<p>2016-2020</p>
-								</div>
-								<div class="data-entry">
-									<p>Skills:</p>
-									<div class="data-map">
-										<div class="data-entry">
-											<p>Java</p>
-											<p>Intermediate</p>
-										</div>
-										<div class="data-entry">
-											<p>Java Script</p>
-											<p>Background</p>
-										</div>
-										<div class="data-entry">
-											<p>Paint</p>
-											<p>Confident</p>
-										</div>
-									</div>
-								</div>
-								<div class="data-entry">
-									<p>Languages:</p>
-									<div class="data-map">
-										<div class="data-entry">
-											<p>English</p>
-											<p>Upper-Intermediate</p>
-										</div>
-										<div class="data-entry">
-											<p>Ukrainian</p>
-											<p>Native</p>
-										</div>
-										<div class="data-entry">
-											<p>Russian</p>
-											<p>Native</p>
-										</div>
-									</div>
-								</div>
-							</div>
+				<div class="content-grid">
+					<h4 id="personal-info-header">Personal information</h4>
+					<div id="personal-info-pii">
+						<div class="data-entry">
+							<p>Surname:</p>
+							<p>Popov</p>
+						</div>
+						<div class="data-entry">
+							<p>Name:</p>
+							<p>Hryhorii</p>
+						</div>
+						<div class="data-entry">
+							<p>Phone number:</p>
+							<p>(+38) 096 169 8581</p>
+						</div>
+						<div class="data-entry">
+							<p>Date of birth:</p>
+							<p>25.03.1999</p>
+						</div>
+						<div class="data-entry">
+							<p>City:</p>
+							<p>Kyiw</p>
 						</div>
 					</div>
-					<div class="image-content">
-						<div class="img-holder">
-							<img src="/images/user-img.jpg">
+					<div id="personal-info-edu">
+						<div class="data-entry">
+							<p>Education:</p>
+							<p><abbr>NTUU</abbr> "Igor Sikorsky Kyiv Polytechnic Institute"</p>
+						</div>
+						<div class="data-entry">
+							<p>Faculty:</p>
+							<p>Institute of Applied System Analysis</p>
+						</div>
+						<div class="data-entry">
+							<p>Years of education:</p>
+							<p>2016-2020</p>
 						</div>
 					</div>
-				</div>
-				<div class="external-edu-skills">
-					<div class="data-entry">
-						<p>Education:</p>
-						<p><abbr>NTUU</abbr> "Igor Sikorsky Kyiv Polytechnic Institute"</p>
-					</div>
-					<div class="data-entry">
-						<p>Faculty:</p>
-						<p>Institute of Applied System Analysis</p>
-					</div>
-					<div class="data-entry">
-						<p>Years of education:</p>
-						<p>2016-2020</p>
-					</div>
-					<div class="data-entry">
+					<div class="data-entry" id="personal-info-skill-set">
 						<p>Skills:</p>
 						<div class="data-map">
 							<div class="data-entry">
@@ -137,7 +83,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="data-entry">
+					<div class="data-entry" id="personal-info-lang-set">
 						<p>Languages:</p>
 						<div class="data-map">
 							<div class="data-entry">
@@ -152,6 +98,11 @@
 								<p>Russian</p>
 								<p>Native</p>
 							</div>
+						</div>
+					</div>
+					<div class="image-content">
+						<div class="img-holder">
+							<img src="/images/user-img.jpg">
 						</div>
 					</div>
 				</div>
@@ -303,13 +254,13 @@
 			</div>
 			<div class="projects-component">
 				<h4>Projects</h4>
-				<div class="project-container">
+				<div class="project-container-grid">
 					<div class="project">
 						<div class="card">
-							<div class="img-holder">
+							<div class="img-holder" hidden>
 								<img src="/images/project-min.png">
 							</div>
-							<div class="description" hidden>
+							<div class="description" >
 								<p>Dome description goes here blah-blah-blah</p>
 							</div>
 						</div>

@@ -1,6 +1,3 @@
-@import "../helper/variables";
-@import "../helper/placeholders";
-
 body {
 	padding: 0;
 	margin: 0;
@@ -15,6 +12,7 @@ body {
 }
 
 p {
+	font-size: $fontSize;
 	margin:0;
 	padding:0;
 }
