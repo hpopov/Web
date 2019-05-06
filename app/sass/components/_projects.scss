@@ -23,28 +23,11 @@
 					@extend %project-card-content;
 					justify-content: center;
 					align-items: center;
+					p {
+						padding: 10px;
+					}
 				}
 			}
 		}
 	}
-	// .project-container {
-	// 	display: flex;
-	// 	flex-wrap: wrap;
-	// 	justify-content: space-around;
-	// 	.project {
-	// 		display: flex;
-	// 		flex-direction: column;
-	// 		//width: 33.33333333% auto;
-	// 		margin-bottom: 30px;
-	// 		padding-right: 40px;
-	// 		.card {
-	// 			margin-bottom: 15px;
-	// 			.img-holder {
-	// 				img {
-	// 					@include size($projectThumbWidth, $projectThumbHeight);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
 }

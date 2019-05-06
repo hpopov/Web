@@ -9,7 +9,7 @@ var browserSync = require('browser-sync').create();
 
 var config = {
 
-    isDevelop: false,
+    isDevelop: true,
 
     paths: {
         sass: './app/sass/**/*.scss', 
