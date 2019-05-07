@@ -1,0 +1,84 @@
+<div class="personal-info-component">
+	<div class="content-grid">
+		<h4 id="personal-info-header">Personal information</h4>
+		<div id="personal-info-pii">
+			<div class="data-entry">
+				<p>Surname:</p>
+				<p>{{user.surname}}</p>
+			</div>
+			<div class="data-entry">
+				<p>Name:</p>
+				<p>{{user.name}}</p>
+			</div>
+			<div class="data-entry">
+				<p>Phone number:</p>
+				<p>{{phoneNumber}}</p>
+			</div>
+			<div class="data-entry">
+				<p>Date of birth:</p>
+				<p>{{dateOfBirth}}</p>
+			</div>
+			<div class="data-entry">
+				<p>City:</p>
+				<p>{{city}}</p>
+			</div>
+		</div>
+		<div id="personal-info-edu">
+			<div class="data-entry">
+				<p>Education:</p>
+				<p><abbr>{{education.abbr}}</abbr> {{education.otherName}}</p>
+			</div>
+			<div class="data-entry">
+				<p>Faculty:</p>
+				<p>{{faculty}}</p>
+			</div>
+			<div class="data-entry">
+				<p>Years of education:</p>
+				<!-- <p>{{yearInterval | intervalPipe: 'delimiter':'-'}}</p> -->
+				<p>{{educationYear.firstYear}}-{{educationYear.lastYear}}</p>
+			</div>
+		</div>
+		<div class="data-entry" id="personal-info-skill-set">
+			<p>Skills:</p>
+			<div class="data-map">
+				<div class="data-entry">
+					<p>Java</p>
+					<p>Intermediate</p>
+				</div>
+				<div class="data-entry">
+					<p>Java Script</p>
+					<p>Background</p>
+				</div>
+				<div class="data-entry">
+					<p>Paint</p>
+					<p>Confident</p>
+				</div>
+			</div>
+		</div>
+		<div class="data-entry" id="personal-info-lang-set">
+			<p>Languages:</p>
+			<div class="data-map">
+				<div class="data-entry">
+					<p>English</p>
+					<p>Upper-Intermediate</p>
+				</div>
+				<div class="data-entry">
+					<p>Ukrainian</p>
+					<p>Native</p>
+				</div>
+				<div class="data-entry">
+					<p>Russian</p>
+					<p>Native</p>
+				</div>
+			</div>
+		</div>
+		<div class="image-content">
+			<div class="img-holder">
+				<img src="assets/images/user-img-{{user.id}}.jpg" alt="User image">
+			</div>
+		</div>
+	</div>
+	<div class="float-right">
+		<button class="dark-button">Edit</button>
+	</div>
+</div>

@@ -1,0 +1,33 @@
+.projects-component {
+	@extend %component;
+	h4 {
+		margin-bottom: 25px;
+	}
+	.project-container-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		.project {
+			margin-bottom: 30px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.card {
+				margin-bottom: 15px;
+				.img-holder {
+					img {
+						@extend %project-card-content;
+					}
+				}
+				.description {
+					@extend %project-card-content;
+					justify-content: center;
+					align-items: center;
+					p {
+						padding: 10px;
+					}
+				}
+			}
+		}
+	}
+}

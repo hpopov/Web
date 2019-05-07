@@ -4,8 +4,7 @@
   "description": "To use this project you have to install gulp:\r npm install gulp --save-dev\r Prerequisities:\r You have to has node.js with npm installed (go to official site)\r Also you have to install gulp globally (npm install --global gulp)",
   "main": "gulpfile.js",
   "dependencies": {
-    "browser-sync": "^2.26.3",
-    "gulp": "^4.0.0",
+    "browser-sync": "^2.26.5",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
@@ -13,7 +12,9 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

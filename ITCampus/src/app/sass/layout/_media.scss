@@ -1,0 +1,225 @@
+$lgSize: 1199px;
+$mdSize: 992px;
+$smSize: 767px;
+$tnSize: 480px;
+$mdImageCoefficient: 6/7;
+@media screen and (max-width: $lgSize) {
+	.projects-component {
+		.project-container-grid{
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+			.project {
+				align-items: center;
+			}
+		}
+	}
+
+}
+@media screen and (max-width: $mdSize) {
+
+	%large-button {
+		padding-left: 14px;
+		padding-right: 14px;
+		min-width: 70px;
+	}
+	%button {
+		padding-left: 12px;
+		padding-right: 12px;
+		min-width: 100px;
+	}
+	header, footer {
+		@include logo-img($logoWidth*$mdImageCoefficient,$logoHeight*$mdImageCoefficient);
+	}
+	.main-content {
+		>.space-between {
+			margin-top: 25px;
+			margin-bottom: 25px;
+		}
+		>.float-right {
+			margin-top: 25px;
+			margin-bottom: 25px;
+		}
+		.personal-info-component {
+			.content-grid {
+				grid-template-columns: 8fr 6fr;
+				.image-content .img-holder img{
+					@include size($userImgWidth*$mdImageCoefficient,$userImgHeight*$mdImageCoefficient);
+				}
+			}
+			// .content {
+			// 	.text-content{
+			// 		width: 50%;
+			// 	}
+			// 	.image-content .img-holder img{
+			// 		@include size($userImgWidth*$mdImageCoefficient,$userImgHeight*$mdImageCoefficient);
+			// 	}
+			// }
+		}
+		.subjects-component {
+			.search-parameters {
+				.optional-line {
+					.sm-show {
+						display: none;
+					}
+				}
+			}
+		}
+		// .projects-component {
+			// .project-container{
+			// 	.project{
+			// 		margin-right: 0px;
+			// 	}
+			// }
+		// }
+	}
+}
+$smFontCoefficient: 0.91;
+$smImageCoefficient: 17/28;
+@media screen and (max-width: $smSize) {
+	* {
+		font-size: 11pt;
+	}
+	%large-button {
+		padding-left: 10px;
+		padding-right: 10px;
+		min-width: 60px;
+		font-size: $largeButtonFontSize*$smFontCoefficient;
+	}
+	%button {
+		padding-left: 11px;
+		padding-right: 11px;
+		min-width: 90px;
+		font-size: $buttonFontSize*$smFontCoefficient;
+	}
+
+	%tiny-button {
+		font-size: $buttonFontSize*$smFontCoefficient;
+	}
+
+	p {
+		font-size: $fontSize*$smFontCoefficient;
+		margin:0;
+		padding:0;
+	}
+	h3 {
+		font-size: $h3Size*$smFontCoefficient;
+	}
+
+	h4 {
+		font-size: $h4Size*$smFontCoefficient;
+	}
+
+	h5 {
+		font-size: $h5Size*$smFontCoefficient;
+	}
+
+	.main-content {
+		>.space-between {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		>.float-right {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		.personal-info-component {
+			.content-grid {
+				#personal-info-pii .data-entry {
+					>* {
+						width: 47%;
+						&:first-child {
+							width: 53%;
+							margin-right: 5px;
+						}
+
+					}
+				}
+				grid-template-rows: 4fr 10fr 5fr 5fr 5fr;
+				#personal-info-edu {
+					grid-column: 1/ span 2;
+				}
+				#personal-info-skill-set {
+					grid-column: 1/ span 2;
+				}
+				#personal-info-lang-set {
+					grid-column: 1/ span 2;
+				}
+				.image-content {
+					grid-row: 1/ span 2;
+					.img-holder img{
+						@include size($userImgWidth*$smImageCoefficient,$userImgHeight*$smImageCoefficient);
+					}
+				}
+			}
+			// .content {
+			// 	.text-content{
+			// 		width: 100%;
+			// 	}
+
+			// 	.image-content .img-holder img{
+			// 		@include size($userImgWidth*$smImageCoefficient,$userImgHeight*$smImageCoefficient);
+			// 	}
+			// 	.edu-skills {
+			// 		display: none;
+			// 	}
+			// }
+			// .external-edu-skills {
+			// 	display: block;
+			// }
+		}
+
+		.subjects-component {
+			.search-parameters {
+				flex-direction: column;
+				align-items: stretch;
+				.optional-line {
+					display: flex;
+					justify-content: space-around;
+					margin-bottom: 10px;
+					+.optional-line {
+						margin-bottom: 0px;
+					}
+					input[type="text"]{
+						width: 150px;
+					}
+					.sm-show {
+						display: block;
+					}
+				}
+			}
+			.search-result {
+				table {
+					th, td {
+
+						&.left-justified-text {
+							padding-left: 5px;
+						}
+					}
+				}
+				.float-right .data-entry {
+					width: 33%;
+					>* {
+						width: 20%;
+						&:first-child {
+							font-weight: bold;
+							width: 80%;
+							padding-right: 0px;
+						}
+
+					}
+				}
+			}
+		}
+
+		.projects-component {
+			.project-container-grid {
+				grid-template-columns: repeat(1, 1fr);
+				grid-template-rows: repeat(6, 1fr);
+			}
+			// .project-container {
+			// 	flex-direction: column;
+			// 	align-items: center;
+			// }
+		}
+	}
+}

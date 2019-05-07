@@ -1,0 +1,72 @@
+.personal-info-component {
+	@extend %component;
+
+	.data-entry {
+		margin-bottom: 10px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	
+	.content-grid {
+		display: grid;
+		grid-template-columns: 7fr 6fr;
+		grid-template-rows: 4fr 8fr 6fr 5fr 5fr;
+		#personal-info-header {
+			grid-column: 1/ span 1;
+			grid-row: 1/ span 1;
+		}
+		#personal-info-pii {
+			grid-column: 1/ span 1;
+			grid-row: 2/ span 1;
+		}
+		#personal-info-edu {
+			grid-column: 1/ span 1;
+			grid-row: 3/ span 1;
+		}
+		#personal-info-skill-set {
+			grid-column: 1/ span 1;
+			grid-row: 4/ span 1;
+		}
+		#personal-info-lang-set {
+			grid-column: 1/ span 1;
+			grid-row: 5/ span 1;
+		}
+		.image-content {
+			grid-column: 2/ span 1;
+			grid-row: 1/ -1;
+			padding: 5px;
+			padding-bottom: 15px;
+			.img-holder {
+				float: right;
+				margin-right: 10px;
+				img {
+					@include size($userImgWidth,$userImgHeight);
+				}
+			}
+		}
+	}
+	// .content {
+	// 	display: flex;
+	// 	justify-content: space-between;
+	// 	.text-content {
+	// 		width: 40%;
+	// 		h4 {
+	// 			margin-bottom: 40px;
+	// 		}
+	// 	}
+	// 	.image-content {
+	// 		padding: 5px;
+	// 		padding-bottom: 15px;
+	// 		.img-holder {
+	// 			margin-right: 10px;
+	// 			img {
+	// 				@include size($userImgWidth,$userImgHeight);
+	// 			}
+	// 		}
+	// 	}
+	// }
+	.float-right {
+		margin-top: 10px;
+	}
+}

@@ -4,6 +4,8 @@ Prerequisities:
 You have to has node.js with npm installed (go to official site)
 Also you have to install gulp globally (npm install --global gulp)
 
+Also see https://stackoverflow.com/questions/55638180/how-to-fix-npm-package-tar-with-high-vulnerability-about-arbitrary-file-overwri
+
 DEPENDENCIES
 require('gulp-sass'); -- npm i gulp-sass
 require('gulp-autoprefixer'); -- npm i gulp-autoprefixer
