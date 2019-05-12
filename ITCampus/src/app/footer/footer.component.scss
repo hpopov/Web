@@ -1,8 +1,11 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+
 footer {
-	@extend .space-between;
+	@extend %space-between;
 	@extend %main-container;
 	background-color: $footerColor;
-	@include logo-img($logoWidth,$logoHeight);
 	.footer-links {
 		a {
 			padding-left: 10px;

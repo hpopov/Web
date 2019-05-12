@@ -1,0 +1,101 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+
+.subjects-component {
+	@extend %component;
+	h4 {
+		margin-bottom: 35px;
+	}
+	.search-parameters {
+		@extend %space-between;
+		min-width: 60%;
+		@media screen and (max-width: $smSize) {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.optional-line {
+			display: inline-flex;
+			@media screen and (max-width: $smSize) {
+				display: flex;
+				justify-content: space-around;
+				margin-bottom: 10px;
+				+.optional-line {
+					margin-bottom: 0px;
+				}
+			}
+			.sm-show {
+				@media screen and (max-width: $mdSize) {
+					display: none;
+				}
+				@media screen and (max-width: $smSize) {
+					display: block;
+				}
+			}
+			>* {
+				margin-right: 15px;
+			}
+			input[type="text"]{
+				width: 200px;
+				@media screen and (max-width: $smSize) {
+					width: 150px;
+				}
+			}
+		}
+	}
+	.search-result {
+		display: flex;
+		flex-direction: column;
+		@media screen and (max-width: $smSize) {
+			.float-right .data-entry {
+				width: 33%;
+				>* {
+					width: 20%;
+					&:first-child {
+						font-weight: bold;
+						width: 80%;
+						padding-right: 0px;
+					}
+
+				}
+			}
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 25px;
+			margin-bottom: 15px;
+			th, td {
+				text-align: center;
+				border: $table-border;
+				padding-top: 3px;
+				padding-bottom: 3px;
+				&.left-justified-text {
+					padding-left: 10px;
+					@media screen and (max-width: $smSize) {
+						padding-left: 5px;
+					}
+				}
+			}
+			tr.summary {
+				th, td {
+					border: none;
+					padding-top: 10px;
+					&:first-child {
+						text-align: right;
+						padding-right: 10px;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+		
+		.pagination {
+			text-align: center;
+			a {
+				padding-left: 2px;
+				padding-right: 2px;
+			}
+		}
+	}
+}

@@ -1,3 +1,7 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+
 body {
 	padding: 0;
 	margin: 0;
@@ -37,17 +41,6 @@ h5 {
 	margin:0;
 }
 
-.space-between {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.float-right {
-	display: flex;
-	justify-content: flex-end;
-}
-
 .data-entry {
 	display: flex;
 
@@ -65,11 +58,6 @@ h5 {
 	}
 
 }
-
-.left-justified-text {
-	text-align: left;
-}
-
 
 .download-cv-button {
 	@extend %large-button;
@@ -90,3 +78,15 @@ h5 {
 	@extend %tiny-button;
 	@include buttonColors($lightButtonColors...);
 }
+
+.space-between {
+	@extend %space-between;
+}
+
+.float-right {
+	@extend %float-right;
+}
+.left-justified-text {
+	@extend %left-justified-text;
+}
+@import "src/sass/layout/media";

@@ -1,0 +1,99 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+
+.personal-info-component {
+	@extend %component;
+
+	.data-entry {
+		margin-bottom: 10px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	
+	.content-grid {
+		display: grid;
+		grid-template-columns: 7fr 6fr;
+        grid-template-rows: 4fr 8fr 6fr 5fr 5fr;
+        @media screen and (max-width: $mdSize) {
+			grid-template-columns: 8fr 6fr;
+        }
+        @media screen and (max-width: $smSize) {
+            grid-template-rows: 4fr 10fr 5fr 5fr 5fr;
+        }
+
+		#personal-info-header {
+			grid-column: 1/ span 1;
+			grid-row: 1/ span 1;
+		}
+		#personal-info-pii {
+			grid-column: 1/ span 1;
+            grid-row: 2/ span 1;
+            .data-entry {
+                @media screen and (max-width: $smSize) {
+                    >* {
+                        width: 47%;
+                        &:first-child {
+                            width: 53%;
+                            margin-right: 5px;
+                        }
+    
+                    }
+                }
+            }
+		}
+		#personal-info-edu {
+			grid-column: 1/ span 1;
+			grid-row: 3/ span 1;
+            @media screen and (max-width: $smSize) {
+                grid-column: 1/ span 2;
+            }
+		}
+		#personal-info-skill-set {
+			grid-column: 1/ span 1;
+			grid-row: 4/ span 1;
+            @media screen and (max-width: $smSize) {
+                grid-column: 1/ span 2;
+            }
+		}
+		#personal-info-lang-set {
+			grid-column: 1/ span 1;
+			grid-row: 5/ span 1;
+            @media screen and (max-width: $smSize) {
+                grid-column: 1/ span 2;
+            }
+		}
+		.image-content {
+			grid-column: 2/ span 1;
+			grid-row: 1/ -1;
+			padding: 5px;
+			padding-bottom: 15px;
+            @media screen and (max-width: $smSize) {
+                grid-row: 1/ span 2;
+            }
+			.img-holder {
+				float: right;
+				margin-right: 10px;
+				img {
+					@include size($userImgWidth,$userImgHeight);
+                    @media screen and (max-width: $mdSize) {
+                        @include size(
+                            $userImgWidth*$mdImageCoefficient,
+                            $userImgHeight*$mdImageCoefficient
+                        );
+                    }
+                    @media screen and (max-width: $smSize) {
+                        @include size(
+                            $userImgWidth*$smImageCoefficient,
+                            $userImgHeight*$smImageCoefficient
+                        );
+                    }
+				}
+			}
+		}
+	}
+	.float-right {
+		margin-top: 10px;
+	}
+}

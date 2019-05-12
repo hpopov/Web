@@ -1,0 +1,20 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+    
+    
+	.img-holder {
+		a {
+			display: block;
+			height: $logoHeight;
+            @media screen and (max-width: $mdSize) {
+                height: $logoHeight*$mdImageCoefficient;
+            }
+		}
+		img {
+			@include size($logoWidth,$logoHeight); 
+            @media screen and (max-width: $mdSize) {
+                @include size($logoWidth*$mdImageCoefficient,$logoHeight*$mdImageCoefficient); 
+            }
+		}
+	}

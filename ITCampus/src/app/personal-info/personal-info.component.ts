@@ -5,7 +5,7 @@ import { YearInterval, IntervalPipe} from './yearInterval';
 
 
 @Component({
-  selector: 'personal-info-component',
+  selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })

@@ -1,0 +1,54 @@
+@import 'src/sass/helper/variables';
+
+
+@media screen and (max-width: $mdSize) {
+
+	%large-button {
+		padding-left: 14px;
+		padding-right: 14px;
+		min-width: 70px;
+	}
+	%button {
+		padding-left: 12px;
+		padding-right: 12px;
+		min-width: 100px;
+	}
+}
+@media screen and (max-width: $smSize) {
+	* {
+		font-size: $fontSize*$smFontCoefficient;
+	}
+	%large-button {
+		padding-left: 10px;
+		padding-right: 10px;
+		min-width: 60px;
+		font-size: $largeButtonFontSize*$smFontCoefficient;
+	}
+	%button {
+		padding-left: 11px;
+		padding-right: 11px;
+		min-width: 90px;
+		font-size: $buttonFontSize*$smFontCoefficient;
+	}
+
+	%tiny-button {
+		font-size: $buttonFontSize*$smFontCoefficient;
+	}
+
+	p {
+		font-size: $fontSize*$smFontCoefficient;
+		margin:0;
+		padding:0;
+	}
+	h3 {
+		font-size: $h3Size*$smFontCoefficient;
+	}
+
+	h4 {
+		font-size: $h4Size*$smFontCoefficient;
+	}
+
+	h5 {
+		font-size: $h5Size*$smFontCoefficient;
+	}
+}

@@ -1,0 +1,142 @@
+<div class="subjects-component">
+  <h4>Subjects</h4>
+  <form class="space-between">
+    <div class="search-parameters">
+      <div class="optional-line">
+        <input type="text" name="subject" value="Type subject name..." />
+        <select>
+          <option selected="true">All teachers</option>
+          <option>Bohonov Y.E.</option>
+          <option>Stus O.V.</option>
+          <option>Minarchenko O.M.</option>
+          <option>Liashenko M.V.</option>
+          <option>Ishchenko H.V.</option>
+        </select>
+      </div>
+      <div class="optional-line">
+        <p class="sm-show">Choose test type:</p>
+        <div class="radio-group">
+          <label><input type="radio" name="testType" value="all">All</label>
+          <label><input type="radio" name="testType" value="exam">Exam</label>
+          <label><input type="radio" name="testType" value="credit">Credit</label>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Search" class="dark-button">
+  </form>
+  <div class="search-result">
+    <table>
+      <thead>
+        <tr>
+          <th>№</th>
+          <th class="left-justified-text">Subject</th>
+          <th class="left-justified-text">Teacher</th>
+          <th>Test type</th>
+          <th>Academic hours</th>
+          <th>Mark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="left-justified-text">Math analysis</td>
+          <td class="left-justified-text">Bohonov Y.E.</td>
+          <td>Exam</td>
+          <td>120</td>
+          <td>97</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="left-justified-text">Discrete mathematics</td>
+          <td class="left-justified-text">Stus O.V.</td>
+          <td>Credit</td>
+          <td>80</td>
+          <td>96</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="left-justified-text">Linear algebra</td>
+          <td class="left-justified-text">Minarchenko O.M.</td>
+          <td>Credit</td>
+          <td>60</td>
+          <td>97</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="left-justified-text">Functional analysis</td>
+          <td class="left-justified-text">Bohonov Y.E.</td>
+          <td>Credit</td>
+          <td>40</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="left-justified-text">Foundation of algorithms</td>
+          <td class="left-justified-text">Romanov V.V.</td>
+          <td>Exam</td>
+          <td>80</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="left-justified-text">Object Oriented Programming</td>
+          <td class="left-justified-text">Liashenko M.V.</td>
+          <td>Exam</td>
+          <td>80</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="left-justified-text">Operation calculus</td>
+          <td class="left-justified-text">Bohonov Y.E.</td>
+          <td>Credit</td>
+          <td>24</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="left-justified-text">Intellectual Data Analysis</td>
+          <td class="left-justified-text">Ishchenko H.V.</td>
+          <td>Exam</td>
+          <td>60</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td class="left-justified-text">Web technology</td>
+          <td class="left-justified-text">Golubova I.A.</td>
+          <td>Credit</td>
+          <td>60</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td class="left-justified-text">Operation systems</td>
+          <td class="left-justified-text">Beznosyk O.Y</td>
+          <td>Credit</td>
+          <td>60</td>
+          <td>96</td>
+        </tr>
+        <tr class="summary">
+          <td colspan="5">Average mark:</td>
+          <td>96</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="float-right">
+      <div class="data-entry">
+        <p></p>
+        <p>96</p>
+      </div>
+    </div> -->
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="#">&#8249;</a>
+      <a class="active" href="#">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">&#8250;</a>
+      <a href="#">&raquo;</a>
+    </div>
+  </div>
+</div>

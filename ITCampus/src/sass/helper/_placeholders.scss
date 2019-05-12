@@ -12,6 +12,20 @@
 	}
 }
 
+%space-between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+%float-right {
+	display: flex;
+	justify-content: flex-end;
+}
+%left-justified-text {
+	text-align: left;
+}
+
 %popup {
 	padding: 2% 2% 3% 4%;
 	background-color: $componentColor;

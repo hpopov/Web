@@ -56,3 +56,13 @@ $lightButtonColors: (backgroundColor: transparent,
 	hoverBackgroundColor: transparent,
 	hoverTextColor: darken($lightButtonTextColor,30%)
 	);
+
+
+/*========================================MEDIA=================================================*/
+$lgSize: 1199px;
+$mdSize: 992px;
+$smSize: 767px;
+$tnSize: 480px;
+$mdImageCoefficient: 6/7;
+$smFontCoefficient: 0.85;
+$smImageCoefficient: 16/27;
