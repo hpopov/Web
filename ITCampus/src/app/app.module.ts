@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -8,7 +9,11 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { LogoComponent } from './logo/logo.component';
 import { FooterComponent } from './footer/footer.component';
-// import { IntervalPipe} from './personal-info/yearInterval';
+import { TuplePipe } from './tuple.pipe';
+import { PagePipe } from './subjects/page.pipe';
+import { FilterPipe } from './subjects/filter.pipe';
+import { DataEntryComponent } from './data-entry/data-entry.component';
+import { MapEntryComponent } from './map-entry/map-entry.component';
 
 @NgModule({
   declarations: [
@@ -19,11 +24,14 @@ import { FooterComponent } from './footer/footer.component';
     ProjectsComponent,
     LogoComponent,
     FooterComponent,
-    // IntervalPipe
+    TuplePipe,
+    PagePipe,
+    FilterPipe,
+    DataEntryComponent,
+    MapEntryComponent,
   ],
   imports: [
-    BrowserModule,
-    // IntervalPipe
+    BrowserModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

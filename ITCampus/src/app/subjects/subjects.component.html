@@ -3,26 +3,28 @@
   <form class="space-between">
     <div class="search-parameters">
       <div class="optional-line">
-        <input type="text" name="subject" value="Type subject name..." />
+        <input type="text" name="subject" placeholder="Type subject name..."
+        [(ngModel)]="searchableSubject.name" />
         <select>
-          <option selected="true">All teachers</option>
-          <option>Bohonov Y.E.</option>
-          <option>Stus O.V.</option>
-          <option>Minarchenko O.M.</option>
-          <option>Liashenko M.V.</option>
-          <option>Ishchenko H.V.</option>
+          <option selected="true" (click)="searchableSubject.teacher = undefined">All teachers</option>
+          <option *ngFor="let teacher of subjectsPaginationService.getAllTeachers()"
+          (click)="searchableSubject.teacher = teacher">{{teacher}}</option>
         </select>
       </div>
       <div class="optional-line">
         <p class="sm-show">Choose test type:</p>
         <div class="radio-group">
-          <label><input type="radio" name="testType" value="all">All</label>
-          <label><input type="radio" name="testType" value="exam">Exam</label>
-          <label><input type="radio" name="testType" value="credit">Credit</label>
+          <label (click)="searchableSubject.testType = undefined">
+            <input type="radio" name="testType" value="all">All</label>
+          <label *ngFor="let testType of testTypeValues"
+          (click)="searchableSubject.testType = testType">
+            <input type="radio" name="testType" value="{{testType | lowercase}}">{{testType}}
+          </label>
         </div>
       </div>
     </div>
-    <input type="submit" value="Search" class="dark-button">
+    <input type="submit" value="Search" class="dark-button"
+    (click) = "doSearch()">
   </form>
   <div class="search-result">
     <table>
@@ -37,106 +39,37 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td class="left-justified-text">Math analysis</td>
-          <td class="left-justified-text">Bohonov Y.E.</td>
-          <td>Exam</td>
-          <td>120</td>
-          <td>97</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td class="left-justified-text">Discrete mathematics</td>
-          <td class="left-justified-text">Stus O.V.</td>
-          <td>Credit</td>
-          <td>80</td>
-          <td>96</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td class="left-justified-text">Linear algebra</td>
-          <td class="left-justified-text">Minarchenko O.M.</td>
-          <td>Credit</td>
-          <td>60</td>
-          <td>97</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td class="left-justified-text">Functional analysis</td>
-          <td class="left-justified-text">Bohonov Y.E.</td>
-          <td>Credit</td>
-          <td>40</td>
-          <td>95</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td class="left-justified-text">Foundation of algorithms</td>
-          <td class="left-justified-text">Romanov V.V.</td>
-          <td>Exam</td>
-          <td>80</td>
-          <td>95</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td class="left-justified-text">Object Oriented Programming</td>
-          <td class="left-justified-text">Liashenko M.V.</td>
-          <td>Exam</td>
-          <td>80</td>
-          <td>95</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td class="left-justified-text">Operation calculus</td>
-          <td class="left-justified-text">Bohonov Y.E.</td>
-          <td>Credit</td>
-          <td>24</td>
-          <td>95</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td class="left-justified-text">Intellectual Data Analysis</td>
-          <td class="left-justified-text">Ishchenko H.V.</td>
-          <td>Exam</td>
-          <td>60</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td class="left-justified-text">Web technology</td>
-          <td class="left-justified-text">Golubova I.A.</td>
-          <td>Credit</td>
-          <td>60</td>
-          <td>95</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td class="left-justified-text">Operation systems</td>
-          <td class="left-justified-text">Beznosyk O.Y</td>
-          <td>Credit</td>
-          <td>60</td>
-          <td>96</td>
+        <tr *ngFor="let subject of subjects|filter:searchableSubject|page:currentPage:pageMaxSize">
+          <td>{{subject.num}}</td>
+          <td class="left-justified-text">{{subject.name}}</td>
+          <td class="left-justified-text">{{subject.teacher}}</td>
+          <td>{{subject.testType}}</td>
+          <td>{{subject.academicHours}}</td>
+          <td>{{subject.mark}}</td>
         </tr>
         <tr class="summary">
           <td colspan="5">Average mark:</td>
-          <td>96</td>
+          <td>
+            {{subjectsPaginationService.calculateAverageMark(subjects|filter:searchableSubject) |number}}
+          </td>
         </tr>
       </tbody>
     </table>
-    <!-- <div class="float-right">
-      <div class="data-entry">
-        <p></p>
-        <p>96</p>
-      </div>
-    </div> -->
     <div class="pagination">
-      <a href="#">&laquo;</a>
+      <span class="paginationButton"
+      *ngFor="let pageInfo of subjectsPaginationService
+          .getReachablePagesInfo(currentPage, pageMaxSize, subjects|filter:searchableSubject)"
+      [ngClass]="{active: currentPage !== pageInfo.pageNumber}"
+      (click)="currentPage = pageInfo.pageNumber;">
+      {{pageInfo.presentation}}
+      </span>
+      <!-- <a href="#">&laquo;</a>
       <a href="#">&#8249;</a>
       <a class="active" href="#">1</a>
       <a href="#">2</a>
       <a href="#">3</a>
       <a href="#">&#8250;</a>
-      <a href="#">&raquo;</a>
+      <a href="#">&raquo;</a> -->
     </div>
   </div>
 </div>

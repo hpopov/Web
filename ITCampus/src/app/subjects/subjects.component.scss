@@ -71,6 +71,7 @@
 				padding-top: 3px;
 				padding-bottom: 3px;
 				&.left-justified-text {
+					@extend %left-justified-text;
 					padding-left: 10px;
 					@media screen and (max-width: $smSize) {
 						padding-left: 5px;
@@ -92,9 +93,31 @@
 		
 		.pagination {
 			text-align: center;
-			a {
+			.paginationButton {
 				padding-left: 2px;
 				padding-right: 2px;
+				border: 1px solid $mainBackgroundColor;
+				border-radius: 2px;
+				-webkit-touch-callout: none; /* iOS Safari */
+				-webkit-user-select: none; /* Safari */
+				 -khtml-user-select: none; /* Konqueror HTML */
+				   -moz-user-select: none; /* Firefox */
+					-ms-user-select: none; /* Internet Explorer/Edge */
+						user-select: none;
+				&:hover {
+					cursor: not-allowed;
+				}
+				&.active {
+					background-color: $mainBackgroundColor;
+					border-color: black;
+					&:hover {
+						cursor: pointer;
+						background-color: darken($mainBackgroundColor,10%);
+					}
+					&:active {
+						background-color: darken($mainBackgroundColor,20%);
+					}
+				}
 			}
 		}
 	}

@@ -1,0 +1,19 @@
+.data-entry {
+	display: flex;
+    margin-bottom: 10px;
+
+	>* {
+		width: 60%;
+		&:first-child {
+			font-weight: bold;
+			width: 40%;
+			margin-right: 10px;
+		}
+
+	}
+}
+.lastChild {
+    >.data-entry {
+        margin-bottom: 0;
+    }
+}

@@ -43,7 +43,6 @@ h5 {
 
 .data-entry {
 	display: flex;
-
 	>* {
 		width: 60%;
 		&:first-child {
@@ -54,9 +53,7 @@ h5 {
 		.data-entry>*:first-child {
 			font-style: italic;
 		}
-
 	}
-
 }
 
 .download-cv-button {
@@ -85,8 +82,5 @@ h5 {
 
 .float-right {
 	@extend %float-right;
-}
-.left-justified-text {
-	@extend %left-justified-text;
 }
 @import "src/sass/layout/media";

@@ -5,17 +5,18 @@
 .personal-info-component {
 	@extend %component;
 
-	.data-entry {
-		margin-bottom: 10px;
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
+	// .data-entry {
+	// 	margin-bottom: 10px;
+	// 	&:last-child {
+	// 		margin-bottom: 0;
+	// 	}
+	// }
 	
 	.content-grid {
 		display: grid;
 		grid-template-columns: 7fr 6fr;
-        grid-template-rows: 4fr 8fr 6fr 5fr 5fr;
+        // grid-template-rows: 4fr 8fr 6fr 5fr 5fr;
+        grid-template-rows: 12fr 24fr 18fr 15fr 15fr;
         @media screen and (max-width: $mdSize) {
 			grid-template-columns: 8fr 6fr;
         }

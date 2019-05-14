@@ -1,0 +1,18 @@
+<div *ngIf="!editMode; else editableEntry" [ngSwitch]="true" class="data-entry">
+    <p>{{key+keyDelim}}</p>
+    <p *ngSwitchCase="value != null">{{value}}</p>
+    <p *ngSwitchCase="tupleValue != null">{{tupleValue | tuple:delimiter}}</p>
+</div> 
+<ng-template #editableEntry>
+    <div [ngSwitch]="true" class="data-entry">
+        <p *ngIf="!editableKey">{{key+keyDelim}}</p>
+        <p *ngIf="editableKey"><input [(ngModel)]="key"><span>{{keyDelim}}</span></p>
+        <input *ngSwitchCase="value != null" [(ngModel)]="value">
+        <p *ngSwitchCase="tupleValue != null">
+            <input [(ngModel)]="tupleValue[0]">
+            <span> {{delimiter}} </span>
+            <input [(ngModel)]="tupleValue[1]">
+        </p>
+        <span *ngIf="cancellable" (click)="cancelledEmitter.emit()"> x</span>
+    </div>
+</ng-template>

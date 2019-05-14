@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
+import { Component, OnInit, Input } from '@angular/core';
+import { UserData } from '../user.data';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +9,9 @@ import { User } from '../user';
 export class HeaderComponent implements OnInit {
 
   constructor() { }
-  user: User = {
-    id: 0,
-    name: 'Hryhorii',
-    surname: 'Popov'
-  };
+  
+  @Input()
+  user: UserData;
   
   ngOnInit() {
   }
