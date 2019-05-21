@@ -1,16 +1,1 @@
-<app-header [user]="currentUser"></app-header>
-<div class="main-content">
-	<div class="space-between">
-		<h3>User profile</h3>
-		<button class="download-cv-button">DOWNLOAD CV</button>
-	</div>
-	<div class="components-container">
-		<app-personal-info [user]="currentUser"></app-personal-info>
-		<app-subjects [pageMaxSize]="10" [currentPage]="1"></app-subjects>
-		<app-projects class="lastComponent"></app-projects>
-	</div>
-	<div class="float-right">
-		<button class="download-cv-button">DOWNLOAD CV</button>
-	</div>
-</div>
-<app-footer></app-footer>
+<router-outlet></router-outlet>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -14,6 +15,9 @@ import { PagePipe } from './subjects/page.pipe';
 import { FilterPipe } from './subjects/filter.pipe';
 import { DataEntryComponent } from './data-entry/data-entry.component';
 import { MapEntryComponent } from './map-entry/map-entry.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,9 +33,15 @@ import { MapEntryComponent } from './map-entry/map-entry.component';
     FilterPipe,
     DataEntryComponent,
     MapEntryComponent,
+    HomeComponent,
+    LoginComponent,
   ],
   imports: [
-    BrowserModule, FormsModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

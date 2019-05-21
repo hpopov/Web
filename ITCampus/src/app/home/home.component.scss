@@ -1,0 +1,23 @@
+@import "src/sass/helper/variables";
+@import "src/sass/helper/mixins";
+@import "src/sass/helper/placeholders";
+
+.main-content {
+	@extend %main-container;
+
+	>.space-between, >.float-right {
+		margin-top: 40px;
+		margin-bottom: 40px;
+		@media screen and (max-width: $mdSize) {
+			margin-top: 25px;
+			margin-bottom: 25px;
+		}
+		@media screen and (max-width: $smSize) {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+	}
+	.lastComponent>* {
+		margin-bottom: 0;
+	}
+}
