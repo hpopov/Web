@@ -7,9 +7,9 @@
 			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode"
 			(changed)="user.name = $event.value"></app-data-entry>
 			<app-data-entry key="Phone number" [value]="personalInfo.phoneNumber"
-			[editMode]="editMode" (changed)="user.phoneNumber = $event.value"></app-data-entry>
+			[editMode]="editMode" (changed)="personalInfo.phoneNumber = $event.value"></app-data-entry>
 			<app-data-entry key="Date of birth" [value]="personalInfo.dateOfBirth | date: 'dd.MM.yyyy'"
-				[editMode]="editMode" (changed)="user.dateOfBirth = convertDate($event.value)">
+				[editMode]="editMode" (changed)="personalInfo.dateOfBirth = convertDate($event.value)">
 			</app-data-entry>
 			<app-data-entry key="City" [value]="personalInfo.city" [editMode]="editMode"
 			(changed)="personalInfo.city = $event.value"></app-data-entry> 

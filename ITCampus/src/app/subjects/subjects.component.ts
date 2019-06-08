@@ -11,19 +11,19 @@ import { TestType } from './test-type.enum';
 })
 export class SubjectsComponent implements OnInit {
 
-  private subjects: SubjectData[];
+  subjects: SubjectData[];
   @Input()
-  private pageMaxSize: number = 10;
+  pageMaxSize: number = 10;
   @Input()
-  private currentPage: number = 1;
-  private searchableSubject: SearchableSubject = {
+  currentPage: number = 1;
+  searchableSubject: SearchableSubject = {
     name: '',
     teacher: undefined,
     testType: undefined
   };
-  private testTypeValues: string[];
+  testTypeValues: string[];
 
-  constructor(private subjectsPaginationService: SubjectsPaginationService) {
+  constructor(public subjectsPaginationService: SubjectsPaginationService) {
     this.subjects = subjectsPaginationService.allSubjects;
     this.testTypeValues = [];
     for(let value in TestType) {
