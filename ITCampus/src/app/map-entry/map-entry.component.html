@@ -1,7 +1,7 @@
 <div class="data-entry">
     <p>
       {{key+keyDelim}}
-      <span *ngIf="editMode" (click)="onAddEntry()"> +</span>
+      <span *ngIf="editMode" (click)="onAddElement()"> +</span>
     </p>
     <div class="data-map">
         <app-data-entry  *ngFor="let tuple of mapValue"

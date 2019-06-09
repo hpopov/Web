@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { UserData } from '../user.data';
 import { UserService } from '../user.service';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,9 @@ import { HttpClient } from '@angular/common/http';
   providers: [UserService]
 })
 export class HomeComponent {
-  currentUser: UserData;
-  constructor(private userService: UserService) {
-    this.currentUser = userService.currentUser;
+  public user: UserData;
+  constructor(private userService: UserService, public authService: AuthService) {
+    this.user = userService.getUserByLogin('tordek');
   }
+
 }

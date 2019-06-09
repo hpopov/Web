@@ -5,10 +5,9 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent/*, canActivate:[AuthGuardService] */},
-   //{ pathMatch: 'full', path: '', redirectTo: '/home', canDeactivate:[AuthGuardService] },
+  { path: 'tordek', component: HomeComponent/*, canActivate:[AuthGuardService] */},
     { path: 'login', component: LoginComponent },
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: 'tordek' }
 ];
 
 @NgModule({

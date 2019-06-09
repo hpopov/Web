@@ -1,10 +1,14 @@
 <header>
 	<app-logo></app-logo>
-	<div class="user-greetings">
+	<div *ngIf="authService.isLoggedIn" class="user-greetings">
 		<p>Welcome, {{user.surname}} {{user.name}}!</p>
 		<div class="img-holder">
 			<img src="assets/images/user-img-{{user.id}}.jpg" alt="User Avatar">
 		</div>
 		<button class="logout-button" (click)="logOut()">Log out</button>
+	</div>
+	<div *ngIf="!authService.isLoggedIn" class="user-greetings">
+		<p>Welcome, Anonimous person!</p>
+		<button class="logout-button" (click)="logIn()">Log in</button>
 	</div>
 </header>

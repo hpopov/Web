@@ -11,7 +11,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private router: Router){}
+  constructor(public userService: UserService){}
 
   ngOnInit(): void {
     // this.router.navigate(['/login']);

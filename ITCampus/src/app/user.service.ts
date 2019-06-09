@@ -9,10 +9,19 @@ export class UserService {
   private _currentUser: UserData = {
     id: 0,
     name: 'Hryhorii',
-    surname: 'Popov'
+    surname: 'Popov',
+    login: 'tordek'
   };
   constructor() { }
   get currentUser(): UserData {
     return this._currentUser;
+  }
+
+  public getUserByLogin(login: string): UserData {
+    if (login === 'tordek') {
+      return this.currentUser;
+    } else {
+      return null;
+    }
   }
 }

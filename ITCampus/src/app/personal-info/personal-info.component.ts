@@ -13,6 +13,7 @@ import { formatDate } from '@angular/common';
 })
 export class PersonalInfoComponent implements OnInit {
   @Input() user: UserData;
+  @Input() editable: boolean;
   personalInfo: PersonalInfoData;
   tempPersonalInfo: PersonalInfoData;
   editMode: boolean = false;

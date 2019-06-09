@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, public authService: AuthService) { }
   
   @Input()
   user: UserData;
@@ -21,7 +21,11 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.authService.isLoggedIn = false;
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
+  }
+  
+  logIn() {
+    this.router.navigateByUrl('/login');
   }
 
 }

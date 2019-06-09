@@ -65,7 +65,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="float-right">
+	<div *ngIf="editable" class="float-right">
 		<button class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
 	</div>
 </div>
