@@ -4,7 +4,7 @@
 		<button class="download-cv-button">DOWNLOAD CV</button>
 	</div>
 	<div class="components-container">
-		<app-personal-info [user]="userService.currentUser" [editable]="authService.isLoggedIn">
+		<app-personal-info [user]="user" [editable]="authService.isLoggedIn">
 		</app-personal-info>
 		<app-subjects *ngIf="authService.isLoggedIn" [pageMaxSize]="10" [currentPage]="1"></app-subjects>
 		<app-projects class="lastComponent"></app-projects>
