@@ -4,3 +4,13 @@ export interface UserData {
   name: string;
   surname: string;
 }
+
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
+export interface AuthData {
+  username: string;
+  token: string;
+}

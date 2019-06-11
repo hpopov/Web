@@ -5,7 +5,7 @@
     </p>
     <div class="data-map">
         <app-data-entry  *ngFor="let tuple of mapValue"
-          [key]="tuple[0]" keyDelim="" [value]="tuple[1]" [editMode]="editMode" editableKey="true"
+          [key]="tuple[0]" keyDelim="" [value]="tuple[1]" [editMode]="editMode" editableKey="false"
           cancellable="true" (cancelled)="mapValue.splice(mapValue.indexOf(tuple), 1);"
           (changed)="map.push(convert($event))">
         </app-data-entry>

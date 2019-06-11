@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --ssl true --ssl-cert cerver.crt --ssl-key server.key",
+    "build": "ng build --prod --outputPath=../ITCampusWithBackend/src/main/resources/static",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

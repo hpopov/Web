@@ -1,13 +1,13 @@
 <header>
 	<app-logo></app-logo>
-	<div *ngIf="authService.isLoggedIn" class="user-greetings">
-		<p>Welcome, {{user.surname}} {{user.name}}!</p>
+	<div *ngIf="authService.hasToken() && currentUser.id > -1" class="user-greetings">
+		<p>Welcome, {{currentUser.surname}} {{currentUser.name}}!</p>
 		<div class="img-holder">
-			<img src="assets/images/user-img-{{user.id}}.jpg" alt="User Avatar">
+			<img src="assets/images/user-img-{{currentUser.id}}.jpg" alt="User Avatar">
 		</div>
 		<button class="logout-button" (click)="logOut()">Log out</button>
 	</div>
-	<div *ngIf="!authService.isLoggedIn" class="user-greetings">
+	<div *ngIf="!authService.hasToken() || currentUser.id == -1" class="user-greetings">
 		<p>Welcome, Anonimous person!</p>
 		<button class="logout-button" (click)="logIn()">Log in</button>
 	</div>
