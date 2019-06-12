@@ -21,12 +21,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       login : 'x',
       name : 'x',
       surname : 'x',
+      authorities: []
     };
     this.user = {
       id : -1,
       login : 'x',
       name : 'x',
       surname : 'x',
+      authorities: []
     };
   }
 

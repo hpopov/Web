@@ -67,7 +67,7 @@ h5 {
 }
 
 .dark-button {
-	@extend %button;
+	@extend %normal-button;
 	@include buttonColors($darkButtonColors...);
 }
 

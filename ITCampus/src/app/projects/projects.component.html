@@ -1,75 +1,23 @@
 <div class="projects-component">
   <h4>Projects</h4>
   <div class="project-container-grid">
-    <div class="project">
+    <div *ngFor="let project of projects.slice(0,maxProjectsPerPage)" class="project">
       <div class="card">
-        <div class="img-holder" hidden>
-          <img src="assets/images/project-min.png">
+        <div class="img-holder front">
+          <img src="assets/images/{{project.imageName}}">
         </div>
-        <div class="description" >
-          <p>Dome description goes here blah-blah-blah</p>
+        <div class="description back" >
+          <p class="description-text">{{project.description}}</p>
         </div>
       </div>
-      <h5>Project 1</h5>
-    </div>
-    <div class="project">
-      <div class="card">
-        <div class="img-holder">
-          <img src="assets/images/project-min.png">
-        </div>
-        <div class="description" hidden>
-          <p>Dome description goes here blah-blah-blah</p>
-        </div>
-      </div>
-      <h5>Project 2</h5>
-    </div>
-    <div class="project">
-      <div class="card">
-        <div class="img-holder">
-          <img src="assets/images/project-min.png">
-        </div>
-        <div class="description" hidden>
-          <p>Dome description goes here blah-blah-blah</p>
-        </div>
-      </div>
-      <h5>Project 3</h5>
-    </div>
-    <div class="project">
-      <div class="card">
-        <div class="img-holder">
-          <img src="assets/images/project-min.png">
-        </div>
-        <div class="description" hidden>
-          <p>Dome description goes here blah-blah-blah</p>
-        </div>
-      </div>
-      <h5>Project 4</h5>
-    </div>
-    <div class="project">
-      <div class="card">
-        <div class="img-holder">
-          <img src="assets/images/project-min.png">
-        </div>
-        <div class="description" hidden>
-          <p>Dome description goes here blah-blah-blah</p>
-        </div>
-      </div>
-      <h5>Project 5</h5>
-    </div>
-    <div class="project">
-      <div class="card">
-        <div class="img-holder">
-          <img src="assets/images/project-min.png">
-        </div>
-        <div class="description" hidden>
-          <p>Dome description goes here blah-blah-blah</p>
-        </div>
-      </div>
-      <h5>Project 6</h5>
+      <h5>{{project.header}}</h5>
     </div>
   </div>
   <div class="space-between">
-    <button class="light-button" id="load-more-projects">More</button>
-    <button class="dark-button">Add project</button>
+    <button *ngIf="projects.length > maxProjectsPerPage" class="light-button" id="load-more-projects"
+      (click)="showMoreProjects()">More</button>
+      <button *ngIf="projects.length <= maxProjectsPerPage" class="light-button" id="load-more-projects"
+        (click)="showLessProjects()">Less</button>
+    <button disabled class="dark-button">Add project</button>
   </div>
 </div>

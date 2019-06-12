@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserData } from '../user.data';
 import { PersonalInfoData } from './personal-info.data';
 import { PersonalInfoService } from './personal-info.service';
-import { formatDate } from '@angular/common';
+import { PageDataService } from '../page-data.service';
 
 
 @Component({
@@ -12,29 +12,48 @@ import { formatDate } from '@angular/common';
   providers: [PersonalInfoService]
 })
 export class PersonalInfoComponent implements OnInit {
-  @Input() user: UserData;
+  user: UserData;
   @Input() editable: boolean;
   personalInfo: PersonalInfoData;
   tempPersonalInfo: PersonalInfoData;
+  isLoaded: boolean = false;
   editMode: boolean = false;
   editSaveName: string = 'Edit';
 
-  constructor(private personalInfoService: PersonalInfoService) { }
+  constructor(private pageDataService: PageDataService) {
+    this.user = {
+      id: -1,
+      login: '',
+      name: '',
+      surname: '',
+      authorities: []
+    };
+    this.personalInfo = {
+      city: null,
+      dateOfBirth: null,
+      education: null,
+      educationYear: null,
+      faculty: null,
+      languages: null,
+      phoneNumber: null,
+      skills: null
+    }
+   }
 
   ngOnInit() {
-    this.personalInfo = this.personalInfoService.getPersonalInfoByUserId(this.user.id);
-    this.tempPersonalInfo = JSON.parse(JSON.stringify(this.personalInfo));
+    this.pageDataService.getObservablePageData().subscribe(pageData => {
+      this.user = pageData.user;
+      this.personalInfo = pageData.personalInfo;
+      this.tempPersonalInfo = JSON.parse(JSON.stringify(this.personalInfo));
+      this.isLoaded = true;
+    });
   }
 
   onEditSaveClick() {
-    // if (this.editMode) {
-    //   console.log(this.user);
-    //   console.log(this.personalInfo);
-    // }
     this.editMode = !this.editMode;
     if (this.editMode === false) {
       this.editSaveName = 'Edit';
-      this.personalInfoService.onUpdateEmitter.emit();
+      // this.personalInfoService.onUpdateEmitter.emit();
     } else {
       this.editSaveName = 'Save';
     }

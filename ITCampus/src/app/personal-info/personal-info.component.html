@@ -1,71 +1,46 @@
 <div class="personal-info-component">
 	<div class="content-grid">
 		<h4 id="personal-info-header">Personal information</h4>
-		<div id="personal-info-pii">
+		<div *ngIf="isLoaded" id="personal-info-pii">
 			<app-data-entry key="Surname" [value]="user.surname" [editMode]="editMode"
-			(changed)="user.surname = $event.value"></app-data-entry>
-			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode"
-			(changed)="user.name = $event.value"></app-data-entry>
-			<app-data-entry key="Phone number" [value]="personalInfo.phoneNumber"
-			[editMode]="editMode" (changed)="personalInfo.phoneNumber = $event.value"></app-data-entry>
+				(changed)="user.surname = $event.value"></app-data-entry>
+			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode" (changed)="user.name = $event.value">
+			</app-data-entry>
+			<app-data-entry key="Phone number" [value]="personalInfo.phoneNumber" [editMode]="editMode"
+				(changed)="personalInfo.phoneNumber = $event.value"></app-data-entry>
 			<app-data-entry key="Date of birth" [value]="personalInfo.dateOfBirth | date: 'dd.MM.yyyy'"
 				[editMode]="editMode" (changed)="personalInfo.dateOfBirth = convertDate($event.value)">
 			</app-data-entry>
 			<app-data-entry key="City" [value]="personalInfo.city" [editMode]="editMode"
-			(changed)="personalInfo.city = $event.value"></app-data-entry> 
+				(changed)="personalInfo.city = $event.value"></app-data-entry>
 		</div>
-		<div id="personal-info-edu">
+		<div *ngIf="isLoaded" id="personal-info-edu">
 			<app-data-entry key="Education" [value]="personalInfo.education" [editMode]="editMode"
 				(changed)="personalInfo.education = $event.value">
 			</app-data-entry>
 			<app-data-entry key="Faculty" [value]="personalInfo.faculty" [editMode]="editMode"
 				(changed)="personalInfo.faculty = $event.value">
 			</app-data-entry>
-			<app-data-entry class="lastChild" key="Years of education"
-				[tupleValue]="personalInfo.educationYear" [delimiter]="'-'" [editMode]="editMode"
-				(changed)="personalInfo.educationYear = $event.value">
+			<app-data-entry class="lastChild" key="Years of education" [tupleValue]="personalInfo.educationYear"
+				[delimiter]="'-'" [editMode]="editMode" (changed)="personalInfo.educationYear = $event.value">
 			</app-data-entry>
-			<!-- <div class="data-entry">
-				<p>Education:</p>
-				<p>{{personalInfo.education}}</p>
-				<p><abbr>{{personalInfo.education.abbr}}</abbr> {{personalInfo.education.otherName}}</p>
-			</div> -->
 		</div>
-		<app-map-entry class="lastChild" id="personal-info-skill-set" key="Skills" 
-			[mapValue]="personalInfo.skills" [editMode]="editMode"
-			(changed)="updatePersonalProperty($event)">
+		<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-skill-set"
+			key="Skills" [mapValue]="personalInfo.skills"
+			[editMode]="editMode" (changed)="updatePersonalProperty($event)">
 		</app-map-entry>
-		<!-- <div class="data-entry" id="personal-info-skill-set">
-			<p>Skills:</p>
-			<div class="data-map">
-				<div *ngFor="let skill of personalInfo.skills"
-				class="data-entry">
-					<p>{{skill[0]}}</p>
-					<p>{{skill[1]}}</p>
-				</div>
-			</div>
-		</div> -->
-		<app-map-entry class="lastChild" id="personal-info-lang-set" key="Languages"
-			[mapValue]="personalInfo.languages" [editMode]="editMode"
-			(changed)="updatePersonalProperty($event)">
+		<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-lang-set"
+			key="Languages" [mapValue]="personalInfo.languages"
+			[editMode]="editMode" (changed)="updatePersonalProperty($event)">
 		</app-map-entry>
-		<!-- <div class="data-entry" id="personal-info-lang-set">
-			<p>Languages:</p>
-			<div class="data-map">
-				<div *ngFor="let language of personalInfo.languages"
-				class="data-entry">
-					<p>{{language[0]}}</p>
-					<p>{{language[1].name}}</p>
-				</div>
-			</div>
-		</div> -->
-		<div class="image-content">
+		<div *ngIf="isLoaded" class="image-content">
 			<div class="img-holder">
 				<img src="assets/images/user-img-{{user.id}}.jpg" alt="User image">
 			</div>
 		</div>
+		<p *ngIf="!isLoaded">Loading...</p>
 	</div>
 	<div *ngIf="editable" class="float-right">
-		<button class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
+		<button disabled class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
 	</div>
 </div>

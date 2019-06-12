@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDao;
 import ua.kpi.iasa.web.lab3.model.UserModel;
 
@@ -18,8 +19,12 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserModel loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.findUserByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        try {
+			return userDao.findUserByUsername(username)
+			    .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+		} catch (DaoException e) {
+			throw new UsernameNotFoundException("Username: " + username + " not found", e);
+		}
     }
     
     public UserModel getUserByUsername(String username) {

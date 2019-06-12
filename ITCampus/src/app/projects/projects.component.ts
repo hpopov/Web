@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectData } from './project.data';
+import { ProjectService } from './project.service';
 
 @Component({
   selector: 'app-projects',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor() { }
+  projects: ProjectData[];
+  maxProjectsPerPage: number;
+
+  constructor(private projectService: ProjectService) {
+    this.projects = [];
+    this.maxProjectsPerPage = 3;
+    projectService.getProjectsObservable().subscribe(projects => {
+      this.projects = projects;
+    });
+  }
 
   ngOnInit() {
+  }
+
+  showMoreProjects(): void {
+    this.maxProjectsPerPage += 3;
+  }
+
+  showLessProjects(): void {
+    this.maxProjectsPerPage -= 3;
   }
 
 }

@@ -2,11 +2,7 @@ package ua.kpi.iasa.web.lab3.dao.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.management.modelmbean.XMLParseException;
@@ -24,10 +20,10 @@ import ua.kpi.iasa.web.lab3.dao.DaoException;
 
 public class AbstractXmlDao {
 	
-	private static final DateFormat DATE_FORMAT;
-	static {
-		DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	}
+//	private static final DateFormat DATE_FORMAT;
+//	static {
+//		DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+//	}
 	
 	protected <T> List<T> parseList(NodeList nodes,
 			ExceptionableFunction<Node, T, XMLParseException> modelParser) throws XMLParseException {

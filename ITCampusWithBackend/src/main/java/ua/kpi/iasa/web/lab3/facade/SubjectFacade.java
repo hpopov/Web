@@ -19,7 +19,7 @@ public class SubjectFacade {
 	
 	public List<SubjectData> getSubjectsByUser(UserData user) {
 		final SubjectConverter converter = new SubjectConverter();
-		return subjectService.getSubjectsByUserId(user.getId()).parallelStream()
+		return subjectService.getSubjectsByUserId(user.getId()).stream()
 			.map(converter::convert).collect(Collectors.toList());
 	}
 

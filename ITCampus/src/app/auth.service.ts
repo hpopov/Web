@@ -13,7 +13,8 @@ export class AuthService {
     id: -1,
     login: '',
     name: '',
-    surname: ''
+    surname: '',
+    authorities: []
   };
   hasToken(): boolean {
     return localStorage.getItem('token') !== null;

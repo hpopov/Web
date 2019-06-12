@@ -13,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -21,7 +21,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Component
+@Service
 public class JwtTokenService {
 
 
@@ -30,8 +30,8 @@ public class JwtTokenService {
 	@Value("${security.jwt.token.secret-key:secret}")
 	private String secretKey = "secret";
 
-	@Value("${security.jwt.token.expire-length:10000}")
-	private long validityInMilliseconds = 10000; // 10s
+	@Value("${security.jwt.token.expire-length:900000}")
+	private long validityInMilliseconds = 900000; // 15m
 
 	@Autowired
 	private UserDetailsService userDetailsService;

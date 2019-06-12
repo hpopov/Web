@@ -1,7 +1,7 @@
 package ua.kpi.iasa.web.lab3.model;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,9 +18,10 @@ public class UserModel extends User {
 
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public UserModel(@JsonProperty String username,
-			@JsonProperty String password) {
-		super(username, password,
-				new HashSet<>(Arrays.asList(new SimpleGrantedAuthority("USER"))));
+			@JsonProperty String password, List<String> authorities) {
+		super(username, password, authorities.stream()
+				.map(authName -> new SimpleGrantedAuthority(authName))
+				.collect(Collectors.toSet()));
 	}
 
 	public int getId() {

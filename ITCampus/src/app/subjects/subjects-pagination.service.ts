@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SubjectData } from './subject.data';
 import { TestType } from './test-type.enum';
+import { PageDataService } from '../page-data.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,94 +11,99 @@ import { TestType } from './test-type.enum';
 export class SubjectsPaginationService {
 
   allSubjects: SubjectData[];
-  constructor() {
-    this.allSubjects = [
-      {
-        num: 1,
-        name: 'Math Analysis',
-        teacher: 'Bohonov Y.E.',
-        testType: TestType.EXAM,
-        academicHours: 120,
-        mark: 97
-      },
-      {
-        num: 2,
-        name: 'Discrete mathematics',
-        teacher: 'Stus O.V.',
-        testType: TestType.CREDIT,
-        academicHours: 80,
-        mark: 96
-      },
-      {
-        num: 3,
-        name: 'Linear algebra',
-        teacher: 'Minarchenko O.M.',
-        testType: TestType.CREDIT,
-        academicHours: 60,
-        mark: 97
-      },
-      {
-        num: 4,
-        name: 'Functional analysis',
-        teacher: 'Bohonov Y.E.',
-        testType: TestType.CREDIT,
-        academicHours: 40,
-        mark: 95
-      },
-      {
-        num: 5,
-        name: 'Foundation of algorithms',
-        teacher: 'Romanov V.V.',
-        testType: TestType.EXAM,
-        academicHours: 80,
-        mark: 95
-      },
-      {
-        num: 6,
-        name: 'Object Oriented Programming',
-        teacher: 'Liashenko M.V.',
-        testType: TestType.EXAM,
-        academicHours: 80,
-        mark: 95
-      },
-      {
-        num: 7,
-        name: 'Operation calculus',
-        teacher: 'Bohonov Y.E.',
-        testType: TestType.CREDIT,
-        academicHours: 24,
-        mark: 95
-      },
-      {
-        num: 8,
-        name: 'Intellectual Data Analysis',
-        teacher: 'Ishchenko H.V.',
-        testType: TestType.EXAM,
-        academicHours: 60,
-        mark: 100
-      },
-      {
-        num: 9,
-        name: 'Web technology',
-        teacher: 'Golubova I.A.',
-        testType: TestType.CREDIT,
-        academicHours: 60,
-        mark: 95
-      },
-      {
-        num: 10,
-        name: 'Operation systems',
-        teacher: 'Beznosyk O.Y',
-        testType: TestType.CREDIT,
-        academicHours: 60,
-        mark: 96
-      },
-    ];
+  allSubjectsObservable: Observable<SubjectData[]>;
+  constructor(private pageDataService: PageDataService) {
+    this.allSubjectsObservable = pageDataService.getObservablePageData()
+        .pipe(map(pageData => pageData.subjects));
+    this.allSubjects = [];
+    //   {
+    //     num: 1,
+    //     name: 'Math Analysis',
+    //     teacher: 'Bohonov Y.E.',
+    //     testType: TestType.EXAM,
+    //     academicHours: 120,
+    //     mark: 97
+    //   },
+    //   {
+    //     num: 2,
+    //     name: 'Discrete mathematics',
+    //     teacher: 'Stus O.V.',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 80,
+    //     mark: 96
+    //   },
+    //   {
+    //     num: 3,
+    //     name: 'Linear algebra',
+    //     teacher: 'Minarchenko O.M.',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 60,
+    //     mark: 97
+    //   },
+    //   {
+    //     num: 4,
+    //     name: 'Functional analysis',
+    //     teacher: 'Bohonov Y.E.',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 40,
+    //     mark: 95
+    //   },
+    //   {
+    //     num: 5,
+    //     name: 'Foundation of algorithms',
+    //     teacher: 'Romanov V.V.',
+    //     testType: TestType.EXAM,
+    //     academicHours: 80,
+    //     mark: 95
+    //   },
+    //   {
+    //     num: 6,
+    //     name: 'Object Oriented Programming',
+    //     teacher: 'Liashenko M.V.',
+    //     testType: TestType.EXAM,
+    //     academicHours: 80,
+    //     mark: 95
+    //   },
+    //   {
+    //     num: 7,
+    //     name: 'Operation calculus',
+    //     teacher: 'Bohonov Y.E.',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 24,
+    //     mark: 95
+    //   },
+    //   {
+    //     num: 8,
+    //     name: 'Intellectual Data Analysis',
+    //     teacher: 'Ishchenko H.V.',
+    //     testType: TestType.EXAM,
+    //     academicHours: 60,
+    //     mark: 100
+    //   },
+    //   {
+    //     num: 9,
+    //     name: 'Web technology',
+    //     teacher: 'Golubova I.A.',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 60,
+    //     mark: 95
+    //   },
+    //   {
+    //     num: 10,
+    //     name: 'Operation systems',
+    //     teacher: 'Beznosyk O.Y',
+    //     testType: TestType.CREDIT,
+    //     academicHours: 60,
+    //     mark: 96
+    //   },
+    // ];
   }
 
-  getAllTeachers() : string[] {
-    return this.allSubjects.map(value => value.teacher)
-        .filter((element, index, array) => array.indexOf(element) === index);
+  getAllTeachersObservable() : Observable<string[]> {
+    return this.allSubjectsObservable.pipe(map(
+      subjects => subjects.map(subject => subject.teacher)
+      .filter((element, index, array) => array.indexOf(element) === index)
+      ));
   }
 
   calculateAverageMark(subjects: SubjectData[]): number {

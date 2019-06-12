@@ -16,7 +16,8 @@ export class UserService {
     id: -1,
     name: '',
     surname: '',
-    login: ''
+    login: '',
+    authorities: []
   };
   
   private loadingCurrentUser: Observable<UserData>

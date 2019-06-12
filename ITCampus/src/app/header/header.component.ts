@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit {
     id: -1,
     login: '',
     name: '',
-    surname: ''
+    surname: '',
+    authorities: []
   }
 
   ngOnInit() {

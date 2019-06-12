@@ -19,7 +19,8 @@ public class JsonUserDao implements UserDao{
 	public Optional<UserModel> findUserByUsername(String username) {
 		JsonReader json = Json.createReader(getClass().getResourceAsStream("user.json"));
 		JsonObject jsonObj = json.readObject().getValue(username).asJsonObject();
-		UserModel user = new UserModel(jsonObj.getString("login"), jsonObj.getString("password"));
+		UserModel user = new UserModel(jsonObj.getString("login"), jsonObj.getString("password")
+				,null);
 		user.setId(jsonObj.getInt("id"));
 		user.setName(jsonObj.getString("name"));
 		user.setSurname(jsonObj.getString("surname"));

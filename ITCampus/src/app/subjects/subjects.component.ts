@@ -12,6 +12,7 @@ import { TestType } from './test-type.enum';
 export class SubjectsComponent implements OnInit {
 
   subjects: SubjectData[];
+  teachers: String[];
   @Input()
   pageMaxSize: number = 10;
   @Input()
@@ -24,7 +25,14 @@ export class SubjectsComponent implements OnInit {
   testTypeValues: string[];
 
   constructor(public subjectsPaginationService: SubjectsPaginationService) {
-    this.subjects = subjectsPaginationService.allSubjects;
+    this.subjects = [];
+    this.teachers = [];
+    subjectsPaginationService.allSubjectsObservable.subscribe(subjects => {
+      this.subjects = subjects;
+    });
+    subjectsPaginationService.getAllTeachersObservable().subscribe(teachers => {
+      this.teachers = teachers;
+    });
     this.testTypeValues = [];
     for(let value in TestType) {
       this.testTypeValues.push(TestType[value]);

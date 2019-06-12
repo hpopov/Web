@@ -3,6 +3,7 @@ export interface UserData {
   login: string;
   name: string;
   surname: string;
+  authorities: string[];
 }
 
 export interface Credentials {

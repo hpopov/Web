@@ -40,6 +40,8 @@ public class UserFacade {
 		user.setLogin(userModel.getUsername());
 		user.setName(userModel.getName());
 		user.setSurname(userModel.getSurname());
+		user.setAuthorities(userModel.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
 		return user;
 	}
 

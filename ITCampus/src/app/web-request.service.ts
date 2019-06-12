@@ -9,7 +9,7 @@ import { HttpParamsOptions } from '@angular/common/http/src/params';
 })
 export class WebRequestService {
 
-  private url: string = 'https://localhost:8443/';
+  private url: string = '';//'https://localhost:8443/';
   private headersObj = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'

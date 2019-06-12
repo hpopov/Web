@@ -7,7 +7,7 @@
         [(ngModel)]="searchableSubject.name" />
         <select>
           <option selected="true" (click)="searchableSubject.teacher = undefined">All teachers</option>
-          <option *ngFor="let teacher of subjectsPaginationService.getAllTeachers()"
+          <option *ngFor="let teacher of teachers"
           (click)="searchableSubject.teacher = teacher">{{teacher}}</option>
         </select>
       </div>
@@ -63,13 +63,6 @@
       (click)="currentPage = pageInfo.pageNumber;">
       {{pageInfo.presentation}}
       </span>
-      <!-- <a href="#">&laquo;</a>
-      <a href="#">&#8249;</a>
-      <a class="active" href="#">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">&#8250;</a>
-      <a href="#">&raquo;</a> -->
     </div>
   </div>
 </div>

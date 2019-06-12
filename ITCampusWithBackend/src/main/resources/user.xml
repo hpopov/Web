@@ -6,5 +6,8 @@
 		<surname>Popov</surname>
 		<username>tordek</username>
 		<passwordEncoded>$2a$10$kZ64VhgLS.zf7GkEExRolei4VlWX1sDy5G4QAjZro8GD0hXf03hbC</passwordEncoded>
+		<authorities>
+			<authority>USER</authority>
+		</authorities>
 	</user>
 </users>

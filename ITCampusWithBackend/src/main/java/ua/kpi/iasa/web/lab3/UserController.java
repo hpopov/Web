@@ -49,13 +49,6 @@ public class UserController {
 //        return new ModelAndView("index.html");
 //    }
  
-//    @RequestMapping("/login")
-//    public boolean login(@RequestBody UserModel user) {
-//    	System.out.println("Recieved /login request" + user);
-//        return
-//          user.getUsername().equals("tordek") && user.getPassword().equals("password");
-//    }
-    
     @GetMapping("/pageData")
     public PageData getPageDataForUser(@RequestParam String username, HttpServletRequest request) {
     	System.out.println("Recieve /pageData request from front!");
