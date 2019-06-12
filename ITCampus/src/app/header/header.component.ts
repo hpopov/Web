@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserData } from '../user.data';
 import { Router } from '@angular/router';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
+import { PageDataService } from '../page-data.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,8 @@ import { UserService } from '../user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, public authService: AuthService, public userService: UserService) {
+  constructor(private router: Router, public authService: AuthService, 
+    private pageDataService: PageDataService, private userService: UserService) {
 
   }
 
@@ -24,9 +25,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageDataService.getObservablePageData().subscribe(pageData => {
+      if (pageData.currentUser) {
+        this.currentUser = pageData.currentUser;
+      }
+    });
     this.userService.currentUserEmitter
       .subscribe(recievedCurrentUser => this.currentUser = recievedCurrentUser);
-    this.userService.loadCurrentUser();
   }
 
   logOut() {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<personalInfos>
+	<personalInfo>
+		<userId>0</userId>
+		<phoneNumber>(+38) 093-854-55-64</phoneNumber>
+		<dateOfBirth>1999-03-25</dateOfBirth>
+		<city>Kyiv</city>
+		<education>NTUU "Igor Sikorsky Kyiv Polytechnic Institute"</education>
+		<faculty>Institute of Applied System Analysis</faculty>
+		<startEducationYear>2016</startEducationYear>
+		<finishEducationYear>2020</finishEducationYear>
+		<skills>
+			<skill>
+				<key>Java</key>
+				<value>Intermediate</value>
+			</skill>
+			<skill>
+				<key>Java Script</key>
+				<value>Background</value>
+			</skill>
+			<skill>
+				<key>Paint</key>
+				<value>Confident</value>
+			</skill>
+		</skills>
+		<languages>
+			<language>
+				<key>English</key>
+				<value>B2</value>
+			</language>
+			<language>
+				<key>Ukrainian</key>
+				<value>Native</value>
+			</language>
+			<language>
+				<key>Russian</key>
+				<value>Native</value>
+			</language>
+		</languages>
+	</personalInfo>
+</personalInfos>
