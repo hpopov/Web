@@ -27,7 +27,7 @@ export class MapEntryComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
+    // this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
   }
 
   emitOnChanged() {

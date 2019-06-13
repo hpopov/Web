@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<personalInfos>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><personalInfos>
 	<personalInfo>
 		<userId>0</userId>
 		<phoneNumber>(+38) 093-854-55-64</phoneNumber>
@@ -8,7 +7,7 @@
 		<education>NTUU "Igor Sikorsky Kyiv Polytechnic Institute"</education>
 		<faculty>Institute of Applied System Analysis</faculty>
 		<startEducationYear>2016</startEducationYear>
-		<finishEducationYear>2020</finishEducationYear>
+		<finishEducationYear>2021</finishEducationYear>
 		<skills>
 			<skill>
 				<key>Java</key>

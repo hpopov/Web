@@ -19,6 +19,9 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './auth-interceptor';
+import { UserService } from './user.service';
+import { AuthService } from './auth.service';
+import { PageDataService } from './page-data.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,7 @@ import { AuthInterceptor } from './auth-interceptor';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-}
+  }
 ],
   bootstrap: [AppComponent]
 })

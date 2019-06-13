@@ -11,6 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import ua.kpi.iasa.web.lab3.token.JwtConfigurer;
 import ua.kpi.iasa.web.lab3.token.JwtTokenService;
@@ -44,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers("/index.html", "/", "/user/*", "/home", "/login",
-                		"/pageData",
+                		"/pageData", "/admin", "/adminPage.jsp",
     					"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")

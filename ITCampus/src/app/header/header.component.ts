@@ -31,8 +31,9 @@ export class HeaderComponent implements OnInit {
         this.currentUser = pageData.currentUser;
       }
     });
-    this.userService.currentUserEmitter
-      .subscribe(recievedCurrentUser => this.currentUser = recievedCurrentUser);
+    this.userService.subscribeToCurrentUserChanges(recievedCurrentUser => {
+      this.currentUser = recievedCurrentUser;
+    });
   }
 
   logOut() {

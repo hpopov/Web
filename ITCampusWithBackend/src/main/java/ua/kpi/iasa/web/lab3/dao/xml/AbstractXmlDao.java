@@ -1,5 +1,7 @@
 package ua.kpi.iasa.web.lab3.dao.xml;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ import ua.kpi.iasa.web.lab3.ExceptionableFunction;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 
 public class AbstractXmlDao {
+	
+	protected static final String ABSOLUTE = 
+			"C:\\Users\\Hryhorii_Popov\\Data\\Other\\FullStack\\Web\\ITCampusWithBackend\\src\\main\\resources";
 	
 //	private static final DateFormat DATE_FORMAT;
 //	static {
@@ -70,6 +75,14 @@ public class AbstractXmlDao {
 			return dBuilder.parse(sourceIs);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			throw new DaoException("Error while initializing the parser", e);
+		}
+	}
+
+	protected InputStream loadInputStream(String path) throws DaoException {
+		try {
+			return new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			throw new DaoException("", e);
 		}
 	}
 }

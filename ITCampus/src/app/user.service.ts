@@ -2,6 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UserData } from './user.data';
 import { WebRequestService } from './web-request.service';
 import { Observable, of } from 'rxjs';
+import { PageDataService } from './page-data.service';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,8 @@ export class UserService {
 
   private login: string = 'tordek';
 
-  public currentUserEmitter: EventEmitter<UserData>;
+  private currentUserEmitter: EventEmitter<UserData>;
+  // public userByLoginEmitter: EventEmitter<UserData>;
 
   public currentUser: UserData = {
     id: -1,
@@ -20,51 +24,71 @@ export class UserService {
     authorities: []
   };
   
-  private loadingCurrentUser: Observable<UserData>
-  private loadingUserByLogin: LoadingUserByLogin;
+  private currentUserObservable: Observable<UserData>;
+  private userByLoginObservable: Observable<UserData>;
   // private userByLogin: UserData = {
   //   id: -1,
   //   name: '',
   //   surname: '',
   //   login: ''
   // };
-  constructor(private webRequestService: WebRequestService) { 
+  constructor(private webRequestService: WebRequestService,
+      pageDataService: PageDataService, private router:Router) { 
     this.currentUserEmitter = new EventEmitter<UserData>();
-
-    this.loadingUserByLogin = null;
-    this.loadingCurrentUser = null;
+    // this.userByLoginObservable = new EventEmitter<UserData>();
+    
+    this.currentUserObservable = pageDataService.getObservablePageData()
+      .pipe(map(pageData => pageData.currentUser));
+    this.currentUserObservable.subscribe(userData => this.currentUser = userData);
+    this.userByLoginObservable = pageDataService.getObservablePageData()
+      .pipe(map(pageData => pageData.user));
     // this.loadCurrentUser();
   }
-  // get currentUser(): UserData {
-  //   return this._currentUser;
-  // }
 
   public getUserByLogin(): Observable<UserData> {
-    let localLoadingUserByLogin: LoadingUserByLogin = this.loadingUserByLogin;
-    if (localLoadingUserByLogin !== null && localLoadingUserByLogin.login === this.login) {
-      return localLoadingUserByLogin.user;
-    } else {
-      localLoadingUserByLogin = new LoadingUserByLogin(this.login,
-        this.webRequestService.get<UserData>("user/" + this.login,
-       {username:this.login}));
-       this.loadingUserByLogin = localLoadingUserByLogin;
-       return localLoadingUserByLogin.user;
-    }
+    return this.userByLoginObservable;
+    // let localLoadingUserByLogin: LoadingUserByLogin = this.loadingUserByLogin;
+    // if (localLoadingUserByLogin !== null && localLoadingUserByLogin.login === this.login) {
+    //   return localLoadingUserByLogin.user;
+    // } else {
+    //   localLoadingUserByLogin = new LoadingUserByLogin(this.login,
+    //     this.webRequestService.get<UserData>("user/" + this.login,
+    //    {username:this.login}));
+    //    this.loadingUserByLogin = localLoadingUserByLogin;
+    //    return localLoadingUserByLogin.user;
+    // }
   }
 
-  public loadCurrentUser() {
-    if (this.currentUser.id > -1) {
-      this.currentUserEmitter.emit(this.currentUser);
-    } else {
-      this.webRequestService.get<UserData>("current-user", {},
-      (loadedCurrentUser) => this.onCurrentUserLoaded(loadedCurrentUser));
-    }
+  public loadCurrentUser():void {
+      // this.currentUserEmitter.emit(this.currentUser);
+      this.currentUserObservable = this.webRequestService.get<UserData>("current-user", {},
+      (loadedCurrentUser) => this.onCurrentUserChanged(loadedCurrentUser));
   }
 
-  private onCurrentUserLoaded(loadedCurrentUser: UserData) : void {
+  private onCurrentUserChanged(loadedCurrentUser: UserData) : void {
     this.currentUser = loadedCurrentUser;
-    this.currentUserEmitter.emit(loadedCurrentUser)
+    this.currentUserEmitter.emit(this.currentUser);
   }
+
+  public removeCurrentUser():void {
+    this.onCurrentUserChanged(null);
+  }
+
+  updateUser(user: UserData): Observable<boolean> {
+    return this.webRequestService.post<boolean>("updateUser", user, success => {
+      console.log("Sent updateUser successfully? " + success);
+      console.log("CurrentUser: " + this.currentUser.id + ", new User: " + user.id);
+      if (this.currentUser.id === user.id) {
+        this.currentUser = user;
+        this.currentUserEmitter.emit(this.currentUser);
+      }
+    });
+  }
+
+  subscribeToCurrentUserChanges(callback: (newCurrentUser:UserData) => void) {
+    this.currentUserEmitter.subscribe(callback);
+  }
+
   // public getCurrentUser(): Observable<UserData> {
   //   let localLoadingCurrentUser: Observable<UserData> = this.loadingCurrentUser;
   //   if (localLoadingCurrentUser !== null) {
@@ -80,6 +104,6 @@ export class UserService {
 
 }
 
-class LoadingUserByLogin {
-  constructor(readonly login:string, readonly user: Observable<UserData>) {}
-}
+// class LoadingUserByLogin {
+//   constructor(readonly login:string, readonly user: Observable<UserData>) {}
+// }

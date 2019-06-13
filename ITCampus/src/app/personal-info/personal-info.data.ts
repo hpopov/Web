@@ -12,3 +12,8 @@ export interface PersonalInfoData {
   skills: [string, string][];
   languages: [string, string][];
 }
+
+export interface UpdatePersonalInfoData {
+  userId: number;
+  personalInfo: PersonalInfoData;
+}

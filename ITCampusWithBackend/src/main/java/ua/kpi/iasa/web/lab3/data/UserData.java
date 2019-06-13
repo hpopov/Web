@@ -2,6 +2,9 @@ package ua.kpi.iasa.web.lab3.data;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserData {
 
 	private int id;
@@ -9,6 +12,21 @@ public class UserData {
 	private String name;
 	private String surname;
 	private List<String> authorities;
+	
+	public UserData() {}
+	
+	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+	public UserData(@JsonProperty int id, @JsonProperty String login,
+			@JsonProperty String name, @JsonProperty String surname,
+			@JsonProperty List<String> authorities) {
+		this.id = id;
+		this.login = login;
+		this.name = name;
+		this.surname = surname;
+		this.authorities = authorities;
+	}
+
+
 
 	public int getId() {
 		return id;

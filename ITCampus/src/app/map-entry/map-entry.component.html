@@ -1,11 +1,11 @@
 <div class="data-entry">
     <p>
       {{key+keyDelim}}
-      <span *ngIf="editMode" (click)="onAddElement()"> +</span>
+      <span *ngIf="editMode" class="clickable" (click)="onAddElement()"> +</span>
     </p>
     <div class="data-map">
         <app-data-entry  *ngFor="let tuple of mapValue"
-          [key]="tuple[0]" keyDelim="" [value]="tuple[1]" [editMode]="editMode" editableKey="false"
+          [key]="tuple[0]" keyDelim="" [value]="tuple[1]" [editMode]="editMode" [editableKey]="false"
           cancellable="true" (cancelled)="mapValue.splice(mapValue.indexOf(tuple), 1);"
           (changed)="map.push(convert($event))">
         </app-data-entry>

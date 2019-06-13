@@ -9,7 +9,7 @@ import { HttpParamsOptions } from '@angular/common/http/src/params';
 })
 export class WebRequestService {
 
-  private url: string = '';//'https://localhost:8443/';
+  private url: string = '';//https://localhost:8443/';
   private headersObj = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
@@ -17,7 +17,7 @@ export class WebRequestService {
   constructor(private http: HttpClient) { }
 
   public post<T>(relativeUrl: string, body: Object,
-    successfulCallback: (result: T) => void, errorCallback: (error: any) => void): Observable<T> {
+    successfulCallback?: (result: T) => void, errorCallback?: (error: any) => void): Observable<T> {
     let httpOptions = {
       headers: new HttpHeaders(this.headersObj)
     };

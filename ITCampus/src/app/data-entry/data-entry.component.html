@@ -7,12 +7,12 @@
     <div [ngSwitch]="true" class="data-entry">
         <p *ngIf="!editableKey">{{key+keyDelim}}</p>
         <p *ngIf="editableKey"><input [(ngModel)]="key"><span>{{keyDelim}}</span></p>
-        <input *ngSwitchCase="value != null" [(ngModel)]="value">
+        <input *ngSwitchCase="value != null" (change)="emitOnChanged()"[(ngModel)]="value">
         <p *ngSwitchCase="tupleValue != null">
             <input [(ngModel)]="tupleValue[0]">
             <span> {{delimiter}} </span>
             <input [(ngModel)]="tupleValue[1]">
         </p>
-        <span *ngIf="cancellable" (click)="cancelledEmitter.emit()"> x</span>
+        <span *ngIf="cancellable" class="clickable" (click)="cancelledEmitter.emit()"> x</span>
     </div>
 </ng-template>

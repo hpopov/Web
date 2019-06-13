@@ -1,9 +1,19 @@
 package ua.kpi.iasa.web.lab3.dao.xml;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.management.modelmbean.XMLParseException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.PersonalInfoDao;
+import ua.kpi.iasa.web.lab3.data.PersonalInfoData;
 import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
 
 @Repository
@@ -22,11 +33,12 @@ import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
 public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDao {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(XmlPersonalInfoDao.class);
+	private static final String PATH = "/personalInfo.xml";
 
 	@Override
 	public List<PersonalInfoModel> getAllPersonalInfos() throws DaoException {
 
-		Document doc = initDocument(getClass().getResourceAsStream("/personalInfo.xml"));
+		Document doc = initDocument(loadInputStream(ABSOLUTE + PATH));
 		Node rootNode = doc.getElementsByTagName("personalInfos").item(0);
 		try {
 			return parseListByTagName(rootNode, "personalInfo", this::parseModel);
@@ -71,6 +83,53 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 		entry.setKey(getChildTextContent(skillElement, "key"));
 		entry.setValue(getChildTextContent(skillElement, "value"));
 		return entry;
+	}
+
+	@Override
+	public void updatePersonalInfo(PersonalInfoData personalInfo, int userId) throws DaoException {
+		Document doc = initDocument(loadInputStream(ABSOLUTE + PATH));
+		Node rootNode = doc.getElementsByTagName("personalInfos").item(0);
+
+		NodeList personalInfoNodes;
+		try {
+			personalInfoNodes = XmlUtils.toElement(rootNode).getElementsByTagName("personalInfo");
+		} catch (XMLParseException e) {
+			throw new DaoException("",e);
+		}
+		String userIdStr = String.valueOf(userId);
+		for(int i = 0; i<personalInfoNodes.getLength(); i++) {
+			Element element;
+			try {
+				element = XmlUtils.toElement(personalInfoNodes.item(i));
+			} catch (XMLParseException e) {
+				throw new DaoException("",e);
+			}
+			if (element.getElementsByTagName("userId").item(0).getTextContent().equals(userIdStr)) {
+				element.getElementsByTagName("phoneNumber").item(0).setTextContent(personalInfo.getPhoneNumber());
+				element.getElementsByTagName("dateOfBirth").item(0).setTextContent(personalInfo.getDateOfBirth());
+				element.getElementsByTagName("city").item(0).setTextContent(personalInfo.getCity());
+				element.getElementsByTagName("education").item(0).setTextContent(personalInfo.getEducation());
+				element.getElementsByTagName("faculty").item(0).setTextContent(personalInfo.getFaculty());
+				element.getElementsByTagName("startEducationYear").item(0)
+					.setTextContent(String.valueOf(personalInfo.getEducationYear()[0]));
+				element.getElementsByTagName("finishEducationYear").item(0)
+					.setTextContent(String.valueOf(personalInfo.getEducationYear()[1]));
+			}
+		}
+
+		Transformer xformer;
+		try {
+			xformer = TransformerFactory.newInstance().newTransformer();
+		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+			throw new DaoException("",e);
+		}
+		try {
+			final File file = new File(ABSOLUTE + PATH);
+			System.out.println(file);
+			xformer.transform(new DOMSource(doc), new StreamResult(file));
+		} catch (TransformerException e) {
+			throw new DaoException("",e);
+		}
 	}
 
 

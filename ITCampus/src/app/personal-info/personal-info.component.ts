@@ -3,6 +3,7 @@ import { UserData } from '../user.data';
 import { PersonalInfoData } from './personal-info.data';
 import { PersonalInfoService } from './personal-info.service';
 import { PageDataService } from '../page-data.service';
+import { UserService } from '../user.service';
 
 
 @Component({
@@ -15,12 +16,14 @@ export class PersonalInfoComponent implements OnInit {
   user: UserData;
   @Input() editable: boolean;
   personalInfo: PersonalInfoData;
-  tempPersonalInfo: PersonalInfoData;
+  savedPersonalInfo: PersonalInfoData;
+  savedUser: UserData;
   isLoaded: boolean = false;
   editMode: boolean = false;
   editSaveName: string = 'Edit';
 
-  constructor(private pageDataService: PageDataService) {
+  constructor(private personalInfoService: PersonalInfoService,
+      private userService: UserService) {
     this.user = {
       id: -1,
       login: '',
@@ -41,19 +44,35 @@ export class PersonalInfoComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.pageDataService.getObservablePageData().subscribe(pageData => {
-      this.user = pageData.user;
-      this.personalInfo = pageData.personalInfo;
-      this.tempPersonalInfo = JSON.parse(JSON.stringify(this.personalInfo));
-      this.isLoaded = true;
+    this.personalInfoService.getPersonalInfoObservable().subscribe(personalInfo => {
+      this.savedPersonalInfo = personalInfo;
+      this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
     });
+    this.userService.getUserByLogin().subscribe(user => {
+      this.savedUser = user;
+      this.user = JSON.parse(JSON.stringify(this.savedUser));
+      this.isLoaded = true;
+    })
   }
 
   onEditSaveClick() {
     this.editMode = !this.editMode;
     if (this.editMode === false) {
       this.editSaveName = 'Edit';
-      // this.personalInfoService.onUpdateEmitter.emit();
+      this.userService.updateUser(this.user).subscribe(succeed => {
+        if (succeed) {
+          this.savedUser = this.user;
+        }
+        this.user = JSON.parse(JSON.stringify(this.savedUser));
+      });
+      this.personalInfoService.updatePersonalInfo(this.personalInfo, this.savedUser.id)
+        .subscribe(succeed => {
+          console.log("Update personal info : succeed?" + succeed);
+        if (succeed) {
+          this.savedPersonalInfo = this.personalInfo;
+        }
+        this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
+      });
     } else {
       this.editSaveName = 'Save';
     }

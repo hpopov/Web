@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDao;
+import ua.kpi.iasa.web.lab3.data.UserData;
 import ua.kpi.iasa.web.lab3.model.UserModel;
 
 @Repository
@@ -30,6 +32,12 @@ public class PrimitiveUserDao implements UserDao {
 			user.setSurname("Popov");
 		}
 		return Optional.ofNullable(user);
+	}
+
+	@Override
+	public void updateUser(UserData user) throws DaoException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

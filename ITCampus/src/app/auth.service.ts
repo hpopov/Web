@@ -45,7 +45,8 @@ export class AuthService {
     localStorage.setItem(
       'token', response.token
     );
-    this.userService.loadCurrentUser();
+    console.log(this);
+    // this.userService.loadCurrentUser();
     // this.userService.getCurrentUser()
     //   .subscribe(recievedCurrentUser => this.currentUser = recievedCurrentUser);
     console.log("Login succeed: " + response);

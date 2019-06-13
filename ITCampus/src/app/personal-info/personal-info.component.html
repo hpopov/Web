@@ -3,23 +3,24 @@
 		<h4 id="personal-info-header">Personal information</h4>
 		<div *ngIf="isLoaded" id="personal-info-pii">
 			<app-data-entry key="Surname" [value]="user.surname" [editMode]="editMode"
-				(changed)="user.surname = $event.value"></app-data-entry>
-			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode" (changed)="user.name = $event.value">
+				(changed)="updateUserProperty($event)"></app-data-entry>
+			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode" 
+				(changed)="updateUserProperty($event)">
 			</app-data-entry>
 			<app-data-entry key="Phone number" [value]="personalInfo.phoneNumber" [editMode]="editMode"
-				(changed)="personalInfo.phoneNumber = $event.value"></app-data-entry>
+				(changed)="updatePersonalProperty($event)"></app-data-entry>
 			<app-data-entry key="Date of birth" [value]="personalInfo.dateOfBirth | date: 'dd.MM.yyyy'"
-				[editMode]="editMode" (changed)="personalInfo.dateOfBirth = convertDate($event.value)">
+				[editMode]="editMode" (changed)="updatePersonalProperty($event)">
 			</app-data-entry>
 			<app-data-entry key="City" [value]="personalInfo.city" [editMode]="editMode"
-				(changed)="personalInfo.city = $event.value"></app-data-entry>
+				(changed)="updatePersonalProperty($event)"></app-data-entry>
 		</div>
 		<div *ngIf="isLoaded" id="personal-info-edu">
 			<app-data-entry key="Education" [value]="personalInfo.education" [editMode]="editMode"
-				(changed)="personalInfo.education = $event.value">
+				(changed)="updatePersonalProperty($event)">
 			</app-data-entry>
 			<app-data-entry key="Faculty" [value]="personalInfo.faculty" [editMode]="editMode"
-				(changed)="personalInfo.faculty = $event.value">
+				(changed)="updatePersonalProperty($event)">
 			</app-data-entry>
 			<app-data-entry class="lastChild" key="Years of education" [tupleValue]="personalInfo.educationYear"
 				[delimiter]="'-'" [editMode]="editMode" (changed)="personalInfo.educationYear = $event.value">
@@ -41,6 +42,6 @@
 		<p *ngIf="!isLoaded">Loading...</p>
 	</div>
 	<div *ngIf="editable" class="float-right">
-		<button disabled class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
+		<button class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
 	</div>
 </div>

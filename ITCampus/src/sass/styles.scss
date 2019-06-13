@@ -50,10 +50,18 @@ h5 {
 			width: 40%;
 			margin-right: 10px;
 		}
+		.data-entry>* {
+			width: 55%;
+		}
 		.data-entry>*:first-child {
 			font-style: italic;
+			width: 45%;
 		}
 	}
+}
+
+.clickable {
+	@extend %button;
 }
 
 .download-cv-button {

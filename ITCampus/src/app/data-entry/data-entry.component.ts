@@ -30,7 +30,7 @@ export class DataEntryComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
+    // this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
   }
 
   emitOnChanged() {

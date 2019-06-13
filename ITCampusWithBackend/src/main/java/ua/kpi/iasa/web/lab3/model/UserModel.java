@@ -16,9 +16,7 @@ public class UserModel extends User {
 	private String name;
 	private String surname;
 
-	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-	public UserModel(@JsonProperty String username,
-			@JsonProperty String password, List<String> authorities) {
+	public UserModel(String username, String password, List<String> authorities) {
 		super(username, password, authorities.stream()
 				.map(authName -> new SimpleGrantedAuthority(authName))
 				.collect(Collectors.toSet()));
