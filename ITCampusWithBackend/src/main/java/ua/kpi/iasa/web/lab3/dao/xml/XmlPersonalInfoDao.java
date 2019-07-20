@@ -1,8 +1,6 @@
 package ua.kpi.iasa.web.lab3.dao.xml;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -114,6 +112,7 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 					.setTextContent(String.valueOf(personalInfo.getEducationYear()[0]));
 				element.getElementsByTagName("finishEducationYear").item(0)
 					.setTextContent(String.valueOf(personalInfo.getEducationYear()[1]));
+//				XmlUtils.toElement(element.getElementsByTagName("skills").item(0).re).
 			}
 		}
 
