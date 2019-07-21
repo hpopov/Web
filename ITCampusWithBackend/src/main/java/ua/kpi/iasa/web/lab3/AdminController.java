@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @CrossOrigin("https://localhost:4200")
-//@EnableAutoConfiguration
+@EnableAutoConfiguration
 public class AdminController {
 
 	@GetMapping("/admin")
