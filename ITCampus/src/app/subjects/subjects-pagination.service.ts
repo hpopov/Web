@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SubjectData } from './subject.data';
 import { TestType } from './test-type.enum';
-import { PageDataService } from '../page-data.service';
+import { PageDataService } from '../page-web.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

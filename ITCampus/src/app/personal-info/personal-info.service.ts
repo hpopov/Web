@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { PersonalInfoData } from './personal-info.data';
 import { LanguageLevelsService } from './language-levels.service';
-import { PageDataService } from '../page-data.service';
+import { PageDataService } from '../page-web.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { WebRequestService } from '../web-request.service';

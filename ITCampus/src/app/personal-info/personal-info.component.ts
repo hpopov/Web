@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserData } from '../user.data';
 import { PersonalInfoData } from './personal-info.data';
 import { PersonalInfoService } from './personal-info.service';
-import { PageDataService } from '../page-data.service';
+import { PageDataService } from '../page-web.service';
 import { UserService } from '../user.service';
 
 

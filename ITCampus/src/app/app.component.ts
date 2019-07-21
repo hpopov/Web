@@ -1,8 +1,5 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserService } from './user.service';
-import { UserData } from './user.data';
-import { Router } from '@angular/router';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Component, OnInit } from '@angular/core';
+import { PageDataService } from './page-web.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +8,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 })
 export class AppComponent implements OnInit{
 
-  constructor(public userService: UserService){}
+  constructor(private pageDataService: PageDataService){}
 
   ngOnInit(): void {
     // this.router.navigate(['/login']);

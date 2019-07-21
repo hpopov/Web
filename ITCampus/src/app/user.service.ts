@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UserData } from './user.data';
 import { WebRequestService } from './web-request.service';
 import { Observable, of } from 'rxjs';
-import { PageDataService } from './page-data.service';
+import { PageDataService } from './page-web.service';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 

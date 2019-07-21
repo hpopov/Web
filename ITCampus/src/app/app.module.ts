@@ -21,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './auth-interceptor';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
-import { PageDataService } from './page-data.service';
+import { PageDataService } from './page-web.service';
 
 @NgModule({
   declarations: [

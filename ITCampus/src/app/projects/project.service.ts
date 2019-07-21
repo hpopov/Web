@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProjectData } from './project.data';
 import { Observable } from 'rxjs';
-import { PageDataService } from '../page-data.service';
+import { PageDataService } from '../page-web.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

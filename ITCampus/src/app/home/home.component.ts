@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, Input, AfterContentInit, AfterContentChecked, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { UserData } from '../user.data';
 import { AuthService } from '../auth.service';
-import { PageDataService } from '../page-data.service';
+import { PageDataService } from '../page-web.service';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,13 @@ import { PageDataService } from '../page-data.service';
   encapsulation: ViewEncapsulation.None,
   // providers: [UserService]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
 
   public currentUser: UserData;
   public user: UserData;
-  public isLoaded: boolean = false;
   constructor(private pageDataService: PageDataService, public authService: AuthService) {
     this.currentUser = {
-      id : -1,
+      id : -2,
       login : 'x',
       name : 'x',
       surname : 'x',
@@ -38,16 +37,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       if (pageData.currentUser) {
         this.currentUser = pageData.currentUser;
       }
-      this.isLoaded = true;
     })
-  }
-
-  ngAfterViewInit(): void {
-    // this.userService.loadCurrentUser();
-  }
-  
-  ngAfterContentInit(): void {
-    // this.userService.loadCurrentUser();
   }
 
 }
