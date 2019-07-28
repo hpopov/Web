@@ -115,7 +115,7 @@ export class SubjectsPaginationService {
     return this.allSubjectsSubject.asObservable();
   }
 
-  getAllTeachersObservable() : Observable<string[]> {
+  getAllTeachersAsObservable() : Observable<string[]> {
     return this.getAllSubjectsAsObservable().pipe(map(
       subjects => subjects.map(subject => subject.teacher)
       .filter((element, index, array) => array.indexOf(element) === index)

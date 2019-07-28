@@ -37,7 +37,7 @@ export class SubjectsComponent implements OnInit, OnDestroy {
         .subscribe(subjects => {
       this.subjects = subjects;
     });
-    this.teachersSubscription = this.subjectsPaginationService.getAllTeachersObservable()
+    this.teachersSubscription = this.subjectsPaginationService.getAllTeachersAsObservable()
         .subscribe(teachers => {
       this.teachers = teachers;
     });
