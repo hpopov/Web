@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Credentials } from '../user.data';
+import { Credentials } from '../shared/user/user.data';
 
 @Component({
   selector: 'app-login',
@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      sessionStorage.setItem('token', '');
+      // sessionStorage.setItem('token', '');
   }
 
   login() {
-    this.authService.logIn(this.credentials, (res) => this.router.navigate(['']),
+    this.authService.logIn(this.credentials, (res) => this.router.navigate(['uuu']),
      (err) => alert("Authentication failed."));
   }
 }

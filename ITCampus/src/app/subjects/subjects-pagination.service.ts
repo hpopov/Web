@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SubjectData } from './subject.data';
-import { TestType } from './test-type.enum';
-import { PageDataService } from '../page-web.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ProfileService } from '../profile/profile.service';
+import { Observable, Subject } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+import { CleanableSubject } from '../utils/cleanable-subject';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,10 @@ import { map } from 'rxjs/operators';
 export class SubjectsPaginationService {
 
   allSubjects: SubjectData[];
-  allSubjectsObservable: Observable<SubjectData[]>;
-  constructor(private pageDataService: PageDataService) {
-    this.allSubjectsObservable = pageDataService.getObservablePageData()
-        .pipe(map(pageData => pageData.subjects));
+  private allSubjectsSubject: CleanableSubject<SubjectData[]>;
+  private allSubjectsLoaded: boolean = false;
+  constructor(private pageDataService: ProfileService) {
+    this.allSubjectsSubject = new CleanableSubject();
     this.allSubjects = [];
     //   {
     //     num: 1,
@@ -99,8 +99,24 @@ export class SubjectsPaginationService {
     // ];
   }
 
+  private bindAllSubjectsToProfile() : void {
+    this.allSubjectsLoaded = true;
+    this.pageDataService.getProfileAsObservable()
+        .pipe(map(pageData => pageData.subjects)).subscribe(subjects => {
+          this.allSubjects = subjects.slice();
+          this.allSubjectsSubject.next(this.allSubjects);
+        });
+  }
+
+  public getAllSubjectsAsObservable() : Observable<SubjectData[]> {
+    if (!this.allSubjectsLoaded) {
+      this.bindAllSubjectsToProfile();
+    }
+    return this.allSubjectsSubject.asObservable();
+  }
+
   getAllTeachersObservable() : Observable<string[]> {
-    return this.allSubjectsObservable.pipe(map(
+    return this.getAllSubjectsAsObservable().pipe(map(
       subjects => subjects.map(subject => subject.teacher)
       .filter((element, index, array) => array.indexOf(element) === index)
       ));

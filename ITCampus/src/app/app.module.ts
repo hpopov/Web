@@ -15,13 +15,14 @@ import { PagePipe } from './subjects/page.pipe';
 import { FilterPipe } from './subjects/filter.pipe';
 import { DataEntryComponent } from './data-entry/data-entry.component';
 import { MapEntryComponent } from './map-entry/map-entry.component';
-import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AuthInterceptor } from './auth-interceptor';
-import { UserService } from './user.service';
+import { CorsInterceptor } from './interceptors/cors-interceptor';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthService } from './auth.service';
-import { PageDataService } from './page-web.service';
+import { AppRoutingModule } from './app-routing.module';
+
+
 
 @NgModule({
   declarations: [
@@ -37,23 +38,29 @@ import { PageDataService } from './page-web.service';
     FilterPipe,
     DataEntryComponent,
     MapEntryComponent,
-    HomeComponent,
+    ProfileComponent,
     LoginComponent,
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
-    HttpClientModule
   ],
   providers: [
+    AuthService,
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }
-],
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CorsInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

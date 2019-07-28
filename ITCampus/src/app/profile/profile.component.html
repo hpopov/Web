@@ -1,18 +1,17 @@
-<div *ngIf="isLoaded" class="main-content">
+<div class="main-content">
 	<div class="space-between">
 		<h3>User profile</h3>
 		<button disabled class="download-cv-button">DOWNLOAD CV</button>
 	</div>
 	<div class="components-container">
-		<app-personal-info [editable]="user.id == currentUser.id">
+		<app-personal-info [user]=profile.user [personalInfo]=profile.personalInfo
+		 	[editable]=isAdminRightsGranted()>
 		</app-personal-info>
-		<app-subjects *ngIf="user.id == currentUser.id" [pageMaxSize]="10" [currentPage]="1"></app-subjects>
+		<app-subjects *ngIf=isAdminRightsGranted() [subjects]=profile.subjects 
+			[pageMaxSize]="10" [currentPage]="1"></app-subjects>
 		<app-projects class="lastComponent"></app-projects>
 	</div>
 	<div class="float-right">
 		<button disabled class="download-cv-button">DOWNLOAD CV</button>
 	</div>
-</div>
-<div *ngIf="!isLoaded" class="main-content">
-	<p>Loading user data...</p>
 </div>

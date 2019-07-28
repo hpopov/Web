@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SubjectsPaginationService } from './subjects-pagination.service';
 import { SubjectData, SearchableSubject } from './subject.data';
 import { TestType } from './test-type.enum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subjects',
@@ -9,10 +10,12 @@ import { TestType } from './test-type.enum';
   styleUrls: ['./subjects.component.scss'],
   providers: [SubjectsPaginationService]
 })
-export class SubjectsComponent implements OnInit {
+export class SubjectsComponent implements OnInit, OnDestroy {
 
-  subjects: SubjectData[];
+  @Input()subjects: SubjectData[];
+  subjectSubscription: Subscription;
   teachers: String[];
+  teachersSubscription: Subscription;
   @Input()
   pageMaxSize: number = 10;
   @Input()
@@ -25,12 +28,17 @@ export class SubjectsComponent implements OnInit {
   testTypeValues: string[];
 
   constructor(public subjectsPaginationService: SubjectsPaginationService) {
-    this.subjects = [];
+    // this.subjects = [];
     this.teachers = [];
-    subjectsPaginationService.allSubjectsObservable.subscribe(subjects => {
+  }
+
+  ngOnInit() {
+    this.subjectSubscription = this.subjectsPaginationService.getAllSubjectsAsObservable()
+        .subscribe(subjects => {
       this.subjects = subjects;
     });
-    subjectsPaginationService.getAllTeachersObservable().subscribe(teachers => {
+    this.teachersSubscription = this.subjectsPaginationService.getAllTeachersObservable()
+        .subscribe(teachers => {
       this.teachers = teachers;
     });
     this.testTypeValues = [];
@@ -39,8 +47,11 @@ export class SubjectsComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this.subjectSubscription.unsubscribe();
+    this.teachersSubscription.unsubscribe();
   }
+
 
   doSearch() {
     this.searchableSubject = {

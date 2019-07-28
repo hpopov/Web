@@ -2,21 +2,21 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } fro
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-  })
+@Injectable(
+//     {
+//     providedIn: 'root'
+//   }
+  )
 export class CorsInterceptor implements HttpInterceptor {
 
     constructor(){}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
-            // console.log(req.headers);
-            // console.log(req.headers.append());
+            console.log("CorsInterceptor works!");
+            let headers : HttpHeaders = req.headers.append('Content-Type',  'application/json');
+            headers = headers.append('Access-Control-Allow-Origin', '*');
             req = req.clone({
-                headers: new HttpHeaders({
-                  'Content-Type':  'application/json',
-                  'Access-Control-Allow-Origin': '*',
-                })
+                headers: headers
             });
 
         return next.handle(req);

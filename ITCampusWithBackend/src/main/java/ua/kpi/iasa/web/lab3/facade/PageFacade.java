@@ -28,11 +28,9 @@ public class PageFacade {
 	public PageData makePageDataFromUsernameAndToken(String userName, String token) {
 		PageData pageData = new PageData();
 		UserData user = userFacade.getUserDataByUsername(userName);
-    	UserData currentUser = userFacade.getUserDataOptionalFromToken(token).orElse(null);
 		List<SubjectData> subjects = subjectFacade.getSubjectsByUser(user);
 		List<ProjectData> projects = projectFacade.getProjectsByUser(user);
 		PersonalInfoData personalInfo = personalInfoFacade.getPersonalInfoByUser(user);
-		pageData.setCurrentUser(currentUser);
 		pageData.setPersonalInfo(personalInfo);
 		pageData.setProjects(projects);
 		pageData.setSubjects(subjects);

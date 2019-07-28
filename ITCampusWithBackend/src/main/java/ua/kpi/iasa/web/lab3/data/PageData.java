@@ -8,7 +8,6 @@ public class PageData {
 	private PersonalInfoData personalInfo;
 	private List<SubjectData> subjects;
 	private List<ProjectData> projects;
-	private UserData currentUser;
 
 	public UserData getUser() {
 		return user;
@@ -41,20 +40,6 @@ public class PageData {
 	public void setProjects(List<ProjectData> projects) {
 		this.projects = projects;
 	}
-
-	public UserData getCurrentUser() {
-		return currentUser;
-	}
-
-	public void setCurrentUser(UserData currentUser) {
-		this.currentUser = currentUser;
-	}
 	
 	
 }
-
-//user: UserData;
-//personalInfo: PersonalInfoData;
-//subjects: SubjectData[];
-//projects: ProjectData[];
-//currentUser?: UserData;

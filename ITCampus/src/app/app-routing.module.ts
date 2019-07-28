@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuardService } from './auth-guard.service';
+import { ProfileResolver } from './profile/profile-resolver.service';
+
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent/*, canActivate:[AuthGuardService] */},
+  { path: 'profile/:login', component: ProfileComponent,
+      resolve: {profile: ProfileResolver}/*, canActivate:[AuthGuardService] */},
     { path: 'login', component: LoginComponent },
-    { path: '**', redirectTo: '' }
+    { path: '', pathMatch: 'full', redirectTo: '/profile/tordek'},
+    { path: '**', redirectTo: '/profile/tordek' }
 ];
 
 @NgModule({

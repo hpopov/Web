@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserData } from '../user.data';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { UserData } from '../shared/user/user.data';
 import { PersonalInfoData } from './personal-info.data';
 import { PersonalInfoService } from './personal-info.service';
-import { PageDataService } from '../page-web.service';
-import { UserService } from '../user.service';
+import { ProfileService } from '../profile/profile.service';
+import { UserService } from '../shared/user/user.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,47 +13,51 @@ import { UserService } from '../user.service';
   styleUrls: ['./personal-info.component.scss'],
   providers: [PersonalInfoService]
 })
-export class PersonalInfoComponent implements OnInit {
+export class PersonalInfoComponent implements OnInit, OnDestroy {
+
   user: UserData;
   @Input() editable: boolean;
   personalInfo: PersonalInfoData;
-  savedPersonalInfo: PersonalInfoData;
-  savedUser: UserData;
-  isLoaded: boolean = false;
+  personalInfoSubscription: Subscription;
+  @Input("personalInfo")savedPersonalInfo: PersonalInfoData;
+  userSubscription: Subscription;
+  @Input("user")savedUser: UserData;
+  isLoaded: boolean = true;
   editMode: boolean = false;
   editSaveName: string = 'Edit';
 
   constructor(private personalInfoService: PersonalInfoService,
       private userService: UserService) {
-    this.user = {
-      id: -1,
-      login: '',
-      name: '',
-      surname: '',
-      authorities: []
-    };
-    this.personalInfo = {
-      city: null,
-      dateOfBirth: null,
-      education: null,
-      educationYear: null,
-      faculty: null,
-      languages: null,
-      phoneNumber: null,
-      skills: null
-    }
+    // this.personalInfo = {s
+    //   city: null,
+    //   dateOfBirth: null,
+    //   education: null,
+    //   educationYear: null,
+    //   faculty: null,
+    //   languages: null,
+    //   phoneNumber: null,
+    //   skills: null
+    // }
    }
 
   ngOnInit() {
-    this.personalInfoService.getPersonalInfoObservable().subscribe(personalInfo => {
-      this.savedPersonalInfo = personalInfo;
-      this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
-    });
-    this.userService.getUserByLogin().subscribe(user => {
+    this.user = JSON.parse(JSON.stringify(this.savedUser));
+    this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
+    this.userSubscription = this.userService.getUserAsObservable().subscribe(user => {
       this.savedUser = user;
-      this.user = JSON.parse(JSON.stringify(this.savedUser));
-      this.isLoaded = true;
-    })
+      this.user = JSON.parse(JSON.stringify(this.savedUser));      
+    });
+    this.personalInfoSubscription = 
+      this.personalInfoService.getPersonalInfoAsObservable().subscribe(personalInfo => {
+        this.savedPersonalInfo = personalInfo;
+        this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
+      });
+    
+  }
+
+  ngOnDestroy(): void {
+    this.personalInfoSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   onEditSaveClick() {
@@ -64,14 +69,6 @@ export class PersonalInfoComponent implements OnInit {
           this.savedUser = this.user;
         }
         this.user = JSON.parse(JSON.stringify(this.savedUser));
-      });
-      this.personalInfoService.updatePersonalInfo(this.personalInfo, this.savedUser.id)
-        .subscribe(succeed => {
-          console.log("Update personal info : succeed?" + succeed);
-        if (succeed) {
-          this.savedPersonalInfo = this.personalInfo;
-        }
-        this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
       });
     } else {
       this.editSaveName = 'Save';

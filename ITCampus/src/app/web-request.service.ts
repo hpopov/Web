@@ -10,18 +10,20 @@ import { HttpParamsOptions } from '@angular/common/http/src/params';
 export class WebRequestService {
 
   private url: string = 'https://localhost:8443/';
-  private headersObj = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  };
+  // private headersObj = {
+  //   'Content-Type': 'application/json',
+  //   'Access-Control-Allow-Origin': '*'
+  // };
   constructor(private http: HttpClient) { }
 
   public post<T>(relativeUrl: string, body: Object,
     successfulCallback?: (result: T) => void, errorCallback?: (error: any) => void): Observable<T> {
     let httpOptions = {
-      headers: new HttpHeaders(this.headersObj)
+      // headers: new HttpHeaders(this.headersObj)
     };
-    let result: Observable<T> = this.http.post<T>(this.url + relativeUrl, body, httpOptions);
+    let url = this.url + relativeUrl;
+    console.log("Making POST request for " + url);
+    let result: Observable<T> = this.http.post<T>(url, body, httpOptions);
     this.fullySubscribe(result, successfulCallback, errorCallback);
     return result;
   }
@@ -46,19 +48,21 @@ export class WebRequestService {
   }
 
   public get<T>(relativeUrl: string, params: Object,
-    successfulCallback?: (result:T) => void, errorCallback?: (any) => void): Observable<T> {
-      let url: string = this.url + relativeUrl;
-      console.log("Making GET request for " + url);
-      let httpParams: HttpParams = new HttpParams();
-      for(let key in params) {
-        httpParams = httpParams.append(key, params[key]);
-      }
+      successfulCallback?: (result:T) => void, errorCallback?: (any) => void): Observable<T> {
+    let url: string = this.url + relativeUrl;
+    console.log("Making GET request for " + url);
+    let httpParams: HttpParams = new HttpParams();
+    for(let key in params) {
+      httpParams = httpParams.append(key, params[key]);
+    }
     let httpOptions = {
-      headers: new HttpHeaders(this.headersObj),
+      // headers: new HttpHeaders(this.headersObj),
       params: httpParams
     };
     let result: Observable<T> = this.http.get<T>(url, httpOptions);
-    this.fullySubscribe(result, successfulCallback, errorCallback);
+    if (successfulCallback || errorCallback) {
+      this.fullySubscribe(result, successfulCallback, errorCallback);
+    }
     return result;
   }
 
