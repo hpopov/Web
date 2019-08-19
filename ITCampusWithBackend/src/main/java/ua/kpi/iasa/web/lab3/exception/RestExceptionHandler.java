@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import ua.kpi.iasa.web.lab3.token.InvalidJwtAuthenticationException;
+import ua.kpi.iasa.web.lab3.security.InvalidJwtAuthenticationException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice

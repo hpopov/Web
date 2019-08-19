@@ -1,8 +1,5 @@
 package ua.kpi.iasa.web.lab3.model;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PersonalInfoModel {

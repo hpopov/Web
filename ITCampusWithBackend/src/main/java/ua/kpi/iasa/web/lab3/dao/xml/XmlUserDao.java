@@ -3,6 +3,7 @@ package ua.kpi.iasa.web.lab3.dao.xml;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.management.modelmbean.XMLParseException;
 import javax.xml.transform.Transformer;
@@ -22,6 +23,9 @@ import org.w3c.dom.NodeList;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDao;
 import ua.kpi.iasa.web.lab3.data.UserData;
+import ua.kpi.iasa.web.lab3.model.AuthorityModel;
+import ua.kpi.iasa.web.lab3.model.AuthorityType;
+import ua.kpi.iasa.web.lab3.model.UserDetailsModel;
 import ua.kpi.iasa.web.lab3.model.UserModel;
 
 
@@ -40,7 +44,8 @@ public class XmlUserDao extends AbstractXmlDao implements UserDao {
 		} catch (XMLParseException e) {
 			throw new DaoException("", e);
 		}
-		return users.stream().filter(user-> user.getUsername().equals(username)).findFirst();
+		return users.stream().filter(user-> 
+			user.getUserDetails().getUsername().equals(username)).findFirst();
 	}
 
 	private UserModel parseModel(Node node) throws XMLParseException {
@@ -49,10 +54,20 @@ public class XmlUserDao extends AbstractXmlDao implements UserDao {
 		String password = getChildTextContent(element, "passwordEncoded");
 		List<String> authorities = parseListByTagName(element, "authority",
 				listNode-> XmlUtils.toElement(listNode).getTextContent());
-		UserModel result = new UserModel(username, password, authorities);
+		final UserDetailsModel userDetailsModel = new UserDetailsModel();
+		userDetailsModel.setAuthorities(authorities.stream().map(AuthorityType::valueOf)
+				.map(type -> {
+					AuthorityModel role = new AuthorityModel();
+					role.setAuthorityRole(type);
+					return role;
+				}).collect(Collectors.toSet()));
+		userDetailsModel.setUsername(username);
+		userDetailsModel.setPassword(password);
+		UserModel result = new UserModel(/*username, password, authorities*/);
 		result.setId(getChildIntContent(element, "id"));
 		result.setName(getChildTextContent(element, "name"));
 		result.setSurname(getChildTextContent(element, "surname"));
+		result.setUserDetails(userDetailsModel);
 		return result;
 	}
 

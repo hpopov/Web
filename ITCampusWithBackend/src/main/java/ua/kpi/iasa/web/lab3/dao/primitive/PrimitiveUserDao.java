@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDao;
 import ua.kpi.iasa.web.lab3.data.UserData;
+import ua.kpi.iasa.web.lab3.model.UserDetailsModel;
 import ua.kpi.iasa.web.lab3.model.UserModel;
 
 @Repository
@@ -26,7 +27,7 @@ public class PrimitiveUserDao implements UserDao {
 		UserModel user = null;
 		if (username.equals("tordek")) {
 			String password = encoder.encode("password");
-			user = new UserModel("tordek", password, Arrays.asList("USER"));
+			user = new UserModel(/* "tordek", password, Arrays.asList("USER") */);
 			user.setId(0);
 			user.setName("Hryhorii");
 			user.setSurname("Popov");

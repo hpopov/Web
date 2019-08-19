@@ -1,26 +1,24 @@
 package ua.kpi.iasa.web.lab3.model;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class UserModel extends User {
-
-	private static final long serialVersionUID = -400426412471385728L;
+//@Entity
+//@Table(name = "users")
+public class UserModel  {
+	
+//	@Id
+//	@Column(name = "id")
 	private int id;
+	
+//	@Column(name = "name")
 	private String name;
+	
+//	@Column(name = "surname")
 	private String surname;
-
-	public UserModel(String username, String password, List<String> authorities) {
-		super(username, password, authorities.stream()
-				.map(authName -> new SimpleGrantedAuthority(authName))
-				.collect(Collectors.toSet()));
-	}
+	
+//	@OneToOne(cascade = 
+//		{CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
+//		fetch = FetchType.EAGER, optional = false)
+//	@JoinColumn(name = "username")
+	private UserDetailsModel userDetails;
 
 	public int getId() {
 		return id;
@@ -45,6 +43,14 @@ public class UserModel extends User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
+	public UserDetailsModel getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetailsModel userDetails) {
+		this.userDetails = userDetails;
+	}
+
 
 }

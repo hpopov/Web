@@ -1,7 +1,6 @@
 package ua.kpi.iasa.web.lab3.data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
