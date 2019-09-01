@@ -1,6 +1,5 @@
 package ua.kpi.iasa.web.lab3.dao.xml;
 
-import java.io.InputStream;
 import java.util.List;
 
 import javax.management.modelmbean.XMLParseException;
@@ -15,9 +14,9 @@ import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.SubjectDao;
 import ua.kpi.iasa.web.lab3.model.SubjectModel;
 import ua.kpi.iasa.web.lab3.model.TestType;
+import ua.kpi.iasa.web.lab3.model.UserModel;
 
 @Repository
-@Qualifier("subjectDao")
 public class XmlSubjectDao extends AbstractXmlDao implements SubjectDao {
 
 	@Override
@@ -42,6 +41,11 @@ public class XmlSubjectDao extends AbstractXmlDao implements SubjectDao {
 		result.setTeacher(getChildTextContent(element, "teacher"));
 		result.setTestType(TestType.values()[getChildIntContent(element, "testType")]);
 		return result;
+	}
+
+	@Override
+	public List<SubjectModel> getAllUserSubjects(UserModel user) throws DaoException {
+		return getAllSubjects();
 	}
 	
 }

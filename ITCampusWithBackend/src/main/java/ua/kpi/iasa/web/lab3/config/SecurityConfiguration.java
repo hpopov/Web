@@ -3,8 +3,11 @@ package ua.kpi.iasa.web.lab3.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import ua.kpi.iasa.web.lab3.security.JwtConfigurer;
 import ua.kpi.iasa.web.lab3.security.JwtTokenService;
@@ -21,6 +25,7 @@ import ua.kpi.iasa.web.lab3.security.auth.JwtAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
+//@EnableGlobalMethodSecurity
 //@CrossOrigin
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -56,7 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html", "/", "/user/*", "/home", "/login",
                 		"/pageData", "/admin", "/adminPage.jsp",
     					"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/vehicles/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/rest/users/**", "/rest/profiles/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/rest/authentication").permitAll()
+                .antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/rest/authentication").hasRole("USER")
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/v1/vehicles/**").permitAll()
                 .anyRequest().authenticated()
@@ -64,10 +73,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .apply(jwtConfigurer)
             .and().cors()
             .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            .and()
             .headers()
                 .httpStrictTransportSecurity()
                     .includeSubDomains(true)
                     .maxAgeInSeconds(31536000);
+            
         //@formatter:on
     }
 	

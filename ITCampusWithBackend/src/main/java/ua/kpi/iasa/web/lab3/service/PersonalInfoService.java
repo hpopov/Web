@@ -6,8 +6,8 @@ import ua.kpi.iasa.web.lab3.service.exception.EntityNotFoundException;
 
 public interface PersonalInfoService {
 
-	PersonalInfoModel getPersonalInfoByUserId(int userId) throws EntityNotFoundException;
+	PersonalInfoModel getPersonalInfoByUsername(String username) throws EntityNotFoundException;
 
-	boolean updatePersonalInfoByUserId(PersonalInfoData personalInfo, int userId);
+	boolean updatePersonalInfoByUsername(PersonalInfoData personalInfo, String username);
 
 }

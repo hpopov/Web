@@ -2,20 +2,11 @@ package ua.kpi.iasa.web.lab3.data;
 
 import java.util.List;
 
-public class PageData {
+public class ProfileData {
 	
-	private UserData user;
 	private PersonalInfoData personalInfo;
 	private List<SubjectData> subjects;
 	private List<ProjectData> projects;
-
-	public UserData getUser() {
-		return user;
-	}
-
-	public void setUser(UserData user) {
-		this.user = user;
-	}
 
 	public PersonalInfoData getPersonalInfo() {
 		return personalInfo;

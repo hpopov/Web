@@ -6,5 +6,9 @@ public class EntityNotFoundException extends RuntimeException {
 	public EntityNotFoundException(Throwable th) {
 		super(th);
 	}
+	
+	public EntityNotFoundException() {
+		super();
+	}
 
 }

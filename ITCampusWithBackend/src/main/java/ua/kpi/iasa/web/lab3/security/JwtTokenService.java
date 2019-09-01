@@ -35,8 +35,8 @@ public class JwtTokenService {
 	@Value("${security.jwt.token.secret-key:secret}")
 	private String secretKey;
 
-	@Value("${security.jwt.token.expire-length:900000}")
-	private long validityInMilliseconds; // 15m
+	@Value("${security.jwt.token.expire-length:9000000}")
+	private long validityInMilliseconds; // 150m
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -98,17 +98,17 @@ public class JwtTokenService {
 		}
 	}
 
-//	public boolean isTokenValid(String token) {
-//		final Date tokenExpiredDate;
-//		try {
-//			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-//			tokenExpiredDate = claims.getBody().getExpiration();
-//		} catch (JwtException | IllegalArgumentException e) {
-//			return false;
-//		}
-//		if (tokenExpiredDate.before(new Date())) {
-//			return false;
-//		}
-//		return true;
-//	}
+	public boolean isTokenValid(String token) {
+		final Date tokenExpiredDate;
+		try {
+			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+			tokenExpiredDate = claims.getBody().getExpiration();
+		} catch (JwtException | IllegalArgumentException e) {
+			return false;
+		}
+		if (tokenExpiredDate.before(new Date())) {
+			return false;
+		}
+		return true;
+	}
 }

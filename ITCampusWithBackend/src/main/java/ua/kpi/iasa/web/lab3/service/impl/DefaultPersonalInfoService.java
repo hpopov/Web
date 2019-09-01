@@ -1,42 +1,51 @@
 package ua.kpi.iasa.web.lab3.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import ua.kpi.iasa.web.lab3.LoggableComponent;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.PersonalInfoDao;
 import ua.kpi.iasa.web.lab3.data.PersonalInfoData;
 import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
+import ua.kpi.iasa.web.lab3.model.UserModel;
 import ua.kpi.iasa.web.lab3.service.PersonalInfoService;
+import ua.kpi.iasa.web.lab3.service.UserService;
 import ua.kpi.iasa.web.lab3.service.exception.EntityNotFoundException;
 
 @Service
-public class DefaultPersonalInfoService implements PersonalInfoService {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(PersonalInfoData.class);
-	
+public class DefaultPersonalInfoService extends LoggableComponent implements PersonalInfoService {
+
 	@Autowired
-	PersonalInfoDao personalInfoDao;
+	private UserService userService;
+	@Autowired
+	private PersonalInfoDao personalInfoDao;
 	
 	@Override
-	public PersonalInfoModel getPersonalInfoByUserId(int userId) throws EntityNotFoundException {
+	public PersonalInfoModel getPersonalInfoByUsername(String username) throws EntityNotFoundException {
 		try {
-			return personalInfoDao.getAllPersonalInfos()
-					.stream().filter(model-> model.getUserId() == userId).findAny()
-					.orElseThrow(DaoException::new);
+			final UserModel user = userService.getUserByUsername(username);
+			return personalInfoDao.getPersonalInfoForUser(user).orElseThrow(EntityNotFoundException::new);
 		} catch (DaoException e) {
 			throw new EntityNotFoundException(e);
 		}
 	}
 	
+//	private PersonalInfoModel makeEmptyPersonalInfoModel(UserModel user) {
+//		PersonalInfoModel model = new PersonalInfoModel();
+//		model.setLanguages(Collections.emptyMap());
+//		model.set
+//	}
+	
+	@Transactional
 	@Override
-	public boolean updatePersonalInfoByUserId(PersonalInfoData personalInfo, int userId) {
+	public boolean updatePersonalInfoByUsername(PersonalInfoData personalInfo, String username) {
 		try {
-			personalInfoDao.updatePersonalInfo(personalInfo, userId);
+			final UserModel user = userService.getUserByUsername(username);
+			personalInfoDao.saveOrUpdatePersonalInfoForUser(personalInfo, user);
 		} catch (DaoException e) {
-			LOG.error("Error updating personal info!", e);
+			log.error("Error updating personal info!", e);
 			return false;
 		}
 		return true;

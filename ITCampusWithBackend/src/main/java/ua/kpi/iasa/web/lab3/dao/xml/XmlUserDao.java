@@ -1,6 +1,7 @@
 package ua.kpi.iasa.web.lab3.dao.xml;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,17 +23,21 @@ import org.w3c.dom.NodeList;
 
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDao;
-import ua.kpi.iasa.web.lab3.data.UserData;
 import ua.kpi.iasa.web.lab3.model.AuthorityModel;
 import ua.kpi.iasa.web.lab3.model.AuthorityType;
 import ua.kpi.iasa.web.lab3.model.UserDetailsModel;
 import ua.kpi.iasa.web.lab3.model.UserModel;
+import ua.kpi.iasa.web.lab3.service.exception.UnableToMakeEntityException;
 
 
-@Repository("userDao")
+@Repository
 public class XmlUserDao extends AbstractXmlDao implements UserDao {
 
 	private static final String PATH = "/user.xml";
+	
+//	@Autowired
+//	private PublicUserConverter publicUserConverter;
+	
 	@Override
 	public Optional<UserModel> findUserByUsername(String username) throws DaoException {
 
@@ -67,22 +72,22 @@ public class XmlUserDao extends AbstractXmlDao implements UserDao {
 		result.setId(getChildIntContent(element, "id"));
 		result.setName(getChildTextContent(element, "name"));
 		result.setSurname(getChildTextContent(element, "surname"));
+//		result.setUsername(username);
 		result.setUserDetails(userDetailsModel);
 		return result;
 	}
 
 	@Override
-	public void updateUser(UserData user) throws DaoException {
+	public Optional<UserModel> updateUser(UserModel user) throws DaoException {
 		Document doc = initDocument(loadInputStream(ABSOLUTE + PATH));
 		Node rootNode = doc.getElementsByTagName("users").item(0);
-
 		NodeList userNodes;
 		try {
 			userNodes = XmlUtils.toElement(rootNode).getElementsByTagName("user");
 		} catch (XMLParseException e) {
 			throw new DaoException("",e);
 		}
-		String userId = String.valueOf(user.getId());
+		String userId = String.valueOf(0);///
 		for(int i = 0; i<userNodes.getLength(); i++) {
 			Element element;
 			try {
@@ -98,7 +103,7 @@ public class XmlUserDao extends AbstractXmlDao implements UserDao {
 				.setTextContent(user.getSurname());
 				System.out.println("surname: "+ element.getElementsByTagName("surname").item(0).getTextContent());
 				element.getElementsByTagName("username").item(0)
-				.setTextContent(user.getLogin());
+				.setTextContent(user.getUsername());
 				System.out.println("username: "+ element.getElementsByTagName("username")
 				.item(0).getTextContent());
 			}
@@ -117,6 +122,26 @@ public class XmlUserDao extends AbstractXmlDao implements UserDao {
 		} catch (TransformerException e) {
 			throw new DaoException("",e);
 		}
+//		final UserModel userModel = publicUserConverter.dataToModel(user);
+		user.setId(0);//
+		return Optional.of(user);
+	}
+
+	@Override
+	public List<UserModel> getUserList() {
+		// TODO Auto-generated method stub
+		return Collections.emptyList();
+	}
+
+	@Override
+	public UserModel createUser(UserModel user) {
+		// TODO Auto-generated method stub
+		throw new UnableToMakeEntityException("Unable to create user using XmlUserDao");
+	}
+
+	@Override
+	public void deleteUser(UserModel user) throws DaoException  {
+		throw new DaoException("Unsupported method deleteUser on xmlUserDao");
 	}
 
 }

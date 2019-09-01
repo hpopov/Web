@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 public enum AuthorityType implements GrantedAuthority {
 	
-	ROLE_USER, ROLE_ADMIN;
-	public static Supplier<EnumSet<AuthorityType>> emptySet =
-			() -> EnumSet.noneOf(AuthorityType.class); 
+	ROLE_USER, ROLE_ADMIN; 
 	
 //	private static final Map<String, AuthorityType> AUTH_MAP;
 //	static {

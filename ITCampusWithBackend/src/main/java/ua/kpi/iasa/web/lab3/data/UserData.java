@@ -1,39 +1,30 @@
 package ua.kpi.iasa.web.lab3.data;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import ua.kpi.iasa.web.lab3.model.AuthorityType;
+
 public class UserData {
 
-	private int id;
 	private String login;
 	private String name;
 	private String surname;
-	private List<String> authorities;
+	private EnumSet<AuthorityType> authorities;
 	
 	public UserData() {}
 	
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-	public UserData(@JsonProperty int id, @JsonProperty String login,
+	public UserData(@JsonProperty String login,
 			@JsonProperty String name, @JsonProperty String surname,
-			@JsonProperty List<String> authorities) {
-		this.id = id;
+			@JsonProperty EnumSet<AuthorityType> authorities) {
 		this.login = login;
 		this.name = name;
 		this.surname = surname;
 		this.authorities = authorities;
-	}
-
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getLogin() {
@@ -60,11 +51,11 @@ public class UserData {
 		this.surname = surname;
 	}
 
-	public List<String> getAuthorities() {
+	public EnumSet<AuthorityType> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(List<String> authorities) {
+	public void setAuthorities(EnumSet<AuthorityType> authorities) {
 		this.authorities = authorities;
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.SubjectDao;
+import ua.kpi.iasa.web.lab3.dao.UserDao;
 import ua.kpi.iasa.web.lab3.model.SubjectModel;
 import ua.kpi.iasa.web.lab3.service.SubjectService;
 import ua.kpi.iasa.web.lab3.service.exception.EntityNotFoundException;
@@ -17,12 +18,16 @@ import ua.kpi.iasa.web.lab3.service.exception.EntityNotFoundException;
 public class DefaultSubjectService implements SubjectService {
 	
 	@Autowired
-	@Qualifier("subjectDao")
 	SubjectDao subjectDao;
 	
+	@Autowired
+	UserDao userDao;
+	
 	@Override
-	public List<SubjectModel> getSubjectsByUserId(int userId) {
+	public List<SubjectModel> getSubjectsByUsername(String username) {
 		try {
+			final int userId = 
+					userDao.findUserByUsername(username).orElseThrow(EntityNotFoundException::new).getId();
 			return subjectDao.getAllSubjects().stream().filter(subject-> subject.getUserId() == userId)
 					.collect(Collectors.toList());
 		} catch (DaoException e) {

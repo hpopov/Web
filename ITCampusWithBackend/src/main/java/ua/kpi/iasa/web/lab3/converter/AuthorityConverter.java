@@ -14,8 +14,10 @@ public class AuthorityConverter implements Converter<AuthorityModel, AuthorityTy
 	}
 
 	@Override
-	public AuthorityModel dataToModel(AuthorityType data) {
-		AuthorityModel model = new AuthorityModel();
+	public AuthorityModel populateDataToModel(AuthorityModel model, AuthorityType data) {
+		if (model == null) {
+			model = new AuthorityModel();
+		}
 		model.setAuthorityRole(data);
 		return model;
 	}

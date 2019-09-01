@@ -1,6 +1,9 @@
 package ua.kpi.iasa.web.lab3.service.impl;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ua.kpi.iasa.web.lab3.converter.UserDetailsConverter;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.UserDetailsDao;
+import ua.kpi.iasa.web.lab3.model.AuthorityModel;
 import ua.kpi.iasa.web.lab3.model.UserDetailsModel;
 import ua.kpi.iasa.web.lab3.service.UserDetailsService;
 
@@ -36,4 +40,11 @@ public class DefaultUserDetailsService implements UserDetailsService {
 			throws UsernameNotFoundException {
 		return userDetailsConverter.modelToData(getUserDetailsByUsername(username));
 	}
+
+	@Override
+	public Set<AuthorityModel> getAuthoritiesByUsername(String username) {
+		return getUserDetailsByUsername(username).getAuthorities();
+	}
+	
+	
 }

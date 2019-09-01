@@ -6,6 +6,6 @@ import ua.kpi.iasa.web.lab3.model.SubjectModel;
 
 public interface SubjectService {
 
-	List<SubjectModel> getSubjectsByUserId(int userId);
+	List<SubjectModel> getSubjectsByUsername(String username);
 
 }

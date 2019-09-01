@@ -2,6 +2,7 @@ package ua.kpi.iasa.web.lab3.dao.xml;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.management.modelmbean.XMLParseException;
@@ -15,26 +16,55 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import ua.kpi.iasa.web.lab3.converter.DateConverter;
+import ua.kpi.iasa.web.lab3.converter.PersonalInfoConverter;
+import ua.kpi.iasa.web.lab3.converter.UserLanguageConverter;
+import ua.kpi.iasa.web.lab3.converter.UserSkillConverter;
 import ua.kpi.iasa.web.lab3.dao.DaoException;
 import ua.kpi.iasa.web.lab3.dao.PersonalInfoDao;
+import ua.kpi.iasa.web.lab3.dao.UserDao;
 import ua.kpi.iasa.web.lab3.data.PersonalInfoData;
 import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
+import ua.kpi.iasa.web.lab3.model.UserModel;
 
 @Repository
-@Qualifier("personalInfoDao")
 public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDao {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(XmlPersonalInfoDao.class);
 	private static final String PATH = "/personalInfo.xml";
+	
+	@Autowired
+	private DateConverter dateConverter;
+	@Autowired
+	private UserSkillConverter userSkillConverter;
+	@Autowired
+	private UserLanguageConverter userLanguageConverter;
+	@Autowired
+	private PersonalInfoConverter personalInfoConverter;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Override
-	public List<PersonalInfoModel> getAllPersonalInfos() throws DaoException {
+	public Optional<PersonalInfoModel> getPersonalInfoForUser(UserModel user) throws DaoException {
+		return getAllPersonalInfosForUser(user.getUsername()).stream().filter(
+				model -> model.getUser().getUsername().contentEquals(user.getUsername())).findFirst();
+	}
+
+	@Override
+	public PersonalInfoModel saveOrUpdatePersonalInfoForUser(PersonalInfoData personalInfo, UserModel user)
+			throws DaoException {
+		return updatePersonalInfo(personalInfo, user.getUsername());
+	}
+	
+	public List<PersonalInfoModel> getAllPersonalInfosForUser(String username) throws DaoException {
 
 		Document doc = initDocument(loadInputStream(ABSOLUTE + PATH));
 		Node rootNode = doc.getElementsByTagName("personalInfos").item(0);
@@ -48,9 +78,16 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 	private PersonalInfoModel parseModel(Node node) throws XMLParseException {
 		PersonalInfoModel result = new PersonalInfoModel();
 		Element element = XmlUtils.toElement(node);
-		result.setUserId(getChildIntContent(element, "userId"));
+		final UserModel user = new UserModel();
+		user.setId(getChildIntContent(element, "userId"));
+		try {
+			result.setUser(userDao.findUserByUsername("tordek").get());
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		result.setCity(getChildTextContent(element, "city"));
-		result.setDateOfBirth(getChildTextContent(element, "dateOfBirth"));
+		result.setDateOfBirth(dateConverter.dataToModel(getChildTextContent(element, "dateOfBirth")));
 		result.setEducation(getChildTextContent(element, "education"));
 		result.setFaculty(getChildTextContent(element, "faculty"));
 		result.setFinishEducationYear(getChildIntContent(element, "finishEducationYear"));
@@ -59,13 +96,16 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 		
 		NodeList skillsTags = XmlUtils.toElement(element.getElementsByTagName("skills").item(0))
 				.getElementsByTagName("skill");
-		result.setSkills(parseList(skillsTags, this::parseEntry).stream()
-				.collect(Collectors.toMap(Entry::getKey, Entry::getValue)));
+//		result.setSkills(parseList(skillsTags, this::parseEntry).stream().collect(Collectors.toMap(Entry::getKey,
+//					entry-> userSkillConverter.dataToModel(new String[] {entry.getKey(), entry.getValue()}))));
+		result.setSkills(parseList(skillsTags, this::parseEntry).stream().map(entry->
+		userSkillConverter.dataToModel(new String[] {entry.getKey(), entry.getValue()})).collect(Collectors.toSet()));
 		
 		NodeList languagesTags = XmlUtils.toElement(element.getElementsByTagName("languages").item(0))
 				.getElementsByTagName("language");
-		result.setLanguages(parseList(languagesTags, this::parseEntry).stream()
-				.collect(Collectors.toMap(Entry::getKey, Entry::getValue)));
+		result.setLanguages(parseList(languagesTags, this::parseEntry).stream().map(entry->
+				userLanguageConverter.dataToModel(new String[] {entry.getKey(), entry.getValue()}))
+				.collect(Collectors.toSet()));
 		return result;
 	}
 	
@@ -83,8 +123,8 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 		return entry;
 	}
 
-	@Override
-	public void updatePersonalInfo(PersonalInfoData personalInfo, int userId) throws DaoException {
+	public PersonalInfoModel updatePersonalInfo(PersonalInfoData personalInfo, String username)
+			throws DaoException {
 		Document doc = initDocument(loadInputStream(ABSOLUTE + PATH));
 		Node rootNode = doc.getElementsByTagName("personalInfos").item(0);
 
@@ -94,6 +134,7 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 		} catch (XMLParseException e) {
 			throw new DaoException("",e);
 		}
+		final int userId = 0;
 		String userIdStr = String.valueOf(userId);
 		for(int i = 0; i<personalInfoNodes.getLength(); i++) {
 			Element element;
@@ -129,6 +170,9 @@ public class XmlPersonalInfoDao extends AbstractXmlDao implements PersonalInfoDa
 		} catch (TransformerException e) {
 			throw new DaoException("",e);
 		}
+		
+		PersonalInfoModel personalInfoModel = personalInfoConverter.dataToModel(personalInfo);
+		return personalInfoModel;
 	}
 
 

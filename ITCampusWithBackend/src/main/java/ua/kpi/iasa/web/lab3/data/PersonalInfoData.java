@@ -1,28 +1,30 @@
 package ua.kpi.iasa.web.lab3.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PersonalInfoData {
 
+	private PublicUserData user;
 	private String phoneNumber;
 	private String dateOfBirth;
 	private String city;
 	private String education;
 	private String faculty;
-	private int[] educationYear;
+	private Integer[] educationYear;
 	private List<String[]> skills;
 	private List<String[]> languages;
-	
 
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-	public PersonalInfoData(@JsonProperty String phoneNumber, @JsonProperty String dateOfBirth,
+	public PersonalInfoData(@JsonProperty PublicUserData user,
+			@JsonProperty String phoneNumber, @JsonProperty String dateOfBirth,
 			@JsonProperty String city, @JsonProperty String education, @JsonProperty String faculty,
-			@JsonProperty int[] educationYear, @JsonProperty List<String[]> skills,
+			@JsonProperty Integer[] educationYear, @JsonProperty List<String[]> skills,
 			@JsonProperty List<String[]> languages) {
+		this.user = user;
 		this.phoneNumber = phoneNumber;
 		this.dateOfBirth = dateOfBirth;
 		this.city = city;
@@ -34,9 +36,7 @@ public class PersonalInfoData {
 	}
 
 	public PersonalInfoData() {
-		this.educationYear = new int[2];
-		skills = new ArrayList<>();
-		languages = new ArrayList<>();
+		this.educationYear = new Integer[2];
 	}
 
 	public String getPhoneNumber() {
@@ -79,32 +79,51 @@ public class PersonalInfoData {
 		this.faculty = faculty;
 	}
 
-	public int[] getEducationYear() {
+	public Integer[] getEducationYear() {
 		return educationYear;
 	}
 
-	public void setEducationBeginYear(int beginYear) {
+	@JsonIgnore
+	public void setEducationBeginYear(Integer beginYear) {
 		educationYear[0] = beginYear;
 	}
 
-	public void setEducationEndYear(int endYear) {
+	@JsonIgnore
+	public void setEducationEndYear(Integer endYear) {
 		educationYear[1] = endYear;
+	}
+
+	@JsonIgnore
+	public Integer getEducationBeginYear() {
+		return educationYear[0];
+	}
+
+	@JsonIgnore
+	public Integer getEducationEndYear() {
+		return educationYear[1];
 	}
 	
 	public List<String[]> getSkills() {
 		return skills;
 	}
-	
-	public void addSkill(String skillName, String skillLevel) {
-		skills.add(new String[]{skillName, skillLevel});
-	}
 
 	public List<String[]> getLanguages() {
 		return languages;
-	}	
-	
-	public void addLanguage(String langName, String langLevel) {
-		languages.add(new String[]{langName, langLevel});
 	}
-	
+
+	public void setSkills(List<String[]> skills) {
+		this.skills = skills;
+	}
+
+	public void setLanguages(List<String[]> languages) {
+		this.languages = languages;
+	}
+
+	public PublicUserData getUser() {
+		return user;
+	}
+
+	public void setUser(PublicUserData user) {
+		this.user = user;
+	}
 }

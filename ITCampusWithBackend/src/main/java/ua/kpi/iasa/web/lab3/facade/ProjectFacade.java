@@ -17,8 +17,8 @@ public class ProjectFacade {
 	@Autowired
 	ProjectService projectService;
 
-	public List<ProjectData> getProjectsByUser(UserData user) {
-		return projectService.getProjectsByUserId(user.getId()).stream().map(this::toData)
+	public List<ProjectData> getProjectsByUsername(String username) {
+		return projectService.getProjectsByUsername(username).stream().map(this::toData)
 				.collect(Collectors.toList());
 	}
 	

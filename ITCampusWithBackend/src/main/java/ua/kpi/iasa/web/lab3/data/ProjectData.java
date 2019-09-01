@@ -2,6 +2,7 @@ package ua.kpi.iasa.web.lab3.data;
 
 public class ProjectData {
 	
+	private Integer id;
 	private String header;
 	private String imageName;
 	private String description;
@@ -28,6 +29,14 @@ public class ProjectData {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }

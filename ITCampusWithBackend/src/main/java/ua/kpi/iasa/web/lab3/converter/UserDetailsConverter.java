@@ -21,9 +21,8 @@ public class UserDetailsConverter implements Converter<UserDetailsModel, UserDet
 	
 	@Override
 	public UserDetailsData modelToData(UserDetailsModel model) {
-		final EnumSet<AuthorityType> authorities = model.getAuthorities().stream()
-				.map(authorityConverter::modelToData)
-				.collect(Collectors.toCollection(AuthorityType.emptySet));
+		final EnumSet<AuthorityType> authorities = Converter.mapCollectionToEnumSet(
+				authorityConverter::modelToData, model.getAuthorities(), AuthorityType.class);
 		final String password = model.getPassword();
 		final String username = model.getUsername();
 		UserDetailsData data = new UserDetailsData(username, password, authorities);
@@ -31,8 +30,10 @@ public class UserDetailsConverter implements Converter<UserDetailsModel, UserDet
 	}
 
 	@Override
-	public UserDetailsModel dataToModel(UserDetailsData data) {
-		UserDetailsModel model = new UserDetailsModel();
+	public UserDetailsModel populateDataToModel(UserDetailsModel model, UserDetailsData data) {
+		if (model == null) {
+			model = new UserDetailsModel();
+		}
 		model.setUsername(data.getUsername());
 		model.setPassword(passwordEncoder.encode(data.getPassword()));
 		model.setAuthorities(data.getAuthorities().stream()
