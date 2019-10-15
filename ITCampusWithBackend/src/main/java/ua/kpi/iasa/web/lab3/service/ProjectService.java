@@ -2,15 +2,25 @@ package ua.kpi.iasa.web.lab3.service;
 
 import java.util.List;
 
-import ua.kpi.iasa.web.lab3.data.ProjectData;
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import ua.kpi.iasa.web.lab3.data.CreateProjectData;
+import ua.kpi.iasa.web.lab3.data.UpdateProjectData;
 import ua.kpi.iasa.web.lab3.model.ProjectModel;
-import ua.kpi.iasa.web.lab3.service.exception.EntityNotFoundException;
 
 public interface ProjectService {
 
-	List<ProjectModel> getProjectsByUsername(String username);
-	//making 2 separate methods for update and delete, because user can have many projects
-	boolean createUserProject(String username, ProjectData project);
-	boolean updateUserProject(String username, ProjectData project) throws EntityNotFoundException;
+    List<ProjectModel> getProjectsByUsername(String username);
 
+    ProjectModel createUserProject(String username, CreateProjectData project, MultipartFile image)
+            throws EntityNotFoundException;
+
+    ProjectModel updateUserProject(String username, UpdateProjectData project) throws EntityNotFoundException;
+
+    ProjectModel updateUserProjectImage(String username, Integer projectId, MultipartFile image)
+            throws EntityNotFoundException;
+
+    void deleteUserProjectById(String username, Integer projectId) throws EntityNotFoundException;
 }

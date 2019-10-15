@@ -3,8 +3,8 @@ package ua.kpi.iasa.web.lab3.facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.kpi.iasa.web.lab3.converter.PersonalInfoConverter;
 import ua.kpi.iasa.web.lab3.data.PersonalInfoData;
+import ua.kpi.iasa.web.lab3.mapping.converter.impl.PersonalInfoConverter;
 import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
 import ua.kpi.iasa.web.lab3.service.PersonalInfoService;
 

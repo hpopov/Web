@@ -1,11 +1,8 @@
 package ua.kpi.iasa.web.lab3.model;
 
-import java.util.EnumSet;
-import java.util.function.Supplier;
-
 import org.springframework.security.core.GrantedAuthority;
 
-public enum AuthorityType implements GrantedAuthority {
+public enum AuthorityType implements GrantedAuthority, EnumType<AuthorityType> {
 	
 	ROLE_USER, ROLE_ADMIN; 
 	
@@ -25,6 +22,13 @@ public enum AuthorityType implements GrantedAuthority {
 	@Override
 	public String getAuthority() {
 		return toString();
+	}
+
+	@Override
+	public EnumModel<AuthorityType> toEmptyModel(AuthorityType type) {
+		AuthorityModel model = new AuthorityModel();
+		model.setValue(type);
+		return model;
 	}
 
 }

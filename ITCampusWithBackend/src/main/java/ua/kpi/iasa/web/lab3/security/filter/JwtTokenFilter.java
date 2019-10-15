@@ -8,7 +8,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -17,15 +16,15 @@ import ua.kpi.iasa.web.lab3.security.auth.JwtAuthentication;
 
 public class JwtTokenFilter extends GenericFilterBean {
 
-	private JwtTokenService jwtTokenService;
-	
+    private JwtTokenService jwtTokenService;
+
     public JwtTokenFilter(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService; 
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
 
 //    	HttpServletRequest httpReq = (HttpServletRequest) req;
 //        String token = jwtTokenService.resolveToken(httpReq);
@@ -34,7 +33,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 //            SecurityContextHolder.getContext().setAuthentication(auth);
 //        }
 //        filterChain.doFilter(req, res);
-    	HttpServletRequest httpReq = (HttpServletRequest) req;
+        HttpServletRequest httpReq = (HttpServletRequest) req;
         String token = jwtTokenService.resolveToken(httpReq);
         if (token != null && jwtTokenService.isTokenValid(token)) {
             SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(token));
@@ -43,4 +42,3 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
 }
-		

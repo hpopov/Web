@@ -9,33 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "authorities")
-public class AuthorityModel {
+public class AuthorityModel implements EnumModel<AuthorityType> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PK")
-	private Integer pk;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PK")
+    private Integer pk;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "value", unique = true, nullable = false)
-	private AuthorityType authorityRole;
-
-	public Integer getPk() {
-		return pk;
-	}
-
-	public void setPk(Integer pk) {
-		this.pk = pk;
-	}
-
-	public AuthorityType getAuthorityRole() {
-		return authorityRole;
-	}
-
-	public void setAuthorityRole(AuthorityType authorityRole) {
-		this.authorityRole = authorityRole;
-	}
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "value", unique = true, nullable = false)
+    private AuthorityType value;
 }

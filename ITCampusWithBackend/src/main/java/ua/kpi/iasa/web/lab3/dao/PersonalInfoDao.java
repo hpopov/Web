@@ -2,12 +2,13 @@ package ua.kpi.iasa.web.lab3.dao;
 
 import java.util.Optional;
 
-import ua.kpi.iasa.web.lab3.data.PersonalInfoData;
-import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
-import ua.kpi.iasa.web.lab3.model.UserModel;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PersonalInfoDao {
-	Optional<PersonalInfoModel> getPersonalInfoForUser(UserModel user) throws DaoException;
-	PersonalInfoModel saveOrUpdatePersonalInfoForUser(PersonalInfoData personalInfo,
-			UserModel user) throws DaoException;
+import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
+
+@Repository
+public interface PersonalInfoDao extends CrudRepository<PersonalInfoModel, Integer> {
+
+    Optional<PersonalInfoModel> findByUserId(Integer userId);
 }
