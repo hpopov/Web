@@ -1,10 +1,8 @@
 package ua.kpi.iasa.web.lab3.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,49 +15,39 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import ua.kpi.iasa.web.lab3.config.properties.FileStorageProperties;
-import ua.kpi.iasa.web.lab3.config.properties.UserProperties;
-import ua.kpi.iasa.web.lab3.dao.base.EnumRepository;
-import ua.kpi.iasa.web.lab3.dao.base.GraphRepository;
-import ua.kpi.iasa.web.lab3.dao.base.SimpleSaveRepository;
 import ua.kpi.iasa.web.lab3.security.JwtConfigurer;
 import ua.kpi.iasa.web.lab3.security.auth.JwtAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
-@EnableJpaRepositories(basePackages = "ua.kpi.iasa.web.lab3.dao", basePackageClasses = { EnumRepository.class,
-		GraphRepository.class, SimpleSaveRepository.class })
-@EnableTransactionManagement
-@EnableConfigurationProperties({ FileStorageProperties.class, UserProperties.class})
 //@EnableGlobalMethodSecurity
 //@CrossOrigin
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
 
-	@Autowired
-	private JwtConfigurer jwtConfigurer;
+    @Autowired
+    private JwtConfigurer jwtConfigurer;
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/index.html", "/", "/user/*", "/home", "/login", "/pageData", "/admin", "/adminPage.jsp",
@@ -76,18 +64,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000);
 
 		// @formatter:on
-	}
+    }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(jwtAuthenticationProvider).userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder());
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(jwtAuthenticationProvider).userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
 //			.inMemoryAuthentication();
 //			.
 //			.withUser("user")
 //			.password("password")
 //			.roles("USER");
-	}
+    }
 
 //	@Override
 //	protected void configure(HttpSecurity http) 
