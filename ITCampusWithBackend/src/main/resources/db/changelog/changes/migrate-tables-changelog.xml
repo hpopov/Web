@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:appdba="http://www.datical.net/xml/ns/appdba" xmlns:datical="http://www.datical.net/xml/ns/datical"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+	 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog
+	 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<!-- id for these changeSets is generated as Atom-like timestamp format -->
+	<!-- for useful generation see https://timestampgenerator.com/#copyAtom -->
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:39:58+00:00">
+		<createTable tableName="authorities">
+			<column autoIncrement="true" name="PK" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="value" type="VARCHAR(45)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:41:19+00:00">
+		<createTable tableName="avatars">
+			<column name="username" type="VARCHAR(32)">
+				<constraints primaryKey="true" unique="true" />
+			</column>
+			<column name="image_name" type="BINARY(16)">
+				<constraints nullable="false" />
+			</column>
+			<column name="image_extension" type="VARCHAR(8)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:41:47+00:00">
+		<createTable tableName="personal_infos">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="phone_number" type="VARCHAR(16)" />
+			<column name="date_of_birth" type="date" />
+			<column name="city" type="VARCHAR(32)" />
+			<column name="education" type="VARCHAR(32)" />
+			<column name="faculty" type="VARCHAR(32)" />
+			<column name="first_edu_year" type="INT" />
+			<column name="last_edu_year" type="INT" />
+			<column name="user_id" type="INT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:42:19+00:00">
+		<createTable tableName="projects">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="header" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="VARCHAR(128)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="image_name" type="BINARY(16)">
+				<constraints nullable="false" />
+			</column>
+			<column name="image_extension" type="VARCHAR(8)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:42:38+00:00">
+		<createTable tableName="subjects">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="teacher" type="VARCHAR(24)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_type" type="VARCHAR(8)">
+				<constraints nullable="false" />
+			</column>
+			<column name="academic_hours" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="mark" type="INT">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="INT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:42:55+00:00">
+		<createTable tableName="user_details">
+			<column name="username" type="VARCHAR(32)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="password" type="VARCHAR(64)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:43:11+00:00">
+		<createTable tableName="user_details2authorities">
+			<column name="user_details_username" type="VARCHAR(32)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="authorities_PK" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:43:30+00:00">
+		<createTable tableName="user_languages">
+			<column name="language" type="VARCHAR(25)">
+				<constraints nullable="false" />
+			</column>
+			<column name="assessment" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="personal_info_id" type="INT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:43:42+00:00">
+		<createTable tableName="user_skills">
+			<column name="skill_name" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="skill_assessment" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="personal_info_id" type="INT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:45:16+00:00">
+		<createTable tableName="users">
+			<column autoIncrement="true" name="id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="surname" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="username" type="VARCHAR(32)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:45:27+00:00">
+		<addUniqueConstraint columnNames="personal_info_id, language" constraintName="personal_info_id_UNIQUE"
+			tableName="user_languages" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:45:37+00:00">
+		<addUniqueConstraint columnNames="personal_info_id, skill_name" constraintName="personal_info_id_UNIQUE"
+			tableName="user_skills" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:45:47+00:00">
+		<addUniqueConstraint columnNames="user_id, name" constraintName="user_id_UNIQUE" tableName="subjects" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:45:58+00:00">
+		<createIndex indexName="fk_personal_infos_users1_idx" tableName="personal_infos">
+			<column name="user_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:46:10+00:00">
+		<createIndex indexName="fk_projects_users1_idx" tableName="projects">
+			<column name="user_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:46:26+00:00">
+		<createIndex indexName="fk_subjects_users1_idx" tableName="subjects">
+			<column name="user_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:46:35+00:00">
+		<createIndex indexName="fk_user_details_has_authorities_authorities1_idx" tableName="user_details2authorities">
+			<column name="authorities_PK" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:46:48+00:00">
+		<createIndex indexName="fk_user_details_has_authorities_user_details1_idx" tableName="user_details2authorities">
+			<column name="user_details_username" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:46:59+00:00">
+		<createIndex indexName="fk_user_languages_personal_infos1_idx" tableName="user_languages">
+			<column name="personal_info_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:47:09+00:00">
+		<createIndex indexName="fk_user_skills_personal_infos1_idx" tableName="user_skills">
+			<column name="personal_info_id" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:47:25+00:00">
+		<addForeignKeyConstraint baseColumnNames="username" baseTableName="avatars"
+			constraintName="fk_avatars_user_details1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT"
+			referencedColumnNames="username" referencedTableName="user_details" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:48:33+00:00">
+		<addForeignKeyConstraint baseColumnNames="user_id" baseTableName="personal_infos"
+			constraintName="fk_personal_infos_users1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT"
+			referencedColumnNames="id" referencedTableName="users" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:48:45+00:00">
+		<addForeignKeyConstraint baseColumnNames="user_id" baseTableName="projects"
+			constraintName="fk_projects_users1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT"
+			referencedColumnNames="id" referencedTableName="users" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:48:57+00:00">
+		<addForeignKeyConstraint baseColumnNames="user_id" baseTableName="subjects"
+			constraintName="fk_subjects_users1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT"
+			referencedColumnNames="id" referencedTableName="users" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:49:08+00:00">
+		<addForeignKeyConstraint baseColumnNames="authorities_PK" baseTableName="user_details2authorities"
+			constraintName="fk_user_details_has_authorities_authorities1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="CASCADE" referencedColumnNames="PK" referencedTableName="authorities" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:49:19+00:00">
+		<addForeignKeyConstraint baseColumnNames="user_details_username"
+			baseTableName="user_details2authorities" constraintName="fk_user_details_has_authorities_user_details1" deferrable="false"
+			initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="username"
+			referencedTableName="user_details" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:49:33+00:00">
+		<addForeignKeyConstraint baseColumnNames="personal_info_id" baseTableName="user_languages"
+			constraintName="fk_user_languages_personal_infos1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="personal_infos" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:49:53+00:00">
+		<addForeignKeyConstraint baseColumnNames="personal_info_id" baseTableName="user_skills"
+			constraintName="fk_user_skills_personal_infos1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE"
+			onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="personal_infos" validate="true" />
+	</changeSet>
+	<changeSet author="Hryhorii_Popov" id="2019-10-22T10:50:04+00:00">
+		<addForeignKeyConstraint baseColumnNames="username" baseTableName="users"
+			constraintName="fk_users_user_details1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT"
+			referencedColumnNames="username" referencedTableName="user_details" validate="true" />
+	</changeSet>
+</databaseChangeLog>

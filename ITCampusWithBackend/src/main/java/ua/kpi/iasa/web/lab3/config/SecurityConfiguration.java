@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/index.html", "/", "/user/*", "/home", "/login", "/pageData", "/admin", "/adminPage.jsp",
 						"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/rest/users/**", "/rest/profiles/**", "/resources/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/rest/users/**", "/rest/profiles/**", "/resources/**", "/swagger-ui.html").permitAll()
 				.antMatchers(HttpMethod.POST, "/rest/authentication", "/resources/**", "/rest/users").permitAll()
 				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
