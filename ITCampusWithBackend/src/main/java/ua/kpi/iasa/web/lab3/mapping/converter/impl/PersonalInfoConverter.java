@@ -28,12 +28,12 @@ public class PersonalInfoConverter implements Converter<PersonalInfoModel, Perso
         data.setCity(model.getCity());
         data.setDateOfBirth(model.getDateOfBirth());
         data.setEducation(model.getEducation());
-        data.setEducationBeginYear(model.getStartEducationYear());
-        data.setEducationEndYear(model.getFinishEducationYear());
+        data.setFirstEducationYear(model.getStartEducationYear());
+        data.setLastEducationYear(model.getFinishEducationYear());
         data.setFaculty(model.getFaculty());
         data.setPhoneNumber(model.getPhoneNumber());
-        data.setSkills(Converter.mapToList(userSkillConverter::modelToData, model.getSkills()));
-        data.setLanguages(Converter.mapToList(userLanguageConverter::modelToData, model.getLanguages()));
+        data.setSkills(Converter.mapToMap(userSkillConverter::modelToData, model.getSkills()));
+        data.setLanguages(Converter.mapToMap(userLanguageConverter::modelToData, model.getLanguages()));
         data.setUser(publicUserConverter.modelToData(model.getUser()));
         return data;
     }

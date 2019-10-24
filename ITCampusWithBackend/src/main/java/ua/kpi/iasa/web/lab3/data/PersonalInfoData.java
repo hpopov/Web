@@ -1,48 +1,50 @@
 package ua.kpi.iasa.web.lab3.data;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonalInfoData {
 
+    @Schema(required = true)
 	private PublicUserData user;
+
+    @Schema(required = true)
 	private String phoneNumber;
+
+    @Schema(required = true)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
+
+    @Schema(required = true)
 	private String city;
+
+    @Schema(required = true)
 	private String education;
+
+    @Schema(required = true)
 	private String faculty;
-	private Integer[] educationYear = new Integer[2];
-	private List<String[]> skills;
-	private List<String[]> languages;
 
-	@JsonIgnore
-	public void setEducationBeginYear(Integer beginYear) {
-		educationYear[0] = beginYear;
-	}
+    @Schema(required = true)
+    private Integer firstEducationYear;
 
-	@JsonIgnore
-	public void setEducationEndYear(Integer endYear) {
-		educationYear[1] = endYear;
-	}
-
-	@JsonIgnore
-	public Integer getEducationBeginYear() {
-		return educationYear[0];
-	}
-
-	@JsonIgnore
-	public Integer getEducationEndYear() {
-		return educationYear[1];
-	}
+    @Schema(required = true)
+    private Integer lastEducationYear;
+    
+    @Schema(required = true, description = "key stands for skill name, value stands for skill assessment")
+	private Map<String, String> skills;
+	
+    @Schema(required = true, description = "key stands for language name, value stands for language assessment")
+	private Map<String, String> languages;
 }

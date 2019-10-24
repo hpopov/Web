@@ -50,12 +50,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/index.html", "/", "/user/*", "/home", "/login", "/pageData", "/admin", "/adminPage.jsp",
+				.antMatchers("/index.html", "/", "/login",
 						"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/rest/users/**", "/rest/profiles/**", "/resources/**", "/swagger-ui.html").permitAll()
+				.antMatchers(HttpMethod.GET, "/rest/users/*", "/resources/**", "/swagger-ui.html",
+				        "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs.yml").permitAll()
 				.antMatchers(HttpMethod.POST, "/rest/authentication", "/resources/**", "/rest/users").permitAll()
-				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
-				.antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
+//				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
+//				.antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/rest/authentication").hasRole("USER")
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/v1/vehicles/**").permitAll()

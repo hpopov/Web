@@ -27,10 +27,10 @@ public class PersonalInfoPopulator implements Populator<PersonalInfoModel, Perso
         model.setDateOfBirth(data.getDateOfBirth());
         model.setEducation(data.getEducation());
         model.setFaculty(data.getFaculty());
-        model.setStartEducationYear(data.getEducationBeginYear());
-        model.setFinishEducationYear(data.getEducationEndYear());
-        model.setLanguages(Converter.mapToSet(userLanguageConverter::dataToModel, data.getLanguages()));
-        model.setSkills(Converter.mapToSet(userSkillConverter::dataToModel, data.getSkills()));
+        model.setStartEducationYear(data.getFirstEducationYear());
+        model.setFinishEducationYear(data.getLastEducationYear());
+        model.setLanguages(Converter.mapToSet(userLanguageConverter::dataToModel, data.getLanguages().entrySet()));
+        model.setSkills(Converter.mapToSet(userSkillConverter::dataToModel, data.getSkills().entrySet()));
         model.setPhoneNumber(data.getPhoneNumber());
         model.setUser(publicUserPopulator.populate(data.getUser(), model.getUser()));
         return model;

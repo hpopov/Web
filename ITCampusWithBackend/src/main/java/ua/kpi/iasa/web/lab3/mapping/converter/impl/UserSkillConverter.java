@@ -1,5 +1,8 @@
 package ua.kpi.iasa.web.lab3.mapping.converter.impl;
 
+import java.util.Map.Entry;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,18 +12,18 @@ import ua.kpi.iasa.web.lab3.mapping.populator.impl.UserSkillPopulator;
 import ua.kpi.iasa.web.lab3.model.UserSkillModel;
 
 @Component
-public class UserSkillConverter implements Converter<UserSkillModel, String[]> {
+public class UserSkillConverter implements Converter<UserSkillModel, Entry<String, String>> {
 
     @Autowired
     private UserSkillPopulator userSkillPopulator;
 
     @Override
-    public String[] modelToData(UserSkillModel model) {
-        return new String[] { model.getName(), model.getAssessment() };
+    public Entry<String, String> modelToData(UserSkillModel model) {
+        return new ImmutablePair<>(model.getName(), model.getAssessment());
     }
 
     @Override
-    public UserSkillModel dataToModel(String @NonNull [] data) {
+    public UserSkillModel dataToModel(@NonNull Entry<String, String> data) {
         return userSkillPopulator.populate(data, new UserSkillModel());
     }
 }

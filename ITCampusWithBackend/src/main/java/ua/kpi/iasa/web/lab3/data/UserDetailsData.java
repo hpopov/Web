@@ -6,10 +6,12 @@ import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.kpi.iasa.web.lab3.model.AuthorityType;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
