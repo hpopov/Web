@@ -11,10 +11,8 @@ import ua.kpi.iasa.web.lab3.model.ProjectModel;
 @Component
 public class ProjectConverter implements ModelToDataConverter<ProjectModel, ProjectData> {
 
-    private static final String RESOURCES_REST_PATH = "/resources/";
-
     @Autowired
-    private FilePathConverter filePathConverter;
+    private FileToGetResourcesPathConverter fileToGetResourcesPathConverter;
 
     @Override
     public ProjectData modelToData(@NonNull ProjectModel model) {
@@ -22,7 +20,7 @@ public class ProjectConverter implements ModelToDataConverter<ProjectModel, Proj
         data.setId(model.getId());
         data.setHeader(model.getHeader());
         data.setDescription(model.getDescription());
-        data.setImageUrl(RESOURCES_REST_PATH + filePathConverter.modelToData(model.getProjectImage()));
+        data.setImageUrl(fileToGetResourcesPathConverter.modelToData(model.getProjectImage()));
         return data;
     }
 }

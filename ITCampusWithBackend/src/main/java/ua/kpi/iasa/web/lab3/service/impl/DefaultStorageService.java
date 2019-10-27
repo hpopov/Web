@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 import ua.kpi.iasa.web.lab3.config.properties.FileStorageProperties;
 import ua.kpi.iasa.web.lab3.exception.FileStorageException;
-import ua.kpi.iasa.web.lab3.model.FilePathModel;
+import ua.kpi.iasa.web.lab3.model.FileModel;
 import ua.kpi.iasa.web.lab3.service.StorageService;
 import ua.kpi.iasa.web.lab3.service.strategy.DirectoryPathHashingStrategy;
 
@@ -53,18 +53,18 @@ public class DefaultStorageService implements StorageService {
     }
 
     @Override
-    public void store(InputStream file, FilePathModel filePathModel) throws FileStorageException {
-        final Path absoluteTargetPath = resolvePath(filePathModel);
+    public void store(InputStream file, FileModel fileModel) throws FileStorageException {
+        final Path absoluteTargetPath = resolvePath(fileModel);
         createDirectoriesIfAbsent(absoluteTargetPath);
         try {
             Files.copy(file, absoluteTargetPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
-            throw new FileStorageException(String.format(UNABLE_TO_CREATE_FILE, filePathModel.getFileName()), ex);
+            throw new FileStorageException(String.format(UNABLE_TO_CREATE_FILE, fileModel.getFileName()), ex);
         }
     }
 
-    private Path resolvePath(FilePathModel filePathModel) {
-        return fileStorageLocation.resolve(directoryPathHashingStrategy.hashDirectoryPath(filePathModel));
+    private Path resolvePath(FileModel fileModel) {
+        return fileStorageLocation.resolve(directoryPathHashingStrategy.hashDirectoryPath(fileModel));
     }
 
     private void createDirectoriesIfAbsent(Path targetPath) throws FileStorageException {
@@ -77,37 +77,37 @@ public class DefaultStorageService implements StorageService {
     }
 
     @Override
-    public Resource loadAsResource(FilePathModel filePathModel) throws FileStorageException {
-        final Resource resource = new FileSystemResource(resolvePath(filePathModel));
+    public Resource loadAsResource(FileModel fileModel) throws FileStorageException {
+        final Resource resource = new FileSystemResource(resolvePath(fileModel));
         if (resource.exists()) {
             return resource;
         }
-        throw new FileStorageException(String.format(FILE_NOT_FOUND, filePathModel.getFileName()));
+        throw new FileStorageException(String.format(FILE_NOT_FOUND, fileModel.getFileName()));
     }
 
     @Override
-    public void copy(Path sourcePath, FilePathModel filePathModel) throws FileStorageException {
-        final Path absoluteTargetPath = resolvePath(filePathModel);
+    public void copy(Path sourcePath, FileModel fileModel) throws FileStorageException {
+        final Path absoluteTargetPath = resolvePath(fileModel);
         final Path absoluteSourcePath = fileStorageLocation.resolve(sourcePath);
         createDirectoriesIfAbsent(absoluteTargetPath);
         try {
             Files.copy(absoluteSourcePath, absoluteTargetPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
-            throw new FileStorageException(String.format(UNABLE_TO_COPY_FILE, filePathModel.getFileName().toString()),
+            throw new FileStorageException(String.format(UNABLE_TO_COPY_FILE, fileModel.getFileName().toString()),
                     ex);
         }
     }
 
     @Override
-    public void delete(FilePathModel filePathModel) throws FileStorageException {
-        final Path absoluteTargetPath = resolvePath(filePathModel);
+    public void delete(FileModel fileModel) throws FileStorageException {
+        final Path absoluteTargetPath = resolvePath(fileModel);
         if (!Files.exists(absoluteTargetPath)) {
             return;
         }
         try {
             deleteFilesRecursively(absoluteTargetPath);
         } catch (IOException ex) {
-            throw new FileStorageException(String.format(UNABLE_TO_DELETE_PATH, filePathModel.getFileName()), ex);
+            throw new FileStorageException(String.format(UNABLE_TO_DELETE_PATH, fileModel.getFileName()), ex);
         }
     }
 

@@ -21,6 +21,7 @@ public class AvatarModel {
 
     @Embedded
     @AttributeOverrides({ @AttributeOverride(name = "fileName", column = @Column(name = "image_name")),
-            @AttributeOverride(name = "extension", column = @Column(name = "image_extension")) })
-    private FilePathModel avatarImage;
+            @AttributeOverride(name = "extension", column = @Column(name = "image_extension")),
+            @AttributeOverride(name = "created", column = @Column(name = "image_created")) })
+    private FileModel avatarImage;
 }

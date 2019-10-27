@@ -14,7 +14,7 @@ public interface ProjectService {
 
     List<ProjectModel> getProjectsByUsername(String username);
 
-    ProjectModel createUserProject(String username, CreateProjectData project, MultipartFile image)
+    ProjectModel createUserProject(String username, CreateProjectData project)
             throws EntityNotFoundException;
 
     ProjectModel updateUserProject(String username, UpdateProjectData project) throws EntityNotFoundException;

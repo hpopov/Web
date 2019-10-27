@@ -38,7 +38,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		        .message(error).build()// @formatter:on
         );
     }
-    
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -76,8 +76,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiException);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException exception) {
+    @ExceptionHandler({ EntityNotFoundException.class, NotFoundException.class })
+    protected ResponseEntity<Object> handleNotFound(Exception exception) {
         logException(exception);
         final ApiExceptionData apiException = ApiExceptionData.builder()// @formatter:off
                 .subExceptions(buildCausesList(exception))
@@ -93,6 +93,28 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .subExceptions(buildCausesList(exception))
                 .status(HttpStatus.BAD_REQUEST)
                 .message(exception.getMessage()).build();// @formatter:on
+        return buildResponseEntity(apiException);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<Object> handleOtherUncheckedExceptions(RuntimeException exception) {
+        logException(exception);
+        final ApiExceptionData apiException = ApiExceptionData.builder()// @formatter:off
+                .subExceptions(buildCausesList(exception))
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .debugMessage(exception.getMessage())
+                .message("Unexpected exception occurs").build();// @formatter:on
+        return buildResponseEntity(apiException);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    protected ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException exception) {
+        logException(exception);
+        final ApiExceptionData apiException = ApiExceptionData.builder()// @formatter:off
+                .subExceptions(buildCausesList(exception))
+                .status(HttpStatus.UNAUTHORIZED)
+                .debugMessage(exception.getMessage())
+                .message("Unauthorized request for this resource").build();// @formatter:on
         return buildResponseEntity(apiException);
     }
 

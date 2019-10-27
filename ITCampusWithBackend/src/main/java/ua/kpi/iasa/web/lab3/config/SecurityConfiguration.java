@@ -22,7 +22,7 @@ import ua.kpi.iasa.web.lab3.security.auth.JwtAuthenticationProvider;
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity
-//@CrossOrigin
+//@CrossOrigin(origins = "*")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -52,9 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/index.html", "/", "/login",
 						"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/rest/users/*", "/resources/**", "/swagger-ui.html",
+				.antMatchers(HttpMethod.GET, "/rest/users", "/rest/users/*", "/resources/**", "/swagger-ui.html",
 				        "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs.yml").permitAll()
-				.antMatchers(HttpMethod.POST, "/rest/authentication", "/resources/**", "/rest/users").permitAll()
+				.antMatchers(HttpMethod.POST, "/rest/authentication", "/rest/users").permitAll()
 //				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
 //				.antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/rest/authentication").hasRole("USER")

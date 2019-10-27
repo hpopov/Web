@@ -9,7 +9,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +18,10 @@ import ua.kpi.iasa.web.lab3.config.properties.UserProperties;
 import ua.kpi.iasa.web.lab3.dao.AvatarDao;
 import ua.kpi.iasa.web.lab3.exception.FileStorageException;
 import ua.kpi.iasa.web.lab3.model.AvatarModel;
-import ua.kpi.iasa.web.lab3.model.FilePathModel;
+import ua.kpi.iasa.web.lab3.model.FileModel;
+import ua.kpi.iasa.web.lab3.service.FileService;
 import ua.kpi.iasa.web.lab3.service.StorageService;
 import ua.kpi.iasa.web.lab3.service.UserAvatarService;
-import ua.kpi.iasa.web.lab3.service.strategy.FilePathStrategy;
 
 @Slf4j
 @Service
@@ -41,8 +40,7 @@ public class DefaultUserAvatarService implements UserAvatarService {
     @Autowired
     private UserProperties userProperties;
     @Autowired
-    @Qualifier("randomFilePathStrategy")
-    private FilePathStrategy filePathStrategy;
+    private FileService fileService;
 
     private Path defaultAvatarImagePath;
 
@@ -54,7 +52,7 @@ public class DefaultUserAvatarService implements UserAvatarService {
     @Override
     public AvatarModel createDefaultUserAvatar(String username) {
         final String avatarFileName = defaultAvatarImagePath.getFileName().toString();
-        final FilePathModel targetFilePath = filePathStrategy.makeFilePath(avatarFileName);
+        final FileModel targetFilePath = fileService.generateFileModelFromFileName(avatarFileName);
         try {
             storageService.copy(defaultAvatarImagePath, targetFilePath);
         } catch (FileStorageException e) {
@@ -70,8 +68,8 @@ public class DefaultUserAvatarService implements UserAvatarService {
     @Override
     public AvatarModel changeUserAvatar(String username, MultipartFile file) {
         final AvatarModel avatar = findUserAvatar(username);
-        final FilePathModel oldAvatarFilePath = avatar.getAvatarImage();
-        final FilePathModel newAvatarFilePath = filePathStrategy.makeFilePath(file.getOriginalFilename());
+        final FileModel oldAvatarFilePath = avatar.getAvatarImage();
+        final FileModel newAvatarFilePath = fileService.generateFileModelFromMultipartFile(file);
         try {
             storageService.store(file.getInputStream(), newAvatarFilePath);
         } catch (IOException e) {
@@ -88,7 +86,7 @@ public class DefaultUserAvatarService implements UserAvatarService {
 
     @Override
     public Resource getUserAvatarImage(String username) {
-        final FilePathModel imageFilePath = findUserAvatar(username).getAvatarImage();
+        final FileModel imageFilePath = findUserAvatar(username).getAvatarImage();
         try {
             return storageService.loadAsResource(imageFilePath);
         } catch (FileStorageException e) {

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>ITCampusWithBackend</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -115,7 +115,10 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc-openapi.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -174,7 +177,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 

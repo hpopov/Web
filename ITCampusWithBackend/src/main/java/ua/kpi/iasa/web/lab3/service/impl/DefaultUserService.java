@@ -20,7 +20,7 @@ import ua.kpi.iasa.web.lab3.exception.FileStorageException;
 import ua.kpi.iasa.web.lab3.mapping.converter.impl.RegistrationConverter;
 import ua.kpi.iasa.web.lab3.mapping.populator.impl.PublicUserPopulator;
 import ua.kpi.iasa.web.lab3.model.AuthorityType;
-import ua.kpi.iasa.web.lab3.model.FilePathModel;
+import ua.kpi.iasa.web.lab3.model.FileModel;
 import ua.kpi.iasa.web.lab3.model.PersonalInfoModel;
 import ua.kpi.iasa.web.lab3.model.ProjectModel;
 import ua.kpi.iasa.web.lab3.model.UserDetailsModel;
@@ -108,7 +108,7 @@ public class DefaultUserService implements UserService {
     public void deleteUser(String username) {
         userAvatarService.deleteUserAvatarWithImage(username);
         final UserModel user = getUserWithProjectsByUsername(username);
-        final Collection<FilePathModel> projectImages = user.getProjects().stream().map(ProjectModel::getProjectImage)
+        final Collection<FileModel> projectImages = user.getProjects().stream().map(ProjectModel::getProjectImage)
                 .collect(Collectors.toList());
         try {
             storageService.deleteAll(projectImages);

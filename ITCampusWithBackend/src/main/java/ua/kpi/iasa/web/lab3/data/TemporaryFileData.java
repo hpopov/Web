@@ -10,14 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateProjectData {
+public class TemporaryFileData {
 
     @Schema(required = true)
-    private String header;
+    private Integer id;
 
-    @Schema(required = true)
-    private String description;
-
-    @Schema(required = true, description = "An id of temporary file for this user to become the image of the project")
-    private Integer temporaryFileId;
+    @Schema(required = true, description = "The url to download the file")
+    private String requestUrl;
 }

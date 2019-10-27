@@ -7,22 +7,22 @@ import java.util.Collection;
 import org.springframework.core.io.Resource;
 
 import ua.kpi.iasa.web.lab3.exception.FileStorageException;
-import ua.kpi.iasa.web.lab3.model.FilePathModel;
+import ua.kpi.iasa.web.lab3.model.FileModel;
 
 public interface StorageService {
 
-    void store(InputStream file, FilePathModel filePathModel) throws FileStorageException;
+    void store(InputStream file, FileModel fileModel) throws FileStorageException;
 
-    Resource loadAsResource(FilePathModel filePathModel) throws FileStorageException;
+    Resource loadAsResource(FileModel fileModel) throws FileStorageException;
 
-    void copy(Path sourcePath, FilePathModel filePathModel) throws FileStorageException;
+    void copy(Path sourcePath, FileModel fileModel) throws FileStorageException;
 
-    void delete(FilePathModel filePathModel) throws FileStorageException;
+    void delete(FileModel fileModel) throws FileStorageException;
 
-    default void deleteAll(Collection<FilePathModel> filePathModels) throws FileStorageException {
+    default void deleteAll(Collection<FileModel> fileModels) throws FileStorageException {
         
-        for(FilePathModel filePathModel : filePathModels) {
-            delete(filePathModel);
+        for(FileModel fileModel : fileModels) {
+            delete(fileModel);
         }
     }
 }
