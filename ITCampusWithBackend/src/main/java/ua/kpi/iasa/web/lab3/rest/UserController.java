@@ -106,7 +106,7 @@ public class UserController {
     @Operation(summary = "Get user avatar by username")
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @NotFoundApiResponse
-    @GetMapping(path = "/{username}/avatar", produces = MediaType.ALL_VALUE)
+    @GetMapping(path = "/{username}/avatar")
     public ResponseEntity<Resource> getUserAvatar(@PathVariable String username) {
         final Resource avatarResource = userAvatarService.getUserAvatarImage(username);
         final String contentType = mimeTypeService.getMimeType(avatarResource);

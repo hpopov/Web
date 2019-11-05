@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "itcampus.user.defaultAvatarPath",
+    "type": "java.lang.String",
+    "description": "Relative to itcampus.file.directory path, which points to the default user avatar image (is used when a new user is created)"
+  },
+  {
+    "name": "itcampus.file.directory",
+    "type": "java.lang.String",
+    "description": "Absolute path, which points to the base directory of filesystem file storage"
+  },
+  {
+    "name": "itcampus.version",
+    "type": "java.lang.String",
+    "description": "Version of the project (is used for swagger documentation)"
+  }
+]}
