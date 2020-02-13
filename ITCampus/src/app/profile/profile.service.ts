@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { WebRequestService } from '../web-request.service';
-import { ProfileModel } from './profile.model';
-import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
 import { CleanableSubject } from '../utils/cleanable-subject';
+import { WebRequestService } from '../web-request.service';
+import { ProfileData } from './profile.model';
+import { PersonalInfoData } from '../personal-info/personal-info.data';
 
 @Injectable(
   {
@@ -12,35 +11,29 @@ import { CleanableSubject } from '../utils/cleanable-subject';
 )
 export class ProfileService {
   
-  private profileSubject: CleanableSubject<ProfileModel>;
-  private loaded: boolean;
+  profile: CleanableSubject<ProfileData>;
 
   constructor(private webRequestService: WebRequestService) {
     console.log("In profileService constructor!");
-    this.profileSubject = new CleanableSubject();
-    this.loaded = false;
-  }
-
-  public getProfile(): CleanableSubject<ProfileModel> {
-    console.log("Getting observable profile!");
-    if (!this.loaded) {
-      console.log("Profile is not loaded yet!");
-      this.loadProfile();
-    }
-    return this.profileSubject;
-  }
-
-  public getProfileAsObservable() : Observable<ProfileModel> {
-    return this.getProfile().asObservable();
+    this.profile = new CleanableSubject();
   }
 
   public loadProfile(): void {
-    this.loaded = true;
     console.log("Loading observable profile...");
-    this.profileSubject.cleanValue();
-    this.webRequestService.get<ProfileModel>("pageData", {username: "tordek"}).subscribe(profile => {
+    // this.profile.cleanValue();
+    this.webRequestService.get<ProfileData>("rest/profiles/tordek").subscribe(profile => {
           console.log(profile);
-          this.profileSubject.next(profile);
-    })
+          this.profile.next(profile);
+    });
+  }
+
+  public replacePersonalInfo(personalInfo: PersonalInfoData): void {
+    console.log("Replacing personalInfo within a profile...");
+    const previousProfile: ProfileData = this.profile.getValue();
+    this.profile.next({
+      personalInfo: personalInfo,
+      projects: previousProfile.projects,
+      subjects: previousProfile.subjects
+    });
   }
 }

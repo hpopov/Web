@@ -13,14 +13,14 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private currentUserSubscription: Subscription;
+  private authenticatedUserSubscription: Subscription;
 
   constructor(private router: Router, public authService: AuthService,
      private userService: UserService, private route: ActivatedRoute) {
       console.log("Header component says, that userService is: "+userService);
   }
 
-  currentUser: UserData;
+  authenticatedUser: UserData;
   //  = {
   //   id: -1,
   //   login: '',
@@ -30,17 +30,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
-    this.currentUserSubscription = this.userService.getCurrentUser().subscribe(currentUser => {
-        this.currentUser = currentUser;
+    this.authenticatedUserSubscription = this.userService.authenticatedUser.subscribe(currentUser => {
+        this.authenticatedUser = currentUser;
     });
   }
 
   ngOnDestroy(): void {
-    this.currentUserSubscription.unsubscribe();
+    this.authenticatedUserSubscription.unsubscribe();
   }
 
 
-  public logOut() {
+  logOut() {
     this.authService.logOut();
     console.log("Logging out...");
     // this.router.navigateByUrl('/login');
@@ -49,6 +49,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logIn() {
     console.log("Logging in...");
     this.router.navigate(['/login']);
+  }
+
+  getUserAvatarUrl(username: string): string {
+    return this.userService.getUserAvatarUrl(username);
   }
 
 }

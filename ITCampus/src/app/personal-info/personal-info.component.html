@@ -1,47 +1,49 @@
 <div class="personal-info-component">
-	<div class="content-grid">
-		<h4 id="personal-info-header">Personal information</h4>
-		<div *ngIf="isLoaded" id="personal-info-pii">
-			<app-data-entry key="Surname" [value]="user.surname" [editMode]="editMode"
-				(changed)="updateUserProperty($event)"></app-data-entry>
-			<app-data-entry key="Name" [value]="user.name" [editMode]="editMode" 
-				(changed)="updateUserProperty($event)">
-			</app-data-entry>
-			<app-data-entry key="Phone number" [value]="personalInfo.phoneNumber" [editMode]="editMode"
-				(changed)="updatePersonalProperty($event)"></app-data-entry>
-			<app-data-entry key="Date of birth" [value]="personalInfo.dateOfBirth | date: 'dd.MM.yyyy'"
-				[editMode]="editMode" (changed)="updatePersonalProperty($event)">
-			</app-data-entry>
-			<app-data-entry key="City" [value]="personalInfo.city" [editMode]="editMode"
-				(changed)="updatePersonalProperty($event)"></app-data-entry>
-		</div>
-		<div *ngIf="isLoaded" id="personal-info-edu">
-			<app-data-entry key="Education" [value]="personalInfo.education" [editMode]="editMode"
-				(changed)="updatePersonalProperty($event)">
-			</app-data-entry>
-			<app-data-entry key="Faculty" [value]="personalInfo.faculty" [editMode]="editMode"
-				(changed)="updatePersonalProperty($event)">
-			</app-data-entry>
-			<app-data-entry class="lastChild" key="Years of education" [tupleValue]="personalInfo.educationYear"
-				[delimiter]="'-'" [editMode]="editMode" (changed)="personalInfo.educationYear = $event.value">
-			</app-data-entry>
-		</div>
-		<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-skill-set"
-			key="Skills" [mapValue]="personalInfo.skills"
-			[editMode]="editMode" (changed)="updatePersonalProperty($event)">
-		</app-map-entry>
-		<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-lang-set"
-			key="Languages" [mapValue]="personalInfo.languages"
-			[editMode]="editMode" (changed)="updatePersonalProperty($event)">
-		</app-map-entry>
-		<div *ngIf="isLoaded" class="image-content">
-			<div class="img-holder">
-				<img src="assets/images/user-img-{{user.id}}.jpg" alt="User image">
+	<form [formGroup]="personalInfoFormGroup.form">
+		<div class="content-grid">
+			<h4 id="personal-info-header">Personal information</h4>
+			<div *ngIf="isLoaded" id="personal-info-pii">
+				<app-data-entry key="Surname" [valueControl]="personalInfoFormGroup.form.get('user.surname')"
+				 [editMode]="editMode"></app-data-entry>
+				<app-data-entry key="Name" [valueControl]="personalInfoFormGroup.form.get('user.name')"
+				 [editMode]="editMode">
+				</app-data-entry>
+				<app-data-entry key="Phone number" [valueControl]="personalInfoFormGroup.form.get('phoneNumber')"
+				 [editMode]="editMode"></app-data-entry>
+				<app-data-entry key="Date of birth" [valueControl]="personalInfoFormGroup.form.get('dateOfBirth')"
+					[editMode]="editMode" (changed)="updatePersonalProperty($event)">
+					<!-- | date: 'dd.MM.yyyy' TODO: move this piece to PersonalInfoFormGroup -->
+				</app-data-entry>
+				<app-data-entry key="City" [valueControl]="personalInfoFormGroup.form.get('city')"
+				 [editMode]="editMode"></app-data-entry>
 			</div>
+			<div *ngIf="isLoaded" id="personal-info-edu">
+				<app-data-entry key="Education" [valueControl]="personalInfoFormGroup.form.get('education')"
+				 [editMode]="editMode">
+				</app-data-entry>
+				<app-data-entry key="Faculty" [valueControl]="personalInfoFormGroup.form.get('faculty')"
+				 [editMode]="editMode">
+				</app-data-entry>
+				<app-data-entry class="lastChild" key="Years of education"
+				 [tupleValueControl]="personalInfoFormGroup.form.get('educationYears')"
+					[delimiter]="'-'" [editMode]="editMode">
+				</app-data-entry>
+			</div>
+			<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-skill-set" key="Skills"
+				[mapValueControls]="personalInfoFormGroup.form.get('skills')" [editMode]="editMode">
+			</app-map-entry>
+			<app-map-entry *ngIf="isLoaded" class="lastChild" id="personal-info-lang-set" key="Languages"
+				[mapValueControls]="personalInfoFormGroup.form.get('languages')" [editMode]="editMode">
+			</app-map-entry>
+			<div *ngIf="isLoaded" class="image-content">
+				<div class="img-holder">
+					<img src="getUserAvatarUrl(user.login)" alt="User image">
+				</div>
+			</div>
+			<p *ngIf="!isLoaded">Loading...</p>
 		</div>
-		<p *ngIf="!isLoaded">Loading...</p>
-	</div>
-	<div *ngIf="editable" class="float-right">
-		<button class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
-	</div>
+		<div *ngIf="editable" class="float-right">
+			<button class="dark-button" (click)="onEditSaveClick()">{{editSaveName}}</button>
+		</div>
+	</form>
 </div>

@@ -19,7 +19,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.projectsSubscription = this.projectService.getProjectsAsObservable().subscribe(projects => {
+    this.projectsSubscription = this.projectService.projects.asObservable().subscribe(projects => {
       this.projects = projects;
     });
   }

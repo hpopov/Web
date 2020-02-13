@@ -1,3 +1,9 @@
+export interface PublicUserData {
+  login: string;
+  name: string;
+  surname: string;
+}
+
 export interface UserData {
   id: number;
   login: string;

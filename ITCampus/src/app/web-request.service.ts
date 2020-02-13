@@ -1,69 +1,53 @@
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
-import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebRequestService {
 
-  private url: string = '';//'https://localhost:8443/';
-  // private headersObj = {
-  //   'Content-Type': 'application/json',
-  //   'Access-Control-Allow-Origin': '*'
-  // };
+  private url: string = 'https://localhost:8443/';
+  private headersObj = {
+    'Content-Type': 'application/json'
+  };
   constructor(private http: HttpClient) { }
 
-  public post<T>(relativeUrl: string, body: Object,
-    successfulCallback?: (result: T) => void, errorCallback?: (error: any) => void): Observable<T> {
+  public resolveUrl(relativeUrl: string): string {
+    return this.url + relativeUrl;
+  }
+  public post<T>(relativeUrl: string, body: Object): Observable<T> {
     let httpOptions = {
-      // headers: new HttpHeaders(this.headersObj)
+      headers: new HttpHeaders(this.headersObj)
     };
-    let url = this.url + relativeUrl;
+    let url = this.resolveUrl(relativeUrl);
     console.log("Making POST request for " + url);
-    let result: Observable<T> = this.http.post<T>(url, body, httpOptions);
-    this.fullySubscribe(result, successfulCallback, errorCallback);
-    return result;
+    return this.http.post<T>(url, body, httpOptions).pipe(
+      catchError(this.handleError<T>())
+    );
   }
 
-  fullySubscribe<T>(observable: Observable<T>, successfulCallback: (result:T) => void,
-   errorCallback: (error:any) => void) {
-    observable
-      .pipe(
-        catchError(this.handleError<T>())
-      )
-      .subscribe(response => {
-        if (response) {
-          // console.log("Response :" + response);
-          return successfulCallback && successfulCallback(response);
-        } else {
-          return errorCallback && errorCallback(response);
-        }
-      }, error => {
-        // console.log("Error :" + error);
-        return errorCallback && errorCallback(error);
-      })
-  }
-
-  public get<T>(relativeUrl: string, params: Object,
-      successfulCallback?: (result:T) => void, errorCallback?: (any) => void): Observable<T> {
-    let url: string = this.url + relativeUrl;
-    console.log("Making GET request for " + url);
-    let httpParams: HttpParams = new HttpParams();
-    for(let key in params) {
-      httpParams = httpParams.append(key, params[key]);
-    }
+  public put<T>(relativeUrl: string, body: Object): Observable<T> {
     let httpOptions = {
-      // headers: new HttpHeaders(this.headersObj),
-      params: httpParams
+      headers: new HttpHeaders(this.headersObj)
     };
-    let result: Observable<T> = this.http.get<T>(url, httpOptions);
-    if (successfulCallback || errorCallback) {
-      this.fullySubscribe(result, successfulCallback, errorCallback);
-    }
-    return result;
+    let url = this.resolveUrl(relativeUrl);
+    console.log("Making PUT request for " + url);
+    return this.http.put<T>(url, body, httpOptions).pipe(
+      catchError(this.handleError<T>())
+    );
+  }
+
+  public get<T>(relativeUrl: string): Observable<T> {
+    let httpOptions = {
+      headers: new HttpHeaders(this.headersObj)
+    };
+    let url = this.resolveUrl(relativeUrl);
+    console.log("Making GET request for " + url);
+    return this.http.get<T>(url, httpOptions).pipe(
+      catchError(this.handleError<T>())
+    );
   }
 
   private handleError<T>() {

@@ -176,9 +176,9 @@ export class FormGroupHolder<T> extends FormControlHolder<FormGroup> {
     //     return this.formGroupMap.arrays.get(param);
     // }
 
-    public getArrayGroup<K extends ArrayKeyNames<T>>(param: K): FormArrayHolder<ArrayValueType<T,K>> {
-        return this.formGroupMap.arrays.get(param);
-    }
+    // public getArrayGroup<K extends ArrayKeyNames<T>>(param: K): FormArrayHolder<ArrayValueType<T,K>> {
+    //     return this.formGroupMap.arrays.get(param);
+    // }
 
 }
 
@@ -212,7 +212,7 @@ export class Main {
         wrapper.getFormControl("login");
         let subgroup: FormGroupKeyNames<Val> = "innerUser";
         wrapper.getFormGroup("innerUser").getFormGroup('karakul').getFormControl('kar');
-        wrapper.getArrayGroup("authorities");
+        // wrapper.getArrayGroup("authorities");
     }
 
     public indexedParamsType() {

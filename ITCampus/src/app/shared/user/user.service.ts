@@ -1,114 +1,88 @@
 import { Injectable } from '@angular/core';
-import { UserData } from './user.data';
-import { WebRequestService } from '../../web-request.service';
-import { Observable } from 'rxjs';
-import { ProfileService } from '../../profile/profile.service';
-import { map, filter } from 'rxjs/operators';
-import { TokenService } from '../token/token.service';
+import { map } from 'rxjs/operators';
+import { PersonalInfoService } from 'src/app/personal-info/personal-info.service';
 import { CleanableSubject } from 'src/app/utils/cleanable-subject';
+import { WebRequestService } from '../../web-request.service';
+import { TokenService } from '../token/token.service';
+import { PublicUserData, UserData } from './user.data';
 
 @Injectable(
   {
-  providedIn: 'root'
-}
+    providedIn: 'root'
+  }
 )
 export class UserService {
 
-  // private login: string = 'tordek';
+  authenticatedUser: CleanableSubject<UserData>;
+  user: CleanableSubject<PublicUserData>;
 
-  private currentUserSubject: CleanableSubject<UserData>;
-  private currentUserLoaded: boolean = false;
-  //  = {
-  //   id: -1,
-  //   name: '',
-  //   surname: '',
-  //   login: '',
-  //   authorities: []
-  // };
-  
-  private userSubject: CleanableSubject<UserData>;
-  private userLoaded: boolean = false;
-  
 
   constructor(private webRequestService: WebRequestService,
-       private profileService: ProfileService, private tokenService: TokenService) { 
-    this.currentUserSubject = new CleanableSubject<UserData>();
-    this.userSubject = new CleanableSubject<UserData>();
+    private personalInfoService: PersonalInfoService, private tokenService: TokenService) {
+    this.authenticatedUser = new CleanableSubject<UserData>();
+    this.user = new CleanableSubject<UserData>();
+    this.bindUserToPersonalInfo();
   }
 
-  private bindUserToProfile() : void {
-    this.userLoaded = true;
-    this.profileService.getProfileAsObservable()
-      .pipe(map(profile => profile.user)).subscribe(user => {
+  private bindUserToPersonalInfo(): void {
+    this.personalInfoService.personalInfo.asObservable()
+      .pipe(map(personalInfo => personalInfo.user)).subscribe(user => {
         this.onUserChanged(user);
-    });
+      });
   }
 
-  // public loadUser(login: string) {
-    
-  // }
-
-  public onUserChanged(user : UserData) {
-    this.userSubject.next(user);
-    console.log("Recieved user: "+ user);
+  public onUserChanged(user: PublicUserData) {
+    this.user.next(user);
+    console.log("Recieved user: " + user);
+    // this.personalInfoService.replaceUser(user);
   }
 
-  public getUser(): CleanableSubject<UserData> {
-    if (!this.userLoaded) {
-      this.bindUserToProfile();
-    }
-    return this.userSubject;
-  }
-
-  public getUserAsObservable() : Observable<UserData> {
-    return this.getUser().asObservable();
-  }
-
-  public loadCurrentUser():void {
-    if (this.isCurrentUserLoadingAllowed()) {
-      this.currentUserLoaded = true;
-      this.currentUserSubject.cleanValue();
-      this.webRequestService.get<UserData>("current-user", {},
-        (loadedCurrentUser) => this.onCurrentUserChanged(loadedCurrentUser));
+  public loadAuthenticatedUser(): void {
+    if (this.isUserAuthenticated()) {
+      // this.authenticatedUser.cleanValue();
+      this.webRequestService.get<UserData>("rest/authentication").subscribe(this.onAuthenticatedUserChanged);
     }
   }
 
-  private isCurrentUserLoadingAllowed(): boolean {
+  private isUserAuthenticated(): boolean {
     return this.tokenService.hasToken();
   }
 
-  private onCurrentUserChanged(loadedCurrentUser: UserData) : void {
-    console.log("onCurrentUserChanged called :" + loadedCurrentUser);
-    this.currentUserSubject.next(loadedCurrentUser);
+  private onAuthenticatedUserChanged(loadedCurrentUser: UserData): void {
+    console.log("onAuthenticatedUserChanged called :" + loadedCurrentUser);
+    this.authenticatedUser.next(loadedCurrentUser);
   }
 
-  public getCurrentUser() : CleanableSubject<UserData> {
-    if (!this.currentUserLoaded) {
-      this.loadCurrentUser();
+  public removeAuthenticatedUser(): void {
+    this.onAuthenticatedUserChanged(null);
+  }
+
+  public updateUser(user: PublicUserData): void {
+    this.webRequestService.put<PublicUserData>("rest/users/" + user.login, user).subscribe(this.onUserUpdated);
+  }
+
+  private onUserUpdated(user: PublicUserData): void {
+    console.log("Sent updateUser successfully");
+    if (this.authenticatedUser.getValue() && this.authenticatedUser.getValue().login === user.login) {
+      this.onAuthenticatedUserChanged({
+        authorities: this.authenticatedUser.getValue().authorities,
+        id: this.authenticatedUser.getValue().id,
+        login: user.login,
+        name: user.name,
+        surname: user.surname
+      });
     }
-    return this.currentUserSubject;
+    if (this.user.getValue().login === user.login) {
+      this.onUserChanged(user);
+    }
   }
 
-  public getCurrentUserAsObservable() : Observable<UserData> {
-    return this.getCurrentUser().asObservable();
+  public hasUserFullProfileAccess(): boolean {
+    return this.authenticatedUser.getValue() && this.authenticatedUser.getValue().login === this.user.getValue().login;
   }
 
-  public removeCurrentUser():void {
-    this.onCurrentUserChanged(null);
-  }
-
-  updateUser(user: UserData): Observable<boolean> {
-    return this.webRequestService.post<boolean>("updateUser", user, success => {
-      console.log("Sent updateUser successfully? " + success);
-      if (success && this.getCurrentUser().getValue() 
-          && this.getCurrentUser().getValue().id === user.id) {
-        this.onCurrentUserChanged(user)
-      }
-      if (success && this.getUser().getValue()
-          && this.getUser().getValue().id === user.id) {
-        this.onUserChanged(user);
-      }
-    });
+  public getUserAvatarUrl(username: string): string {
+    return this.webRequestService.resolveUrl("rest/users/"+username+"/avatar");
   }
 
 }

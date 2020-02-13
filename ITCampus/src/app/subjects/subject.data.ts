@@ -7,7 +7,7 @@ export interface SearchableSubject {
 }
 
 export interface SubjectData extends SearchableSubject {
-    num: number;
+    subjectId: number;
     academicHours: number;
     mark: number;
 }
