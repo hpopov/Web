@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserData } from '../shared/user/user.data';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { UserService } from '../shared/user/user.service';
-import { ProfileService } from '../profile/profile.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { UserData } from '../shared/user/user.data';
+import { UserService } from '../shared/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +13,12 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private authenticatedUserSubscription: Subscription;
+  userAvatarUrl: string = '';
+  isUserAuthenticated: boolean = false;
 
   constructor(private router: Router, public authService: AuthService,
-     private userService: UserService, private route: ActivatedRoute) {
-      console.log("Header component says, that userService is: "+userService);
+    private userService: UserService, private route: ActivatedRoute) {
+    console.log("Header component says, that userService is: " + userService);
   }
 
   authenticatedUser: UserData;
@@ -30,8 +31,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
+    this.userService.loadAuthenticatedUser();
     this.authenticatedUserSubscription = this.userService.authenticatedUser.subscribe(currentUser => {
-        this.authenticatedUser = currentUser;
+      console.log("Header Component received authenticated user!");
+      this.authenticatedUser = currentUser;
+      this.isUserAuthenticated = this.authService.isLoggedIn() && !!currentUser;
+      console.log(this.isUserAuthenticated);
+      if (currentUser != null) {
+        this.userAvatarUrl = this.userService.getUserAvatarUrl(currentUser.login);
+      } else {
+        this.userAvatarUrl = '';
+      }
     });
   }
 
@@ -49,10 +59,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logIn() {
     console.log("Logging in...");
     this.router.navigate(['/login']);
-  }
-
-  getUserAvatarUrl(username: string): string {
-    return this.userService.getUserAvatarUrl(username);
   }
 
 }

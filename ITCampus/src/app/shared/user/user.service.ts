@@ -13,8 +13,8 @@ import { PublicUserData, UserData } from './user.data';
 )
 export class UserService {
 
-  authenticatedUser: CleanableSubject<UserData>;
-  user: CleanableSubject<PublicUserData>;
+  readonly authenticatedUser: CleanableSubject<UserData>;
+  readonly user: CleanableSubject<PublicUserData>;
 
 
   constructor(private webRequestService: WebRequestService,
@@ -26,21 +26,30 @@ export class UserService {
 
   private bindUserToPersonalInfo(): void {
     this.personalInfoService.personalInfo.asObservable()
-      .pipe(map(personalInfo => personalInfo.user)).subscribe(user => {
+      .pipe( map(personalInfo => personalInfo.user)).subscribe(user => {
         this.onUserChanged(user);
       });
   }
 
-  public onUserChanged(user: PublicUserData) {
+  private onUserChanged(user: PublicUserData) {
+    console.log("Recieved user: " + user.login);
     this.user.next(user);
-    console.log("Recieved user: " + user);
-    // this.personalInfoService.replaceUser(user);
+    const authenticatedUserSnapshot: UserData = this.authenticatedUser.getValue();
+    if (authenticatedUserSnapshot && authenticatedUserSnapshot.login === user.login) {
+      this.onAuthenticatedUserChanged({
+        authorities: authenticatedUserSnapshot.authorities,
+        id: authenticatedUserSnapshot.id,
+        login: user.login,
+        name: user.name,
+        surname: user.surname
+      });
+    }
   }
 
   public loadAuthenticatedUser(): void {
     if (this.isUserAuthenticated()) {
       // this.authenticatedUser.cleanValue();
-      this.webRequestService.get<UserData>("rest/authentication").subscribe(this.onAuthenticatedUserChanged);
+      this.webRequestService.get<UserData>("/rest/authentication").subscribe(loadedUser => this.onAuthenticatedUserChanged(loadedUser));
     }
   }
 
@@ -58,12 +67,14 @@ export class UserService {
   }
 
   public updateUser(user: PublicUserData): void {
-    this.webRequestService.put<PublicUserData>("rest/users/" + user.login, user).subscribe(this.onUserUpdated);
+    this.webRequestService.put<PublicUserData>("/rest/users/" + user.login, user).subscribe(this.onUserUpdated);
   }
 
   private onUserUpdated(user: PublicUserData): void {
     console.log("Sent updateUser successfully");
-    if (this.authenticatedUser.getValue() && this.authenticatedUser.getValue().login === user.login) {
+    if (this.user.getValue() && this.user.getValue().login === user.login) {
+      this.onUserChanged(user);
+    } else if (this.authenticatedUser.getValue() && this.authenticatedUser.getValue().login === user.login) {
       this.onAuthenticatedUserChanged({
         authorities: this.authenticatedUser.getValue().authorities,
         id: this.authenticatedUser.getValue().id,
@@ -72,9 +83,6 @@ export class UserService {
         surname: user.surname
       });
     }
-    if (this.user.getValue().login === user.login) {
-      this.onUserChanged(user);
-    }
   }
 
   public hasUserFullProfileAccess(): boolean {
@@ -82,7 +90,7 @@ export class UserService {
   }
 
   public getUserAvatarUrl(username: string): string {
-    return this.webRequestService.resolveUrl("rest/users/"+username+"/avatar");
+    return this.webRequestService.resolveUrl("/rest/users/"+username+"/avatar");
   }
 
 }

@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormControl } from '@angular/forms';
 import { DataEntry } from '../data-entry/data-entry.data';
 import { PersonalInfoService } from '../personal-info/personal-info.service';
-import { MapEntry } from './map-entry.data';
-import { FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-map-entry',
@@ -23,11 +22,16 @@ export class MapEntryComponent implements OnInit {
 
   constructor(private personalInfoService: PersonalInfoService) {
     // this.changedEmitter = new EventEmitter<MapEntry>();
+    // this.mapValueControls.removeAt()
     this.lengthEmitter = new EventEmitter<number>();
   }
 
   ngOnInit() {
     // this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
+  }
+
+  getMapArrayControls(): FormArray[] {
+    return (this.mapValueControls.controls as FormArray[]);
   }
 
   emitOnChanged() {
@@ -42,5 +46,10 @@ export class MapEntryComponent implements OnInit {
     // this.mapValue.push(['','']);
     this.mapValueControls.push(new FormArray([new FormControl(null), new FormControl(null)]));
     this.lengthEmitter.emit(this.mapValueControls.length);
+  }
+
+  onRemoveElement(index: number) {
+    console.log("Removin an element from the map with index " + index);
+    this.mapValueControls.removeAt(index);
   }
 }

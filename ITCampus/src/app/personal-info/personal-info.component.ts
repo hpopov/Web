@@ -1,23 +1,22 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { WebRequestService } from '../web-request.service';
+import { UserService } from '../shared/user/user.service';
 import { PersonalInfoData, PersonalInfoFormGroup } from './personal-info.data';
 import { PersonalInfoService } from './personal-info.service';
-import { UserService } from '../shared/user/user.service';
 
 
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.scss'],
-  providers: [PersonalInfoService]
+  styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit, OnDestroy {
 
   @Input() editable: boolean;
   personalInfoFormGroup: PersonalInfoFormGroup;
   personalInfoSubscription: Subscription;
-  @Input("personalInfo")savedPersonalInfo: PersonalInfoData;
+  savedPersonalInfo: PersonalInfoData;
+  userAvatarUrl: string = '';
   isLoaded: boolean = true;
   editMode: boolean = false;
   editSaveName: string = 'Edit';
@@ -37,16 +36,18 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this.personalInfoFormGroup = new PersonalInfoFormGroup(this.savedPersonalInfo);
+    this.personalInfoFormGroup = new PersonalInfoFormGroup();
     // this.userSubscription = this.userService.getUserAsObservable().subscribe(user => {
     //   this.savedUser = user;
     //   this.user = JSON.parse(JSON.stringify(this.savedUser));      
     // });
     this.personalInfoSubscription = 
       this.personalInfoService.personalInfo.asObservable().subscribe(personalInfo => {
+        console.log(personalInfo);
         this.savedPersonalInfo = personalInfo;
         // this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
         this.personalInfoFormGroup.populateValue(personalInfo);
+        this.userAvatarUrl = this.userService.getUserAvatarUrl(personalInfo.user.login);
       });
     
   }
@@ -64,11 +65,6 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
       this.editSaveName = 'Save';
     }
     this.editMode = !this.editMode;
-  }
-
-  convertDate(date: string) : Date{
-    return new Date(Date.UTC(Number.parseFloat(date.slice(6,10)), Number.parseFloat(date.slice(3,5)),
-        Number.parseFloat(date.slice(0,2))));
   }
 
   getUserAvatarUrl(username: string): string {

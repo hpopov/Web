@@ -12,7 +12,6 @@
 				 [editMode]="editMode"></app-data-entry>
 				<app-data-entry key="Date of birth" [valueControl]="personalInfoFormGroup.form.get('dateOfBirth')"
 					[editMode]="editMode" (changed)="updatePersonalProperty($event)">
-					<!-- | date: 'dd.MM.yyyy' TODO: move this piece to PersonalInfoFormGroup -->
 				</app-data-entry>
 				<app-data-entry key="City" [valueControl]="personalInfoFormGroup.form.get('city')"
 				 [editMode]="editMode"></app-data-entry>
@@ -37,7 +36,7 @@
 			</app-map-entry>
 			<div *ngIf="isLoaded" class="image-content">
 				<div class="img-holder">
-					<img src="getUserAvatarUrl(user.login)" alt="User image">
+					<img [src]="userAvatarUrl" alt="User image">
 				</div>
 			</div>
 			<p *ngIf="!isLoaded">Loading...</p>

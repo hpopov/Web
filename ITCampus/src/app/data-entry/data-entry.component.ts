@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PersonalInfoService } from '../personal-info/personal-info.service';
 
 
 @Component({
@@ -23,22 +22,22 @@ export class DataEntryComponent implements OnInit, OnDestroy {
   // @Output('changed') changedEmitter: EventEmitter<DataEntry>;
   @Output('cancelled') cancelledEmitter: EventEmitter<void>;
 
-  constructor(private personalInfoService: PersonalInfoService) {
+  constructor() {
     // this.changedEmitter = new EventEmitter<DataEntry>();
     this.cancelledEmitter = new EventEmitter<void>();
   }
 
   ngOnInit() {
     // this.personalInfoService.onUpdateEmitter.subscribe(()=>this.emitOnChanged());
-    if (this.keyControl != null) {
-      this.keyControlSub = this.keyControl.valueChanges.subscribe(value => this.key = value);
-    }
+    // if (this.keyControl != null) {
+    //   this.keyControlSub = this.keyControl.valueChanges.subscribe(value => this.key = value);
+    // }
   }
 
   ngOnDestroy(): void {
-    if (this.keyControlSub != null) {
-      this.keyControlSub.unsubscribe();
-    }
+    // if (this.keyControlSub != null) {
+    //   this.keyControlSub.unsubscribe();
+    // }
   }
 
   // emitOnChanged() {

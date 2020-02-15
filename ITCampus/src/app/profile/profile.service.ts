@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { CleanableSubject } from '../utils/cleanable-subject';
 import { WebRequestService } from '../web-request.service';
 import { ProfileData } from './profile.model';
-import { PersonalInfoData } from '../personal-info/personal-info.data';
 
 @Injectable(
   {
@@ -18,22 +17,22 @@ export class ProfileService {
     this.profile = new CleanableSubject();
   }
 
-  public loadProfile(): void {
+  public loadProfile(username: string): void {
     console.log("Loading observable profile...");
-    // this.profile.cleanValue();
-    this.webRequestService.get<ProfileData>("rest/profiles/tordek").subscribe(profile => {
-          console.log(profile);
+    this.profile.cleanValue();//is used to mute current value for resolver, so that it could wait for the actual new value
+    this.webRequestService.get<ProfileData>("/rest/profiles/" + username).subscribe(profile => {
+          // console.log(profile);
           this.profile.next(profile);
     });
   }
 
-  public replacePersonalInfo(personalInfo: PersonalInfoData): void {
-    console.log("Replacing personalInfo within a profile...");
-    const previousProfile: ProfileData = this.profile.getValue();
-    this.profile.next({
-      personalInfo: personalInfo,
-      projects: previousProfile.projects,
-      subjects: previousProfile.subjects
-    });
-  }
+  // public replacePersonalInfo(personalInfo: PersonalInfoData): void {
+  //   console.log("Replacing personalInfo within a profile...");
+  //   const previousProfile: ProfileData = this.profile.getValue();
+  //   this.profile.next({
+  //     personalInfo: personalInfo,
+  //     projects: previousProfile.projects,
+  //     subjects: previousProfile.subjects
+  //   });
+  // }
 }

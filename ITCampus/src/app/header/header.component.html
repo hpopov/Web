@@ -1,9 +1,9 @@
 <header>
 	<app-logo></app-logo>
-	<div *ngIf="authService.isLoggedIn() && authenticatedsUser; else anonGreeting" class="user-greetings">
-		<p>Welcome, {{authenticatedsUser.surname}} {{authenticatedsUser.name}}!</p>
+	<div *ngIf="isUserAuthenticated; else anonGreeting" class="user-greetings">
+		<p>Welcome, {{authenticatedUser.surname}} {{authenticatedUser.name}}!</p>
 		<div class="img-holder">
-			<img src="getUserAvatarUrl(authenticatedsUser.login)" alt="User Avatar">
+			<img [src]="userAvatarUrl" alt="User Avatar">
 		</div>
 		<button class="logout-button" (click)="logOut()">Log out</button>
 	</div>
