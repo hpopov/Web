@@ -4,12 +4,11 @@
 		<button disabled class="download-cv-button">DOWNLOAD CV</button>
 	</div>
 	<div class="components-container">
-		<app-personal-info [user]=profile.user [personalInfo]=profile.personalInfo
-		 	[editable]=isAdminRightsGranted()>
+		<app-personal-info [editable]=hasUserFullProfileAccess()>
 		</app-personal-info>
-		<app-subjects *ngIf=isAdminRightsGranted() [subjects]=profile.subjects 
-			[pageMaxSize]="10" [currentPage]="1"></app-subjects>
-		<app-projects class="lastComponent"></app-projects>
+		<app-subjects *ngIf=hasUserFullProfileAccess() [subjects]=profile.subjects [pageMaxSize]="10" [currentPage]="1">
+		</app-subjects>
+		<app-projects [projects]=profile.projects class="lastComponent"></app-projects>
 	</div>
 	<div class="float-right">
 		<button disabled class="download-cv-button">DOWNLOAD CV</button>

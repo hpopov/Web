@@ -4,10 +4,9 @@
       <span *ngIf="editMode" class="clickable" (click)="onAddElement()"> +</span>
     </p>
     <div class="data-map">
-        <app-data-entry  *ngFor="let tuple of mapValue"
-          [key]="tuple[0]" keyDelim="" [value]="tuple[1]" [editMode]="editMode" [editableKey]="false"
-          cancellable="true" (cancelled)="mapValue.splice(mapValue.indexOf(tuple), 1);"
-          (changed)="map.push(convert($event))">
+        <app-data-entry  *ngFor="let tupleControl of getMapArrayControls(); let index = i"
+          [keyControl]="tupleControl.at(0)" keyDelim=":" [valueControl]="tupleControl.at(1)" [editMode]="editMode"
+          cancellable="true" (cancelled)="onRemoveElement(i)">
         </app-data-entry>
     </div>
 </div>

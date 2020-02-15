@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Credentials } from '../shared/user/user.data';
 

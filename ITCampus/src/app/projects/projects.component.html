@@ -4,7 +4,7 @@
     <div *ngFor="let project of projects.slice(0,maxProjectsPerPage)" class="project">
       <div class="card">
         <div class="img-holder front">
-          <img src="assets/images/{{project.imageName}}">
+          <img src="{{project.imageUrl}}">
         </div>
         <div class="description back" >
           <p class="description-text">{{project.description}}</p>

@@ -14,7 +14,7 @@ export class CurrentUserResolver extends AbstractResolver<UserData> {
   }
 
   protected getValueAsSubject(): CleanableSubject<UserData> {
-    return this.userService.getCurrentUser();
+    return this.userService.authenticatedUser;
   }
   
 }

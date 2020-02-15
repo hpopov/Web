@@ -1,29 +1,27 @@
 import { Injectable } from '@angular/core';
-import { PersonalInfoData } from './personal-info.data';
+import { map } from 'rxjs/operators';
 import { ProfileService } from '../profile/profile.service';
-import { map, filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { WebRequestService } from '../web-request.service';
-import { UserService } from '../shared/user/user.service';
 import { CleanableSubject } from '../utils/cleanable-subject';
+import { WebRequestService } from '../web-request.service';
+import { PersonalInfoData } from './personal-info.data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PersonalInfoService {
 
-  private personalInfoSubject: CleanableSubject<PersonalInfoData>;
+  personalInfo: CleanableSubject<PersonalInfoData>;
 
-  constructor(private profileService: ProfileService, private userService: UserService,
+  constructor(private profileService: ProfileService,
     private webRequestService: WebRequestService) {
-    this.personalInfoSubject = new CleanableSubject();
+    this.personalInfo = new CleanableSubject();
     this.bindPersonalInfoToProfile();
   }
 
-  private bindPersonalInfoToProfile() : void {
-    this.profileService.getProfileAsObservable().pipe(map(pageData => pageData.personalInfo))
+  private bindPersonalInfoToProfile(): void {
+    this.profileService.profile.asObservable().pipe(map(profile => profile.personalInfo))
       .subscribe(personalInfo => {
-        this.personalInfoSubject.next(personalInfo);
+        this.personalInfo.next(personalInfo);
       });
   }
 
@@ -31,17 +29,28 @@ export class PersonalInfoService {
   //   return this.personalInfoSubject;
   // }
 
-  public getPersonalInfoAsObservable(): Observable<PersonalInfoData> {
-    return this.personalInfoSubject.asObservable();
+  // public getPersonalInfoAsObservable(): Observable<PersonalInfoData> {
+  //   return this.personalInfoSubject.asObservable();
+  // }
+
+  public updatePersonalInfo(personalInfo: PersonalInfoData): void {
+    this.webRequestService.put<PersonalInfoData>("rest/personalInfos/" + personalInfo.user.login, personalInfo)
+      .subscribe(this.personalInfo.next);
   }
-  
-  public updatePersonalInfo(personalInfo: PersonalInfoData, userId: number) : void{
-    this.webRequestService.post<boolean>("updatePersonalInfo",
-      {userId: userId, personalInfo: personalInfo}).subscribe(succeed => {
-        if (succeed && this.userService.getUser().getValue()
-           && this.userService.getUser().getValue().id === userId) {
-          this.personalInfoSubject.next(personalInfo);
-        }
-      });
-  }
+
+  // replaceUser(user: PublicUserData): void {//TODO: Do you really certain that you are going to need all the stuff with 'replacing'?
+  // const oldPersonalInfo: PersonalInfoData = this.personalInfo.getValue();
+  //   this.profileService.replacePersonalInfo({
+  //     city: oldPersonalInfo.city,
+  //     dateOfBirth: oldPersonalInfo.dateOfBirth,
+  //     education: oldPersonalInfo.education,
+  //     faculty: oldPersonalInfo.faculty,
+  //     firstEducationYear: oldPersonalInfo.firstEducationYear,
+  //     languages: oldPersonalInfo.languages,
+  //     lastEducationYear: oldPersonalInfo.lastEducationYear,
+  //     phoneNumber: oldPersonalInfo.phoneNumber,
+  //     skills: oldPersonalInfo.skills,
+  //     user: user
+  //   })
+  // }
 }

@@ -126,7 +126,7 @@ export class FormGroupHolder<T> extends FormControlHolder<FormGroup> {
                 const formControl = formControlHolder.control;
 
                 if (this.isPrimitive(propValue)) {
-                    this.form.put(property, new FormControl(formData[property]));
+                    // this.form.put(property, new FormControl(formData[property]));
                 }
                 if (formControl instanceof FormControl) {
 

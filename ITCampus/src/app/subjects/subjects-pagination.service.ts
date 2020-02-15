@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { SubjectData } from './subject.data';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ProfileService } from '../profile/profile.service';
-import { Observable, Subject } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
 import { CleanableSubject } from '../utils/cleanable-subject';
+import { SubjectData } from './subject.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubjectsPaginationService {
 
-  allSubjects: SubjectData[];
-  private allSubjectsSubject: CleanableSubject<SubjectData[]>;
-  private allSubjectsLoaded: boolean = false;
+  allSubjectsSnapshot: SubjectData[];
+  allSubjects: CleanableSubject<SubjectData[]>;
+  // private allSubjectsLoaded: boolean = false;
   constructor(private pageDataService: ProfileService) {
-    this.allSubjectsSubject = new CleanableSubject();
-    this.allSubjects = [];
+    this.allSubjects = new CleanableSubject();
+    this.allSubjectsSnapshot = [];
     //   {
     //     num: 1,
     //     name: 'Math Analysis',
@@ -100,23 +100,23 @@ export class SubjectsPaginationService {
   }
 
   private bindAllSubjectsToProfile() : void {
-    this.allSubjectsLoaded = true;
-    this.pageDataService.getProfileAsObservable()
+    // this.allSubjectsLoaded = true;
+    this.pageDataService.profile.asObservable()
         .pipe(map(pageData => pageData.subjects)).subscribe(subjects => {
-          this.allSubjects = subjects.slice();
-          this.allSubjectsSubject.next(this.allSubjects);
+          this.allSubjectsSnapshot = subjects.slice();
+          this.allSubjects.next(this.allSubjectsSnapshot);
         });
   }
 
-  public getAllSubjectsAsObservable() : Observable<SubjectData[]> {
-    if (!this.allSubjectsLoaded) {
-      this.bindAllSubjectsToProfile();
-    }
-    return this.allSubjectsSubject.asObservable();
-  }
+  // public getAllSubjectsAsObservable() : Observable<SubjectData[]> {
+  //   if (!this.allSubjectsLoaded) {
+  //     this.bindAllSubjectsToProfile();
+  //   }
+  //   return this.allSubjects.asObservable();
+  // }
 
   getAllTeachersAsObservable() : Observable<string[]> {
-    return this.getAllSubjectsAsObservable().pipe(map(
+    return this.allSubjects.asObservable().pipe(map(
       subjects => subjects.map(subject => subject.teacher)
       .filter((element, index, array) => array.indexOf(element) === index)
       ));

@@ -21,11 +21,11 @@ export class CleanableSubject<T> extends BehaviorSubject<T> {
         return this.pipe(filter(CleanableSubject.isValuePresent));
     }
 
-    public getValue(): T {
-        let value: T = super.getValue();
-        if (CleanableSubject.isValuePresent(value)) {
-            return value;
-        }
-        return undefined;
-    }
+    // public getValue(): T {
+    //     let value: T = super.getValue();
+    //     if (CleanableSubject.isValuePresent(value)) {
+    //         return value;
+    //     }
+    //     return undefined;
+    // }
 }

@@ -1,27 +1,22 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { UserData } from '../shared/user/user.data';
-import { PersonalInfoData } from './personal-info.data';
-import { PersonalInfoService } from './personal-info.service';
-import { ProfileService } from '../profile/profile.service';
-import { UserService } from '../shared/user/user.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { UserService } from '../shared/user/user.service';
+import { PersonalInfoData, PersonalInfoFormGroup } from './personal-info.data';
+import { PersonalInfoService } from './personal-info.service';
 
 
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.scss'],
-  providers: [PersonalInfoService]
+  styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit, OnDestroy {
 
-  user: UserData;
   @Input() editable: boolean;
-  personalInfo: PersonalInfoData;
+  personalInfoFormGroup: PersonalInfoFormGroup;
   personalInfoSubscription: Subscription;
-  @Input("personalInfo")savedPersonalInfo: PersonalInfoData;
-  userSubscription: Subscription;
-  @Input("user")savedUser: UserData;
+  savedPersonalInfo: PersonalInfoData;
+  userAvatarUrl: string = '';
   isLoaded: boolean = true;
   editMode: boolean = false;
   editSaveName: string = 'Edit';
@@ -41,54 +36,50 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this.user = JSON.parse(JSON.stringify(this.savedUser));
-    this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
-    this.userSubscription = this.userService.getUserAsObservable().subscribe(user => {
-      this.savedUser = user;
-      this.user = JSON.parse(JSON.stringify(this.savedUser));      
-    });
+    this.personalInfoFormGroup = new PersonalInfoFormGroup();
+    // this.userSubscription = this.userService.getUserAsObservable().subscribe(user => {
+    //   this.savedUser = user;
+    //   this.user = JSON.parse(JSON.stringify(this.savedUser));      
+    // });
     this.personalInfoSubscription = 
-      this.personalInfoService.getPersonalInfoAsObservable().subscribe(personalInfo => {
+      this.personalInfoService.personalInfo.asObservable().subscribe(personalInfo => {
+        console.log(personalInfo);
         this.savedPersonalInfo = personalInfo;
-        this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
+        // this.personalInfo = JSON.parse(JSON.stringify(this.savedPersonalInfo));
+        this.personalInfoFormGroup.populateValue(personalInfo);
+        this.userAvatarUrl = this.userService.getUserAvatarUrl(personalInfo.user.login);
       });
     
   }
 
   ngOnDestroy(): void {
     this.personalInfoSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
   }
 
   onEditSaveClick() {
-    this.editMode = !this.editMode;
-    if (this.editMode === false) {
+    if (this.editMode === true) {
       this.editSaveName = 'Edit';
-      this.userService.updateUser(this.user).subscribe(succeed => {
-        if (succeed) {
-          this.savedUser = this.user;
-        }
-        this.user = JSON.parse(JSON.stringify(this.savedUser));
-      });
+      const username = this.savedPersonalInfo.user.login;
+      this.personalInfoService.updatePersonalInfo(this.personalInfoFormGroup.asData(username));
     } else {
       this.editSaveName = 'Save';
     }
+    this.editMode = !this.editMode;
   }
 
-  convertDate(date: string) : Date{
-    return new Date(Date.UTC(Number.parseFloat(date.slice(6,10)), Number.parseFloat(date.slice(3,5)),
-        Number.parseFloat(date.slice(0,2))));
+  getUserAvatarUrl(username: string): string {
+    return this.userService.getUserAvatarUrl(username);
   }
 
-  updateUserProperty(event) {
-    this.user[event.key] = event.value;
-    console.log('User');
-    console.log(this.user);
-  }
+  // updateUserProperty(event) {
+  //   this.user[event.key] = event.value;
+  //   console.log('User');
+  //   console.log(this.user);
+  // }
 
-  updatePersonalProperty(event) {
-    this.personalInfo[event.key] = event.value;
-    console.log('Personal');
-    console.log(this.personalInfo);
-  }
+  // updatePersonalProperty(event) {
+  //   this.personalInfo[event.key] = event.value;
+  //   console.log('Personal');
+  //   console.log(this.personalInfo);
+  // }
 }

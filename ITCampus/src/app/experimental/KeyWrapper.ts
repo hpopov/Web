@@ -19,7 +19,12 @@ type FormGroupKeyNames<T> = { [K in keyof T]: DifferenceMapper<T[K], Primitive|A
 // type FormGroupKeyNames<T> = { [K in keyof T]:
 //     DifferenceMapper<T[K], PrimitiveKeyNames<T> | ArrayKeyNames<T>, K> }[keyof T];
 type FormGroupKeyType<T, K extends FormGroupKeyNames<T>> = T[K];
-type ArrayValueType<T, K extends ArrayKeyNames<T>> = T[K][];
+type ArrayValueType<T, K extends ArrayKeyNames<T>> = T[K];
+
+let uavt: ArrayValueType<UserData, 'authorities'>;
+let str: string;
+str.charAt(5);
+// uavt.cha
 
 type FormControls = FormGroup | FormControl | FormArray;
 
@@ -95,11 +100,12 @@ class FormControlHolder<T extends FormControls> {
         // }
     }
 }
-
-type FormArrayElement<T> = T extends Primitive ? FormControl : FormGroupHolder<T>;
+let fa: FormArray;
+// fa.setValue()
+type FormArrayElement<T extends any[]> = T extends Primitive[] ? FormControl : FormGroupHolder<T>;
 //Decide, whether it should be possible to contain an array inside of array;
 //Enhance types for maps in formMap
-export class FormArrayHolder<T> extends FormControlHolder<FormArray> {
+export class FormArrayHolder<T extends any[]> extends FormControlHolder<FormArray> {
 
 }
 
@@ -153,7 +159,7 @@ export class FormGroupHolder<T> extends FormControlHolder<FormGroup> {
         }
     }
 
-    private isPrimitive(x: any): x is number | string | boolean | symbol {
+    private isPrimitive(x: any): x is Primitive {
         return typeof x === "number" || typeof x === "string"
             || typeof x === "boolean" || typeof x === "symbol";
     }
@@ -166,9 +172,13 @@ export class FormGroupHolder<T> extends FormControlHolder<FormGroup> {
         return this.formGroupMap.subgroups.get(param) as FormGroupHolder<FormGroupKeyType<T,K>>;
     }
 
-    public getArrayGroup<K extends ArrayKeyNames<T>>(param: K): FormControlHolder<ArrayValueType<T,K>> {
-        return this.formGroupMap.arrays.get(param);
-    }
+    // public getArrayGroup<K extends ArrayKeyNames<T>>(param: K): FormControlHolder<ArrayValueType<T,K>> {
+    //     return this.formGroupMap.arrays.get(param);
+    // }
+
+    // public getArrayGroup<K extends ArrayKeyNames<T>>(param: K): FormArrayHolder<ArrayValueType<T,K>> {
+    //     return this.formGroupMap.arrays.get(param);
+    // }
 
 }
 
@@ -187,15 +197,22 @@ export class Main {
             surname: 'Hastings',
             innerUser: {
                 value1: 'haha',
-                value2: 'superImportant'
+                value2: 'superImportant',
+                oopsVal: {
+                    ababagalamaga: 112,
+                    superb: '41345'
+                },
+                karakul: {
+                    kar: '112'
+                }
             }
         };
         type Val = typeof val;
         let wrapper: FormGroupHolder<Val> = new FormGroupHolder(val);
         wrapper.getFormControl("login");
         let subgroup: FormGroupKeyNames<Val> = "innerUser";
-        wrapper.getFormGroup("innerUser");
-        wrapper.getArrayGroup("authorities");
+        wrapper.getFormGroup("innerUser").getFormGroup('karakul').getFormControl('kar');
+        // wrapper.getArrayGroup("authorities");
     }
 
     public indexedParamsType() {

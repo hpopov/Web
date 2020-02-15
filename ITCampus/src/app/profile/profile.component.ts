@@ -1,9 +1,9 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PublicUserData, UserData } from '../shared/user/user.data';
 import { UserService } from '../shared/user/user.service';
-import { ProfileModel } from './profile.model';
-import { UserData } from '../shared/user/user.data';
+import { ProfileData } from './profile.model';
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +13,8 @@ import { UserData } from '../shared/user/user.data';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  public profile: ProfileModel;
-  public currentUser: UserData;
+  public profile: ProfileData;
+  public authenticatedUser: UserData;
   private currentUserSubscription: Subscription;
   private profileSubscription: Subscription;
   constructor(private route: ActivatedRoute, private userService: UserService) {
@@ -23,8 +23,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log("Initializing ProfileComponent...");
-    this.currentUserSubscription = this.userService.getCurrentUser().subscribe(currentUser => {
-      this.currentUser = currentUser;
+    this.currentUserSubscription = this.userService.authenticatedUser.subscribe(authenticatedUser => {
+      this.authenticatedUser = authenticatedUser;
     });
     this.profile = this.route.snapshot.data['profile'];
     this.profileSubscription = this.route.data.subscribe(data => {
@@ -37,8 +37,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.currentUserSubscription.unsubscribe();
   }
 
-  public isAdminRightsGranted() : boolean {
-    return this.currentUser && this.profile.user.id === this.currentUser.id;
+  public hasUserFullProfileAccess() : boolean {
+    return this.userService.hasUserFullProfileAccess();
   }
 
 }

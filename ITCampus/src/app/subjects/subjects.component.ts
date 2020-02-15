@@ -33,7 +33,7 @@ export class SubjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subjectSubscription = this.subjectsPaginationService.getAllSubjectsAsObservable()
+    this.subjectSubscription = this.subjectsPaginationService.allSubjects.asObservable()
         .subscribe(subjects => {
       this.subjects = subjects;
     });

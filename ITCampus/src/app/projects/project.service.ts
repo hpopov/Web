@@ -1,39 +1,38 @@
 import { Injectable } from '@angular/core';
-import { ProjectData } from './project.data';
-import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ProfileService } from '../profile/profile.service';
-import { map, filter } from 'rxjs/operators';
 import { CleanableSubject } from '../utils/cleanable-subject';
+import { ProjectData } from './project.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private projectsSubject: CleanableSubject<ProjectData[]>;
-  private projectsLoaded: boolean = false;
-  
+  projects: CleanableSubject<ProjectData[]>;
+  // private projectsLoaded: boolean = false;
 
-  constructor(private pageDataService: ProfileService) {
-    this.projectsSubject = new CleanableSubject();
+
+  constructor(private profileService: ProfileService) {
+    this.projects = new CleanableSubject();
     this.bindProjectsToProfile();
   }
 
-  private bindProjectsToProfile() : void {
-    this.projectsLoaded = true;
-    this.pageDataService.getProfile().pipe(
+  private bindProjectsToProfile(): void {
+    // this.projectsLoaded = true;
+    this.profileService.profile.asObservable().pipe(
       map(pageData => pageData.projects)).subscribe(projects => {
-        this.projectsSubject.next(projects);
+        this.projects.next(projects);
       });
   }
 
-  private getProjects(): CleanableSubject<ProjectData[]> {
-    if (!this.projectsLoaded) {
-      this.bindProjectsToProfile();
-    }
-    return this.projectsSubject;
-  }
+  // private getProjects(): CleanableSubject<ProjectData[]> {
+  //   if (!this.projectsLoaded) {
+  //     this.bindProjectsToProfile();
+  //   }
+  //   return this.projects;
+  // }
 
-  public getProjectsAsObservable() : Observable<ProjectData[]> {
-    return this.getProjects().asObservable();
-  }
+  // public getProjectsAsObservable() : Observable<ProjectData[]> {
+  //   return this.getProjects().asObservable();
+  // }
 }
