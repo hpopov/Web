@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:appdba="http://www.datical.net/xml/ns/appdba" xmlns:datical="http://www.datical.net/xml/ns/datical"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+	 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog
+	 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<!-- id for these changeSets is generated as Atom-like timestamp format -->
+	<!-- for useful generation see https://timestampgenerator.com/#copyAtom -->
+	<changeSet id="2020-02-15T20:29:55+00:00" author="Hryhorii_Popov">
+		<loadData tableName="user_details" schemaName="itcampus" encoding="UTF-8" file="data/userDetailsPrepopulated-1.0.2.1.csv"
+			quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="username" />
+			<column name="password" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T17:28:46+00:00" author="Hryhorii_Popov">
+		<loadData tableName="users" schemaName="itcampus" encoding="UTF-8" file="data/usersPrepopulated-1.0.2.1.csv" quotchar="'"
+			relativeToChangelogFile="true" separator=";">
+			<column name="id" />
+			<column name="name" />
+			<column name="surname" />
+			<column name="username" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T17:42:21+00:00" author="Hryhorii_Popov">
+		<loadData tableName="avatars" schemaName="itcampus" encoding="UTF-8" file="data/avatarsPrepopulated-1.0.2.1.csv"
+			quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="username" />
+			<column name="image_name" />
+			<column name="image_extension" />
+			<column name="image_created" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:20:50+00:00" author="Hryhorii_Popov">
+		<loadData tableName="personal_infos" schemaName="itcampus" encoding="UTF-8"
+			file="data/personalInfosPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="id" />
+			<column name="phone_number" />
+			<column name="date_of_birth" />
+			<column name="city" />
+			<column name="education" />
+			<column name="faculty" />
+			<column name="first_edu_year" />
+			<column name="last_edu_year" />
+			<column name="user_id" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:34:10+00:00" author="Hryhorii_Popov">
+		<loadData tableName="authorities" schemaName="itcampus" encoding="UTF-8" file="data/authoritiesPrepopulated-1.0.2.1.csv"
+			quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="PK" />
+			<column name="value" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:36:28+00:00" author="Hryhorii_Popov">
+		<loadData tableName="user_details2authorities" schemaName="itcampus" encoding="UTF-8"
+			file="data/userDetails2AuthoritiesPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="user_details_username" />
+			<column name="authorities_PK" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:38:39+00:00" author="Hryhorii_Popov">
+		<loadData tableName="user_languages" schemaName="itcampus" encoding="UTF-8"
+			file="data/userLanguagesPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="language" />
+			<column name="assessment" />
+			<column name="personal_info_id" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:44:14+00:00" author="Hryhorii_Popov">
+		<loadData tableName="user_skills" schemaName="itcampus" encoding="UTF-8"
+			file="data/userSkillsPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="skill_name" />
+			<column name="skill_assessment" />
+			<column name="personal_info_id" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:50:50+00:00" author="Hryhorii_Popov">
+		<loadData tableName="subjects" schemaName="itcampus" encoding="UTF-8"
+			file="data/subjectsPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="id" />
+			<column name="name" />
+			<column name="teacher" />
+			<column name="test_type" />
+			<column name="academic_hours" />
+			<column name="mark" />
+			<column name="user_id" />
+		</loadData>
+	</changeSet>
+	<changeSet id="2020-02-15T20:58:53+00:00" author="Hryhorii_Popov">
+		<loadData tableName="projects" schemaName="itcampus" encoding="UTF-8"
+			file="data/projectsPrepopulated-1.0.2.1.csv" quotchar="'" relativeToChangelogFile="true" separator=";">
+			<column name="id" />
+			<column name="header" />
+			<column name="description" />
+			<column name="user_id" />
+			<column name="image_name" />
+			<column name="image_extension" />
+			<column name="image_created" />
+		</loadData>
+	</changeSet>
+</databaseChangeLog>

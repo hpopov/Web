@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { WebRequestService } from '../web-request.service';
 import { ProjectData } from './project.data';
 import { ProjectService } from './project.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
@@ -12,10 +13,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   @Input()public projects: ProjectData[];
   public maxProjectsPerPage: number;
+  public minProjectsPerPage: number = 3;
   private projectsSubscription: Subscription;
 
-  constructor(private projectService: ProjectService) {
-    this.maxProjectsPerPage = 3;
+  constructor(private projectService: ProjectService, private webRequestService: WebRequestService) {
+    this.maxProjectsPerPage = this.minProjectsPerPage;
   }
 
   ngOnInit() {
@@ -34,6 +36,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   showLessProjects(): void {
     this.maxProjectsPerPage -= 3;
+  }
+
+  resolve(projectImageUrl: string): string {
+    return this.webRequestService.resolveUrl(projectImageUrl);
   }
 
 }

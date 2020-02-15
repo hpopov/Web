@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { ProfileData } from './profile.model';
 import { ProfileService } from './profile.service';
-import { AbstractResolver } from '../abstract/abstract-resolver.service';
-import { CleanableSubject } from '../utils/cleanable-subject';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileResolver extends AbstractResolver<ProfileData>{
+export class ProfileResolver implements Resolve<ProfileData>{
 
   constructor(private profileService: ProfileService) {
-    super();
   }
 
-  protected getValueAsSubject(): CleanableSubject<ProfileData> {
-    this.profileService.loadProfile();//?
-    return this.profileService.profile;
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): ProfileData | Observable<ProfileData> | Promise<ProfileData> {
+    const login: string = route.params.login;
+    console.log(login);
+    this.profileService.loadProfile(login);//?
+    return this.profileService.profile.asObservable().pipe(take(1));
   }
 
 }

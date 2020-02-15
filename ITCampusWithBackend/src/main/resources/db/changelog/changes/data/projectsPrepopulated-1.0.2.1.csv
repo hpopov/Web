@@ -1,0 +1,5 @@
+id;header;description;user_id;image_name;image_extension;image_created
+1;Шедевр;'Истинный шедевр изобразительного исскуства';1;blobs/project_Masterpiece.dat;jpg;'2020-02-15 00:00:00'
+2;ITCampus-Web;'Клиент-серверная площадка для публикаций и поиска резюме студентов IT-профиля с интегрированными ведомостями об успеваемости.';1;blobs/project_ITCW.dat;png;'2020-02-15 00:00:00'
+3;ITCampus-App;'Кросс-платформенное графическое приложение (desktop;Android) -- интерфейс системы ITCampus';1;blobs/project_ITCA.dat;png;'2020-02-15 00:00:00'
+4;Async plot builder;'Графическое приложение на JavaFx для решения многомерного диффура и построения графиков его решений';1;blobs/project_plotBuilder.dat;png;'2020-02-15 00:00:00'

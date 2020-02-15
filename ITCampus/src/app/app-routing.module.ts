@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ProfileResolver } from './profile/profile-resolver.service';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const appRoutes: Routes = [

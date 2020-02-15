@@ -1,0 +1,12 @@
+id;name;teacher;test_type;academic_hours;mark;user_id
+1;'Math Analysis';'Bohonov Y.E.';EXAM;120;97;1
+2;'Discrete mathematics';'Stus O.V.';CREDIT;80;96;1
+3;'Linear algebra';'Minarchenko O.M.';CREDIT;60;97;1
+4;'Functional analysis';'Bohonov Y.E.';CREDIT;40;95;1
+5;'Foundation of algorithms';'Romanov V.V.';EXAM;80;95;1
+6;'Object Oriented Programming';'Liashenko M.V.';EXAM;80;95;1
+7;'Operation calculus';'Bohonov Y.E.';CREDIT;24;95;1
+8;'Intellectual Data Analysis';'Ishchenko H.V.';EXAM;60;100;1
+9;'Web technology';'Golubova I.A.';CREDIT;60;95;1
+10;'Operation systems';'Beznosyk O.Y';CREDIT;60;96;1
+11;'Informational System Design';'Harchenko K.V.';EXAM;60;100;1

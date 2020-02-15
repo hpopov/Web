@@ -8,4 +8,5 @@
 
 	<include file="/db/changelog/changes/migrate-tables-changelog.xml" />
 	<include file="/db/changelog/changes/version1.0.1-ddl.xml" />
+	<include file="/db/changelog/changes/version1.0.2.1-dml.xml"/>
 </databaseChangeLog>

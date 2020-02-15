@@ -34,8 +34,8 @@ export class PersonalInfoService {
   // }
 
   public updatePersonalInfo(personalInfo: PersonalInfoData): void {
-    this.webRequestService.put<PersonalInfoData>("rest/personalInfos/" + personalInfo.user.login, personalInfo)
-      .subscribe(this.personalInfo.next);
+    this.webRequestService.put<PersonalInfoData>("/rest/personalInfos/" + personalInfo.user.login, personalInfo)
+      .subscribe(response => {console.log("personalInfo updated!");this.personalInfo.next(response)});
   }
 
   // replaceUser(user: PublicUserData): void {//TODO: Do you really certain that you are going to need all the stuff with 'replacing'?

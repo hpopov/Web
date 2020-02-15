@@ -1,9 +1,43 @@
 <div *ngIf="!editMode; else editableEntry" [ngSwitch]="true" class="data-entry">
-    <p>{{key+keyDelim}}</p>
-    <p *ngSwitchCase="valueControl != null"><{{valueControl.value}}</p>
+    <p *ngIf="!!key">{{key+keyDelim}}</p>
+    <p *ngIf="!!keyControl">{{keyControl.value}}</p>
+    <p *ngSwitchCase="valueControl != null">{{valueControl.value}}</p>
     <p *ngSwitchCase="tupleValueControl != null">{{tupleValueControl.value | tuple:delimiter}}</p>
-</div> 
+</div>
 <ng-template #editableEntry>
+    <div [ngSwitch]="true">
+        <div *ngIf="keyControl == null && valueControl != null" class="data-entry">
+            <p>{{key+keyDelim}}</p>
+            <input *ngSwitchCase="valueControl != null" [formControl]=valueControl>
+        </div>
+        <div *ngIf="keyControl == null && tupleValueControl != null" class="data-entry">
+            <p *ngIf="keyControl == null">{{key+keyDelim}}</p>
+            <p *ngSwitchCase="tupleValueControl != null">
+                <input [formControl]="tupleValueControl.at(0)">
+                <span> {{delimiter}} </span>
+                <input [formControl]="tupleValueControl.at(1)">
+            </p>
+        </div>
+        <div *ngIf="keyControl != null && valueControl != null" class="data-entry">
+            <p *ngIf="keyControl != null"><input [formControl]=keyControl><span>{{keyDelim}}</span></p>
+            <p>
+                <input *ngSwitchCase="valueControl != null" [formControl]=valueControl>
+                <span *ngIf="cancellable" class="clickable" (click)="cancelledEmitter.emit()"> x</span>
+            </p>
+        </div>
+        <div *ngIf="keyControl != null && tupleValueControl != null" class="data-entry">
+            <p *ngIf="keyControl != null"><input [formControl]=keyControl><span>{{keyDelim}}</span></p>
+            <p *ngSwitchCase="tupleValueControl != null">
+                <input [formControl]="tupleValueControl.at(0)">
+                <span> {{delimiter}} </span>
+                <input [formControl]="tupleValueControl.at(1)">
+            </p>
+        </div>
+    </div>
+</ng-template>
+
+
+<!-- <ng-template #editableEntry>
     <div [ngSwitch]="true" class="data-entry">
         <p *ngIf="keyControl == null">{{key+keyDelim}}</p>
         <p *ngIf="keyControl != null"><input [formControl]=keyControl><span>{{keyDelim}}</span></p>
@@ -15,4 +49,4 @@
         </p>
         <span *ngIf="cancellable" class="clickable" (click)="cancelledEmitter.emit()"> x</span>
     </div>
-</ng-template>
+</ng-template> -->

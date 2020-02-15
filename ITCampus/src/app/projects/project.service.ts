@@ -24,15 +24,4 @@ export class ProjectService {
         this.projects.next(projects);
       });
   }
-
-  // private getProjects(): CleanableSubject<ProjectData[]> {
-  //   if (!this.projectsLoaded) {
-  //     this.bindProjectsToProfile();
-  //   }
-  //   return this.projects;
-  // }
-
-  // public getProjectsAsObservable() : Observable<ProjectData[]> {
-  //   return this.getProjects().asObservable();
-  // }
 }

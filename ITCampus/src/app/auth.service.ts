@@ -20,7 +20,7 @@ export class AuthService {
 
   public logIn(credentials: Credentials, successfulCallback?: (AuthData)=>void,
    errorCallback?: (any)=>void) {
-      let relativeUrl = 'rest/authentication';
+      let relativeUrl = '/rest/authentication';
       let succeed: (AuthData)=>void = (response)=> {
         this.loginSucceed(response);
         if (successfulCallback) {
@@ -48,5 +48,5 @@ export class AuthService {
     this.tokenService.removeToken();
     this.userService.removeAuthenticatedUser();
   }
-
+  
 }

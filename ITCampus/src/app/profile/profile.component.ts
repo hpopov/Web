@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PublicUserData, UserData } from '../shared/user/user.data';
+import { UserData } from '../shared/user/user.data';
 import { UserService } from '../shared/user/user.service';
 import { ProfileData } from './profile.model';
 
@@ -17,18 +17,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public authenticatedUser: UserData;
   private currentUserSubscription: Subscription;
   private profileSubscription: Subscription;
-  constructor(private route: ActivatedRoute, private userService: UserService) {
-    console.log("Constructed ProfileComponent!");
+  constructor(route: ActivatedRoute, private userService: UserService) {
+    this.profile = route.snapshot.data['profile'];
+    this.profileSubscription = route.data.subscribe(data => {
+      this.profile = data.profile;
+    });
   }
 
   ngOnInit(): void {
-    console.log("Initializing ProfileComponent...");
     this.currentUserSubscription = this.userService.authenticatedUser.subscribe(authenticatedUser => {
       this.authenticatedUser = authenticatedUser;
-    });
-    this.profile = this.route.snapshot.data['profile'];
-    this.profileSubscription = this.route.data.subscribe(data => {
-      this.profile = data.profile;
     });
    }
 

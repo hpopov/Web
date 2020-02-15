@@ -1,4 +1,3 @@
-import { TestType } from './test-type.enum';
 
 export interface SearchableSubject {
     name: string;

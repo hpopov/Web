@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SubjectsPaginationService } from './subjects-pagination.service';
-import { SubjectData, SearchableSubject } from './subject.data';
-import { TestType } from './test-type.enum';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SearchableSubject, SubjectData } from './subject.data';
+import { SubjectsPaginationService } from './subjects-pagination.service';
+import { TestType } from './test-type.enum';
 
 @Component({
   selector: 'app-subjects',

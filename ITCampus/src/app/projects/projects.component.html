@@ -4,9 +4,9 @@
     <div *ngFor="let project of projects.slice(0,maxProjectsPerPage)" class="project">
       <div class="card">
         <div class="img-holder front">
-          <img src="{{project.imageUrl}}">
+          <img [src]="resolve(project.imageUrl)">
         </div>
-        <div class="description back" >
+        <div class="description back">
           <p class="description-text">{{project.description}}</p>
         </div>
       </div>
@@ -16,8 +16,9 @@
   <div class="space-between">
     <button *ngIf="projects.length > maxProjectsPerPage" class="light-button" id="load-more-projects"
       (click)="showMoreProjects()">More</button>
-      <button *ngIf="projects.length <= maxProjectsPerPage" class="light-button" id="load-more-projects"
-        (click)="showLessProjects()">Less</button>
+    <button *ngIf="projects.length <= maxProjectsPerPage && projects.length > minProjectsPerPage" class="light-button"
+      id="load-more-projects" (click)="showLessProjects()">Less
+    </button>
     <button disabled class="dark-button">Add project</button>
   </div>
 </div>

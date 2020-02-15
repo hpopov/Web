@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { SubjectData } from './subject.data';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 @Pipe({
   name: 'page'

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class WebRequestService {
 
-  private url: string = 'https://localhost:8443/';
+  private url: string = 'https://localhost:8443';
   private headersObj = {
     'Content-Type': 'application/json'
   };
