@@ -9,18 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println(authentication);
-		UsernamePasswordAuthenticationToken usernamePasswordAuthentication = 
-				(UsernamePasswordAuthenticationToken) authentication;
-		System.out.println(usernamePasswordAuthentication);
-		return authentication;
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println(authentication);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthentication = (UsernamePasswordAuthenticationToken) authentication;
+        System.out.println(usernamePasswordAuthentication);
+        return authentication;
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return UsernamePasswordAuthenticationToken.class.equals(authentication);
-	}
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return UsernamePasswordAuthenticationToken.class.equals(authentication);
+    }
 
 }

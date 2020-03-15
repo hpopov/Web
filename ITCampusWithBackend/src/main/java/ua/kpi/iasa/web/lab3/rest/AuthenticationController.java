@@ -50,7 +50,6 @@ public class AuthenticationController {
     private UserConverter userConverter;
 
     @Operation(summary = "Recieve the authentcation token")
-
     @ApiResponse(responseCode = "200", description = "Successful operation")
     @NotFoundApiResponse
     @ApiResponse(responseCode = "401", description = "Bad credentials", content = @Content)

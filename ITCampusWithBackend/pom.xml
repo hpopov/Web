@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>ITCampusWithBackend</artifactId>
-	<version>1.0.2.1</version>
+	<version>1.1.0</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -114,28 +114,28 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>
-								${project.build.directory}/classes/static
-							</outputDirectory>
-							<resources>
-								<resource>
-									<directory>../ITCampus/dist/ITCampus</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+	<!-- <plugin> -->
+	<!-- <artifactId>maven-resources-plugin</artifactId> -->
+	<!-- <executions> -->
+	<!-- <execution> -->
+	<!-- <id>copy-resources</id> -->
+	<!-- <phase>validate</phase> -->
+	<!-- <goals> -->
+	<!-- <goal>copy-resources</goal> -->
+	<!-- </goals> -->
+	<!-- <configuration> -->
+	<!-- <outputDirectory> -->
+	<!-- src/main/webapp/webjars -->
+	<!-- </outputDirectory> -->
+	<!-- <resources> -->
+	<!-- <resource> -->
+	<!-- <directory>../ITCampus/dist/ITCampus</directory> -->
+	<!-- </resource> -->
+	<!-- </resources> -->
+	<!-- </configuration> -->
+	<!-- </execution> -->
+	<!-- </executions> -->
+	<!-- </plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

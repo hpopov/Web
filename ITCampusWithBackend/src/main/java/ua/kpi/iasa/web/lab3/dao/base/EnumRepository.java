@@ -10,7 +10,7 @@ import ua.kpi.iasa.web.lab3.model.EnumModel;
 import ua.kpi.iasa.web.lab3.model.EnumType;
 
 @NoRepositoryBean
-public interface EnumRepository<T extends Enum<T> & EnumType<T>, EModel extends EnumModel<T>>
+public interface EnumRepository<T extends Enum<T> & EnumType<T, EModel>, EModel extends EnumModel<T>>
         extends Repository<EModel, Integer>, SimpleSaveRepository<EModel, Integer> {
 
     default EModel getOrCreateEnumModelByType(T type) {

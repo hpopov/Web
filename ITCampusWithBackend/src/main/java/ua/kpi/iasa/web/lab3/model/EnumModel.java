@@ -1,6 +1,6 @@
 package ua.kpi.iasa.web.lab3.model;
 
-public interface EnumModel<T extends Enum<T> & EnumType<T>> {
+public interface EnumModel<T extends Enum<T> & EnumType<T, ? extends EnumModel<T>>> {
     Integer getPk();
 
     T getValue();
