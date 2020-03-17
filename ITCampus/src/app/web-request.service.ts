@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class WebRequestService {
 
-  private url: string = 'https://localhost:8443';
+  private url: string = window['cfgApiBaseUrl'];
   private headersObj = {
     'Content-Type': 'application/json'
   };

@@ -115,7 +115,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>it-campus</finalName>
+		<finalName>it-campus-api</finalName>
 		<plugins>
 			<!-- <plugin> -->
 			<!-- <artifactId>maven-resources-plugin</artifactId> -->
