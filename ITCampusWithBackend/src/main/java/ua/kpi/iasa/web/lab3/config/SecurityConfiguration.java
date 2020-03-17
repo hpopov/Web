@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -59,14 +60,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
 		http.httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/index.html", "/", "/login",
 						"/*.js", "/*.css", "/*.js.map", "/assets/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/rest/users", "/rest/users/*","/rest/users/*/avatar", "/resources/**", "/swagger-ui.html",
-				        "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs.yml").permitAll()
+				.antMatchers(HttpMethod.GET, "/rest/users", "/rest/users/*","/rest/users/*/avatar", "/resources/**",
+				        "/v3/api-docs", "/v3/api-docs.yml").permitAll()
 				.antMatchers(HttpMethod.POST, "/rest/authentication", "/rest/users").permitAll()
 //				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
 //				.antMatchers(HttpMethod.DELETE, "/rest/users/**").permitAll()
