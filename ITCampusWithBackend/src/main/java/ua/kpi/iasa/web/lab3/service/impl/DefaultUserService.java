@@ -106,6 +106,7 @@ public class DefaultUserService implements UserService {
     @Transactional
     @Override
     public void deleteUser(String username) {
+        //TODO: FIXME: the method below actually doesn't delete avatarModel!
         userAvatarService.deleteUserAvatarWithImage(username);
         final UserModel user = getUserWithProjectsByUsername(username);
         final Collection<FileModel> projectImages = user.getProjects().stream().map(ProjectModel::getProjectImage)
